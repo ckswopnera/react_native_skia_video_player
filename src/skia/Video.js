@@ -49,7 +49,7 @@ const Video = () => {
   const volume = useSharedValue(1);
   const {currentFrame, currentTime, size, rotation, duration} = useVideo(
     // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     {
       paused,
       looping: false,

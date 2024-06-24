@@ -1,4 +1,4 @@
-package com.awesomeproject
+package com.react_native_skia_video_player
 import android.content.res.Configuration
 import expo.modules.ApplicationLifecycleDispatcher
 import expo.modules.ReactNativeHostWrapper

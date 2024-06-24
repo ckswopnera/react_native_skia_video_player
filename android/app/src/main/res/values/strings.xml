@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">AwesomeProject</string>
+  <string name="app_name">react_native_skia_video_player</string>
   <string name="expo_runtime_version">1.0.0</string>
 </resources>

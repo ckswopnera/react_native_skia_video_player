@@ -15,7 +15,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'AwesomeProject' do
+target 'react_native_skia_video_player' do
   use_expo_modules!
   post_integrate do |installer|
     begin
@@ -34,7 +34,7 @@ target 'AwesomeProject' do
   :hermes_enabled => true,
     )
 
-  target 'AwesomeProjectTests' do
+  target 'react_native_skia_video_playerTests' do
     inherit! :complete
     # Pods for testing
   end

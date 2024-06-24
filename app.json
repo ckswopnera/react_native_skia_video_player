@@ -1,13 +1,13 @@
 {
-  "name": "AwesomeProject",
-  "displayName": "AwesomeProject",
+  "name": "react_native_skia_video_player",
+  "displayName": "react_native_skia_video_player",
   "expo": {
-    "name": "AwesomeProject",
+    "name": "react_native_skia_video_player",
     "ios": {
-      "bundleIdentifier": "com.AwesomeProject"
+      "bundleIdentifier": "com.react_native_skia_video_player"
     },
     "android": {
-      "package": "com.AwesomeProject"
+      "package": "com.react_native_skia_video_player"
     },
     "extra": {
       "eas": {
