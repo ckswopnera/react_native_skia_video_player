@@ -2,10 +2,21 @@
   "name": "AwesomeProject",
   "displayName": "AwesomeProject",
   "expo": {
+    "name": "AwesomeProject",
+    "ios": {
+      "bundleIdentifier": "com.AwesomeProject"
+    },
+    "android": {
+      "package": "com.AwesomeProject"
+    },
     "extra": {
       "eas": {
         "projectId": "436b2643-3c64-4e9a-94cd-d4e8ca4156aa"
       }
+    },
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/436b2643-3c64-4e9a-94cd-d4e8ca4156aa"
     }
   }
 }
