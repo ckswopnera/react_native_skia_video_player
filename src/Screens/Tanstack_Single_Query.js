@@ -56,31 +56,31 @@ export default function Tanstack_Single_Query() {
         style={{
           color: '#fff',
         }}>
-        {data.name}
+        {data?.name}
       </Text>
       <Text
         style={{
           color: '#fff',
         }}>
-        {data.description}
+        {data?.description}
       </Text>
       <Text
         style={{
           color: '#fff',
         }}>
-        👀 {data.subscribers_count}
+        👀 {data?.subscribers_count}
       </Text>
       <Text
         style={{
           color: '#fff',
         }}>
-        ✨ {data.stargazers_count}
+        ✨ {data?.stargazers_count}
       </Text>
       <Text
         style={{
           color: '#fff',
         }}>
-        🍴 {data.forks_count}
+        🍴 {data?.forks_count}
       </Text>
     </SafeAreaView>
   );

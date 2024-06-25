@@ -4,7 +4,7 @@
 
 import 'react-native';
 import React from 'react';
-import App from '../src/Screens/App';
+import App from '../src/Screens/Clock';
 
 // Note: import explicitly to use the types shipped with jest.
 import {it} from '@jest/globals';

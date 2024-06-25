@@ -21,7 +21,7 @@ import {
 } from 'react-native-size-matters';
 import ClockIcon from '../components/ClockIcon';
 
-const App = () => {
+const Clock = () => {
   const [secondsPassed, setSecondsPassed] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [clockView, setclockView] = useState(false);
@@ -215,4 +215,4 @@ const styles = ScaledSheet.create({
   },
 });
 
-export default App;
+export default Clock;

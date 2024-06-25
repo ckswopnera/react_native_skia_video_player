@@ -3,6 +3,9 @@ import {QueryClient, onlineManager} from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
 
 export const queryClient = new QueryClient();
+export const prefetchData = async () => {
+  await queryClient.prefetchQuery({ queryKey: ['postsNew'], queryFn: fetchPosts });
+};
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
 

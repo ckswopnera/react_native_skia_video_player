@@ -1,6 +1,7 @@
 import * as Updates from 'expo-updates';
 import {useEffect, useState} from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   SafeAreaView,
@@ -9,9 +10,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import App from './Screens/App';
+import Clock from './Screens/Clock';
 import {QueryClientProvider, useQuery} from '@tanstack/react-query';
-import {queryClient} from './utils/util';
+import {prefetchData, queryClient} from './utils/util';
 import Tanstack_Infinite_Scroll from './Screens/Tanstack_Infinite_Scroll';
 import UseOnlineManager from './utils/UseOnlineManager';
 import {NavigationContainer} from '@react-navigation/native';
@@ -22,6 +23,7 @@ import React_Form from './Screens/React_Form';
 import Video from './skia/Video';
 import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from '../store/store';
+import Tanstack_queryclient from './Screens/Tanstack_queryclient';
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -29,7 +31,16 @@ const Drawer = createDrawerNavigator();
 export default function Start() {
   const {currentlyRunning, isUpdateAvailable, isUpdatePending} =
     Updates.useUpdates();
+  const [isPrefetched, setIsPrefetched] = useState(false);
 
+  useEffect(() => {
+    const prefetch = async () => {
+      await prefetchData();
+      setIsPrefetched(true);
+    };
+
+    prefetch();
+  }, []);
   useEffect(() => {
     Orientation.lockToPortrait();
     // console.log({currentlyRunning}, {isUpdateAvailable});
@@ -37,6 +48,20 @@ export default function Start() {
       upDate();
     }
   }, [isUpdatePending]);
+
+
+  if (queryClient.isFetching()) {
+    console.log('At least one query is fetching!')
+  }
+
+
+  if (!isPrefetched) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    );
+  }
 
   const upDate = () => {
     Alert.alert(
@@ -85,7 +110,7 @@ function MainComponent() {
         }}>
         <Drawer.Screen
           name="Timer Clock"
-          component={App}
+          component={Clock}
           options={{
             // headerTitleAlign:'center',
             headerTitle: 'Timer Clock',
@@ -100,6 +125,11 @@ function MainComponent() {
         <Drawer.Screen
           name="Single Query "
           component={Tanstack_Single_Query}
+          // options={{headerShown: false}}
+        />
+        <Drawer.Screen
+          name="Query client "
+          component={Tanstack_queryclient}
           // options={{headerShown: false}}
         />
         <Drawer.Screen
