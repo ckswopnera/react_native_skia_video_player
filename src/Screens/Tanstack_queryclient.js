@@ -5,12 +5,11 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet,
-  ScrollView,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {fetchPosts, queryClient} from '../utils/util';
+import {fetchPosts} from '../utils/util';
 
 const Tanstack_Queryclient = () => {
   const {data, error, isLoading} = useQuery({

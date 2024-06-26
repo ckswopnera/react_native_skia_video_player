@@ -10,6 +10,8 @@ import {
   Image,
   Atlas,
   ImageFormat,
+  Paint,
+  Rect,
 } from '@shopify/react-native-skia';
 import {
   Dimensions,
@@ -23,7 +25,6 @@ import Animated, {
   Easing,
   runOnUI,
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
   withRepeat,
   withTiming,
@@ -56,9 +57,24 @@ const Video = () => {
   const seek = useSharedValue(0);
   const paused = useSharedValue(false);
   const volume = useSharedValue(1);
+
+  const darkenMatrix = [
+    1, 0, 0, 0, 0, // Red channel stays the same
+    0, 1, 0, 0, 0, // Green channel stays the same
+    0, 0, 1, 0, 0, // Blue channel stays the same
+    0, 0, 0, 1, 0  // Alpha channel stays the same
+  ];
+
+  const overlayMatrix = [
+    1, 0, 0, 0, 0,   // Red channel stays the same
+    0, 1, 0, 0, 0,   // Green channel stays the same
+    0, 0, 1, 0, 0,   // Blue channel stays the same
+    0, 0, 0, 0.7, 0  // Alpha channel is reduced to 0.7 to apply transparency
+  ];
+
   const {currentFrame, currentTime, size, duration, framerate} = useVideo(
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     // 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4',
     {
       paused,
@@ -75,7 +91,6 @@ const Video = () => {
   const min = useSharedValue(0);
   const max = useSharedValue(1);
   const TIME = useSharedValue('00:00:00');
-
   const forwardThirty = () => {
     if (currentTime?.value + 30000 < duration) {
       seek.value = currentTime?.value + 30000;
@@ -126,7 +141,7 @@ const Video = () => {
   useEffect(() => {
     if (showControl) {
       const timer = setTimeout(() => {
-        // setShowControl(false);
+        setShowControl(false);
       }, 5000);
       return () => clearTimeout(timer);
     }
@@ -135,11 +150,16 @@ const Video = () => {
   useEffect(() => {
     setShowControl(true);
     const timer = setTimeout(() => {
-      // setShowControl(false);
+      setShowControl(false);
     }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
+  // useEffect(() => {
+  //   max.value=Math.floor(duration / 60000)
+  // }, [duration])
+
+  
   useEffect(() => {
     const id = setInterval(() => {
       // console.log(currentTime.value.toFixed(0) / duration);
@@ -203,7 +223,7 @@ const Video = () => {
   };
 
   const onSlidingComplete = e => {
-    // console.log('e*duration',e*duration)
+    // console.log('e',e)
     if (e * duration !== duration) {
       seek.value = e * duration;
       paused.value = false;
@@ -283,9 +303,6 @@ const Video = () => {
       <TouchableOpacity
         style={{
           height: zoom === true ? height : 400,
-          // position:'absolute',
-          // top:0
-          // width:width,
         }}
         onPress={onPressVideo}>
         <>
@@ -299,13 +316,15 @@ const Video = () => {
                 height={zoom === true ? height : 400}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
-              {/* <ColorMatrix
-            matrix={zoom === true ?[
-              0.95, 0, 0, 0, 0.05, 0.65, 0, 0, 0, 0.15, 0.15, 0, 0, 0, 0.5, 0,
-              0, 0, 1, 0,
-            ]:[]}
-          /> */}
+           {showControl && (
+            <ColorMatrix matrix={darkenMatrix} />
+          )}
             </Fill>
+            {showControl && (
+          <Fill>
+            <ColorMatrix matrix={overlayMatrix} />
+          </Fill>
+        )}
           </Canvas>
         </>
       </TouchableOpacity>

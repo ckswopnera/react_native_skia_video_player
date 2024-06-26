@@ -1,6 +1,4 @@
-import {center} from '@shopify/react-native-skia';
 import React from 'react';
-import {View} from 'react-native';
 import Svg, {Circle, Line} from 'react-native-svg';
 
 const ClockIcon = ({width, height, fill}) => {

@@ -2,21 +2,15 @@ import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from 'expo-linear-gradient';
 import AnalogClock from '../components/AnalogClock';
-import GearIcon from '../components/GearIcon';
 import SkiaEx from '../skia/SkiaEx';
-import MovieIcon from '../components/MovieIcon';
-import {windowHeight, windowWidth} from '../utils/util';
 import {
   scale,
-  verticalScale,
-  moderateScale,
   ScaledSheet,
 } from 'react-native-size-matters';
 import ClockIcon from '../components/ClockIcon';

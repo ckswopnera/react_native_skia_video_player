@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Text, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { center } from '@shopify/react-native-skia';
 import { windowWidth } from '../utils/util';
 
 const React_Form = () => {

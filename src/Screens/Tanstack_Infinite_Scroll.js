@@ -1,4 +1,3 @@
-// MyInfiniteScrollComponent.js
 import React from 'react';
 import {
   FlatList,
