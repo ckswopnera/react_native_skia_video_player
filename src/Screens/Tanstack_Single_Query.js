@@ -16,7 +16,7 @@ export default function Tanstack_Single_Query() {
       <View
         style={{
           backgroundColor: '#000',
-          flex: 1,
+          flex: 1,justifyContent: 'center', alignItems: 'center'
         }}>
         <Text
           style={{

@@ -41,6 +41,8 @@ const Tanstack_Infinite_Scroll = () => {
         style={{
           backgroundColor: '#000',
           flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
         <Text
           style={{
@@ -88,7 +90,9 @@ const Tanstack_Infinite_Scroll = () => {
       }}
       data={posts}
       keyExtractor={item => item.id.toString()}
-      renderItem={({item}) => <ItemComponent item={item} />}
+      renderItem={({item, index}) => (
+        <ItemComponent item={item} index={index + 1} />
+      )}
       onEndReached={loadMore}
       onEndReachedThreshold={0.7}
       ListFooterComponent={
@@ -100,19 +104,39 @@ const Tanstack_Infinite_Scroll = () => {
   );
 };
 
-const ItemComponent = ({item}) => (
+const ItemComponent = ({item, index}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-    <Text
-      style={{
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
-        textTransform: 'capitalize',
-      }}>
-      {item.title}
-    </Text>
-    <Text style={{fontSize: 16, color: '#fff'}}>{item.body}</Text>
+    <View style={{flexDirection: 'row'}}>
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#fff',
+          textAlign: 'center',
+          paddingRight: 10,
+          alignSelf: 'center',
+          width: '15%',
+        }}>
+        {index}
+      </Text>
+      <View style={{flexDirection: 'column', width: '85%'}}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: '#fff',
+            textTransform: 'capitalize',
+            letterSpacing: 1,
+            textDecorationLine: 'underline',
+          }}>
+          {item.title}
+        </Text>
+        <Text style={{fontSize: 16, color: '#fff', letterSpacing: 1}}>
+          {item.body}
+        </Text>
+      </View>
+    </View>
   </TouchableOpacity>
 );
 

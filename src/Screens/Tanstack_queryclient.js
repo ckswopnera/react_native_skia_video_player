@@ -12,7 +12,7 @@ import {
 import {useQuery} from '@tanstack/react-query';
 import {fetchPosts, queryClient} from '../utils/util';
 
-const Tanstack_queryclient = () => {
+const Tanstack_Queryclient = () => {
   const {data, error, isLoading} = useQuery({
     queryKey: ['postsNew'],
     queryFn: fetchPosts,
@@ -41,25 +41,47 @@ const Tanstack_queryclient = () => {
       <FlatList
         data={data.items}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => <ItemComponent item={item} />}
+        renderItem={({item, index}) => (
+          <ItemComponent item={item} index={index + 1} />
+        )}
       />
     </View>
   );
 };
 
-const ItemComponent = ({item}) => (
+const ItemComponent = ({item, index}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-    <Text
-      style={{
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
-        textTransform: 'capitalize',
-      }}>
-      {item.title}
-    </Text>
-    <Text style={{fontSize: 16, color: '#fff'}}>{item.body}</Text>
+    <View style={{flexDirection: 'row'}}>
+      <Text
+        style={{
+          fontSize: 14,
+          fontWeight: 'bold',
+          color: '#fff',
+          textAlign: 'center',
+          paddingRight: 10,
+          alignSelf: 'center',
+          width: '15%',
+        }}>
+        {index}
+      </Text>
+      <View style={{flexDirection: 'column', width: '85%'}}>
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: '#fff',
+            textTransform: 'capitalize',
+            letterSpacing: 1,
+            textDecorationLine: 'underline',
+          }}>
+          {item.title}
+        </Text>
+        <Text style={{fontSize: 16, color: '#fff', letterSpacing: 1}}>
+          {item.body}
+        </Text>
+      </View>
+    </View>
   </TouchableOpacity>
 );
 
@@ -69,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 8,
-    backgroundColor: '#333',
+    backgroundColor: '#000',
   },
   postContainer: {
     marginBottom: 10,
@@ -86,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Tanstack_queryclient;
+export default Tanstack_Queryclient;

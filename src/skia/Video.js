@@ -57,8 +57,8 @@ const Video = () => {
   const paused = useSharedValue(false);
   const volume = useSharedValue(1);
   const {currentFrame, currentTime, size, duration, framerate} = useVideo(
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     // 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4',
     {
       paused,
@@ -88,7 +88,6 @@ const Video = () => {
     } else {
       seek.value = duration - 2000;
       paused.value = true;
-
       setPause(true);
     }
   };
@@ -99,7 +98,6 @@ const Video = () => {
       paused.value = false;
       const newSliderValue = (currentTime?.value - 30000) / duration;
       progress.value = newSliderValue;
-
       if (pause === true) {
         setPause(false);
       }
@@ -115,9 +113,7 @@ const Video = () => {
       setHeight(window.height);
       setWidth(window.width);
     };
-
     const subscription = Dimensions.addEventListener('change', onChange);
-
     return () => {
       if (subscription?.remove) {
         subscription.remove();
@@ -147,13 +143,8 @@ const Video = () => {
   useEffect(() => {
     const id = setInterval(() => {
       // console.log(currentTime.value.toFixed(0) / duration);
-      if (currentTime?.value === 0) {
-        setisLoading(true);
-      } else {
-        setisLoading(false);
-
+      if (currentTime?.value > 0) {
         const progressRatio = currentTime.value.toFixed(0) / duration;
-
         if (progressRatio >= 0 && progressRatio < 1) {
           progress.value = progressRatio;
           changeText();
@@ -161,6 +152,9 @@ const Video = () => {
           paused.value = true;
           setPause(true);
         }
+        setisLoading(false);
+      } else {
+        setisLoading(true);
       }
     }, 1000);
     return () => clearInterval(id);
@@ -172,7 +166,7 @@ const Video = () => {
         duration: 1000,
         easing: Easing.linear,
       }),
-      -1, 
+      -1,
     );
   }, [rotation]);
 
@@ -202,12 +196,50 @@ const Video = () => {
     })();
   };
 
-  return (
-    <View style={{flex: 1, 
-    backgroundColor: '#000'
-    }}>
-      
+  const onPausePlay = () => {
+    paused.value = !paused.value;
+    paused.value === true ? setPause(false) : setPause(true);
+    copyFrameOnAndroid(currentFrame);
+  };
 
+  const onSlidingComplete = e => {
+    // console.log('e*duration',e*duration)
+    if (e * duration !== duration) {
+      seek.value = e * duration;
+      paused.value = false;
+      setPause(false);
+    } else {
+      seek.value = e * duration - 2000;
+      paused.value = false;
+      setPause(false);
+    }
+  };
+  const onSlidingStart = () => {
+    paused.value = true;
+  };
+  const onZoom = () => {
+    setZoom(!zoom);
+    zoom === false
+      ? Orientation.lockToLandscape()
+      : Orientation.lockToPortrait();
+    zoom === false ? setShowBar(false) : setShowBar(true);
+    // SystemNavigationBar.navigationHide();
+    zoom === false
+      ? SystemNavigationBar.fullScreen(true)
+      : SystemNavigationBar.fullScreen(false);
+    // SystemNavigationBar.setFitsSystemWindows(true);
+  };
+
+  const onVolume = () => {
+    setVolumeControl(!volumeControl);
+    volumeControl === true ? (volume.value = 0) : (volume.value = 1);
+  };
+
+  const onPressVideo = () => {
+    setShowControl(!showControl);
+  };
+  return (
+    <View style={{flex: 1, backgroundColor: '#000'}}>
       <Animatable.View
         delay={1000}
         animation={showControl === true ? 'fadeIn' : 'fadeOut'}
@@ -219,18 +251,7 @@ const Video = () => {
         }}>
         <TouchableOpacity
           disabled={showControl === true ? false : true}
-          onPress={() => {
-            setZoom(!zoom);
-            zoom === false
-              ? Orientation.lockToLandscape()
-              : Orientation.lockToPortrait();
-            zoom === false ? setShowBar(false) : setShowBar(true);
-            // SystemNavigationBar.navigationHide();
-            zoom === false
-              ? SystemNavigationBar.fullScreen(true)
-              : SystemNavigationBar.fullScreen(false);
-            // SystemNavigationBar.setFitsSystemWindows(true);
-          }}>
+          onPress={onZoom}>
           <MaterialIcons
             name={zoom !== true ? 'zoom-out-map' : 'zoom-in-map'}
             size={iconSize}
@@ -250,10 +271,7 @@ const Video = () => {
         }}>
         <TouchableOpacity
           disabled={showControl === true ? false : true}
-          onPress={() => {
-            setVolumeControl(!volumeControl);
-            volumeControl === true ? (volume.value = 0) : (volume.value = 1);
-          }}>
+          onPress={onVolume}>
           <MaterialIcons
             name={volumeControl === true ? 'volume-up' : 'volume-off'}
             size={iconSize}
@@ -269,9 +287,7 @@ const Video = () => {
           // top:0
           // width:width,
         }}
-        onPress={() => {
-          setShowControl(!showControl);
-        }}>
+        onPress={onPressVideo}>
         <>
           <Canvas style={{flex: 1}}>
             <Fill>
@@ -301,7 +317,7 @@ const Video = () => {
           position: 'absolute',
           // top: zoom !== true ? size.height/2:null,
           // bottom: zoom !== true ? 10 : null,
-          top: zoom === true ? height-40:280,
+          top: zoom === true ? height - 40 : 280,
           left: 0,
           right: 0,
           flexDirection: 'row',
@@ -330,22 +346,8 @@ const Video = () => {
           progress={progress}
           minimumValue={min}
           maximumValue={max}
-          onSlidingStart={() => {
-            paused.value = true;
-          }}
-          onSlidingComplete={e => {
-            // console.log({duration});
-            // console.log('e*duration',e*duration)
-            if (e * duration !== duration) {
-              seek.value = e * duration;
-              paused.value = false;
-              setPause(false);
-            } else {
-              seek.value = e * duration - 2000;
-              paused.value = false;
-              setPause(false);
-            }
-          }}
+          onSlidingStart={onSlidingStart}
+          onSlidingComplete={onSlidingComplete}
           heartbeat={true}
           theme={{
             disableMinTrackTintColor: '#fff',
@@ -380,7 +382,7 @@ const Video = () => {
           // top: 200,
           left: 0,
           right: 0,
-          top: zoom === true ? height/2:180,
+          top: zoom === true ? height / 2 : 180,
           // bottom: zoom === true ? height/2 : null,
         }}>
         <TouchableOpacity
@@ -412,11 +414,7 @@ const Video = () => {
               alignItems: 'center',
             }}
             disabled={showControl === true ? false : true}
-            onPress={() => {
-              paused.value = !paused.value;
-              paused.value === true ? setPause(false) : setPause(true);
-              copyFrameOnAndroid(currentFrame);
-            }}>
+            onPress={onPausePlay}>
             <FontAwesome6
               name={pause === true ? 'play' : 'pause'}
               size={46}

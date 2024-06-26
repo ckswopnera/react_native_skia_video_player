@@ -23,12 +23,14 @@ import React_Form from './Screens/React_Form';
 import Video from './skia/Video';
 import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from '../store/store';
-import Tanstack_queryclient from './Screens/Tanstack_queryclient';
+import Tanstack_Queryclient from './Screens/Tanstack_Queryclient';
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 export default function Start() {
+  const showBar = useBearStore(state => state.showBar);
+
   const {currentlyRunning, isUpdateAvailable, isUpdatePending} =
     Updates.useUpdates();
   const [isPrefetched, setIsPrefetched] = useState(false);
@@ -50,15 +52,15 @@ export default function Start() {
   }, [isUpdatePending]);
 
 
-  if (queryClient.isFetching()) {
-    console.log('At least one query is fetching!')
-  }
+  // if (queryClient.isFetching()) {
+  //   console.log('At least one query is fetching!')
+  // }
 
 
   if (!isPrefetched) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#fff" />
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }
@@ -80,7 +82,7 @@ export default function Start() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor={'#000'} />
+        <StatusBar barStyle="light-content" backgroundColor={'#000'} hidden={!showBar}/>
         <MainComponent />
       </NavigationContainer>
     </QueryClientProvider>
@@ -93,7 +95,7 @@ function MainComponent() {
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        initialRouteName="Video Player"
+        // initialRouteName="Video Player"
         screenOptions={{
           headerShown: showBar,
           drawerHideStatusBarOnOpen: false,
@@ -129,7 +131,7 @@ function MainComponent() {
         />
         <Drawer.Screen
           name="Query client "
-          component={Tanstack_queryclient}
+          component={Tanstack_Queryclient}
           // options={{headerShown: false}}
         />
         <Drawer.Screen
