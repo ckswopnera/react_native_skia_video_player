@@ -16,6 +16,7 @@ import {
 import {
   Dimensions,
   Platform,
+  SafeAreaView,
   TextInput,
   TouchableOpacity,
   View,
@@ -219,7 +220,7 @@ const Video = () => {
   const onPausePlay = () => {
     paused.value = !paused.value;
     paused.value === true ? setPause(false) : setPause(true);
-    copyFrameOnAndroid(currentFrame);
+    // copyFrameOnAndroid(currentFrame);
   };
 
   const onSlidingComplete = e => {
@@ -259,14 +260,14 @@ const Video = () => {
     setShowControl(!showControl);
   };
   return (
-    <View style={{flex: 1, backgroundColor: '#000'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
       <Animatable.View
         delay={1000}
         animation={showControl === true ? 'fadeIn' : 'fadeOut'}
         style={{
           position: 'absolute',
-          top: zoom === true ? 5 : 90,
-          right: 8,
+          top: zoom === true ? 15 : 90,
+          right: zoom === true ?15:8,
           zIndex: 9999,
         }}>
         <TouchableOpacity
@@ -285,7 +286,7 @@ const Video = () => {
         animation={showControl === true ? 'fadeIn' : 'fadeOut'}
         style={{
           position: 'absolute',
-          top: zoom === true ? 5 : 140,
+          top: zoom === true ? 15 : 140,
           right: zoom === true ? 80 : 8,
           zIndex: 9999,
         }}>
@@ -328,68 +329,7 @@ const Video = () => {
           </Canvas>
         </>
       </TouchableOpacity>
-      <Animatable.View
-        delay={1000}
-        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
-        style={{
-          height: 50,
-          position: 'absolute',
-          // top: zoom !== true ? size.height/2:null,
-          // bottom: zoom !== true ? 10 : null,
-          top: zoom === true ? height - 40 : 280,
-          left: 0,
-          right: 0,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: width,
-        }}>
-        <TextInput
-          editable={false}
-          defaultValue={'00:00:00'}
-          ref={textStamp}
-          style={{
-            color: '#fff',
-            width: zoom === false ? '20%' : '10%',
-            textAlign: 'center',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-        <Slider
-          disabled={showControl === true ? false : true}
-          style={{
-            width: zoom === false ? '60%' : '80%',
-            height: 40,
-          }}
-          progress={progress}
-          minimumValue={min}
-          maximumValue={max}
-          onSlidingStart={onSlidingStart}
-          onSlidingComplete={onSlidingComplete}
-          heartbeat={true}
-          theme={{
-            disableMinTrackTintColor: '#fff',
-            maximumTrackTintColor: '#fff',
-            minimumTrackTintColor: 'red',
-            cacheTrackTintColor: '#333',
-            bubbleBackgroundColor: '#666',
-            heartbeatColor: 'rgba(0,0,0,0.2)',
-          }}
-        />
-
-        <TextInput
-          editable={false}
-          defaultValue={msToTime(duration)}
-          style={{
-            color: '#fff',
-            width: zoom === false ? '20%' : '10%',
-            textAlign: 'center',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Animatable.View>
+     
 
       <Animatable.View
         delay={1000}
@@ -452,7 +392,69 @@ const Video = () => {
           <MaterialIcons name="forward-30" size={iconSize} color={iconColor} />
         </TouchableOpacity>
       </Animatable.View>
-    </View>
+      <Animatable.View
+        delay={1000}
+        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
+        style={{
+          height: 50,
+          position: 'absolute',
+          // top: zoom !== true ? size.height/2:null,
+          // bottom: zoom !== true ? 10 : null,
+          top: zoom === true ? height - 40 : 280,
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: width,
+        }}>
+        <TextInput
+          editable={false}
+          defaultValue={'00:00:00'}
+          ref={textStamp}
+          style={{
+            color: '#fff',
+            width: zoom === true ? '15%' : '20%',
+            textAlign: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
+        <Slider
+          disabled={showControl === true ? false : true}
+          style={{
+            width: zoom === true ? '70%' : '60%',
+            height: 40,
+          }}
+          progress={progress}
+          minimumValue={min}
+          maximumValue={max}
+          onSlidingStart={onSlidingStart}
+          onSlidingComplete={onSlidingComplete}
+          heartbeat={true}
+          theme={{
+            disableMinTrackTintColor: '#fff',
+            maximumTrackTintColor: '#fff',
+            minimumTrackTintColor: 'red',
+            cacheTrackTintColor: '#333',
+            bubbleBackgroundColor: '#666',
+            heartbeatColor: 'rgba(0,0,0,0.2)',
+          }}
+        />
+
+        <TextInput
+          editable={false}
+          defaultValue={msToTime(duration)}
+          style={{
+            color: '#fff',
+            width: zoom === true ? '15%' : '20%',
+            textAlign: 'center',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
+      </Animatable.View>
+    </SafeAreaView>
   );
 };
 

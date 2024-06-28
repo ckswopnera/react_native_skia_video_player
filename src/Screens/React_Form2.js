@@ -21,17 +21,33 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required')
-    .min(5, 'Password must be at least 5 characters'),
+    .min(3, 'Password must be at least 3 characters')
+    .test(
+      'is-00000',
+      'Not matched. Please try again!',
+      value => value === '00000',
+    ),
+  newPassword: yup
+    .string()
+    .required('Password is required')
+    .min(5, 'Password must be at least 5 characters')
+    .test(
+      'passwords-match',
+      'Password must not match with old password',
+      function (value) {
+        return this.parent.password !== value;
+      },
+    ),
   confirmPassword: yup
     .string()
     .required('Confirm Password is required')
     // .oneOf([yup.ref('password'), null], 'Passwords must match'),
     .test('passwords-match', 'Password must match', function (value) {
-      return this.parent.password === value;
+      return this.parent.newPassword === value;
     }),
 });
 
-const React_Form = () => {
+const React_Form2 = () => {
   const {
     control,
     handleSubmit,
@@ -42,6 +58,8 @@ const React_Form = () => {
       name: '',
       email: '',
       password: '',
+      newPassword: '',
+      confirmPassword: '',
     },
   });
 
@@ -79,7 +97,15 @@ const React_Form = () => {
       {errors.password && (
         <Text style={styles.errorText}>{errors.password.message}</Text>
       )}
-
+      <TextInputField
+        name="newPassword"
+        control={control}
+        placeholder="New Password"
+        errors={errors.newPassword}
+      />
+      {errors.newPassword && (
+        <Text style={styles.errorText}>{errors.newPassword.message}</Text>
+      )}
       <TextInputField
         name="confirmPassword"
         control={control}
@@ -111,7 +137,7 @@ const TextInputField = ({name, control, placeholder, errors}) => {
               top: -9,
               left: 12,
               backgroundColor: '#000',
-              zIndex:9999
+              zIndex: 9999,
             }}>
             {placeholder}
           </Text>
@@ -151,7 +177,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 12,
-    borderRadius: 18,
+    borderRadius: 10,
     color: '#fff',
   },
   focusedInput: {
@@ -162,7 +188,8 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: 18,
+    bottom: 12,
   },
   buttonText: {
     color: '#fff',
@@ -183,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React_Form;
+export default React_Form2;

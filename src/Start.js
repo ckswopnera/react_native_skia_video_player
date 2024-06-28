@@ -24,6 +24,9 @@ import Video from './skia/Video';
 import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from '../store/store';
 import Tanstack_Queryclient from './Screens/Tanstack_Queryclient';
+import React_Form2 from './Screens/React_Form2';
+import React_Form3 from './Screens/React_Form3';
+import Screenshot from './Screens/Screenshot';
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -31,8 +34,12 @@ const Drawer = createDrawerNavigator();
 export default function Start() {
   const showBar = useBearStore(state => state.showBar);
 
-  const {currentlyRunning, isUpdateAvailable, isUpdatePending} =
-    Updates.useUpdates();
+  const {
+    isUpdateAvailable,
+    isUpdatePending,
+    isChecking,
+    isDownloading,
+  } = Updates.useUpdates();
   const [isPrefetched, setIsPrefetched] = useState(false);
 
   useEffect(() => {
@@ -40,27 +47,28 @@ export default function Start() {
       await prefetchData();
       setIsPrefetched(true);
     };
-
     prefetch();
   }, []);
+
   useEffect(() => {
     Orientation.lockToPortrait();
-    // console.log({currentlyRunning}, {isUpdateAvailable});
     if (isUpdatePending) {
       upDate();
     }
   }, [isUpdatePending]);
 
-
   // if (queryClient.isFetching()) {
   //   console.log('At least one query is fetching!')
   // }
 
-
   if (!isPrefetched) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#000" />
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#000'}}>
+        <ActivityIndicator size="200" color="#00ff00" />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={'#000'}
+        />
       </View>
     );
   }
@@ -82,7 +90,11 @@ export default function Start() {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor={'#000'} hidden={!showBar}/>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={'#000'}
+          hidden={!showBar}
+        />
         <MainComponent />
       </NavigationContainer>
     </QueryClientProvider>
@@ -140,9 +152,30 @@ function MainComponent() {
           // options={{headerShown: false}}
         />
         <Drawer.Screen
+          name="React Form 2"
+          component={React_Form2}
+          // options={{headerShown: false}}
+        />
+        <Drawer.Screen
+          name="React Form 3"
+          component={React_Form3}
+          // options={{headerShown: false}}
+        />
+        <Drawer.Screen
           name="Video Player"
           component={Video}
-          // options={{headerShown: false}}
+          options={{
+            // headerShown: false,
+            unmountOnBlur: true,
+          }}
+        />
+         <Drawer.Screen
+          name="Screenshot"
+          component={Screenshot}
+          // options={{
+          //   // headerShown: false,
+          //   // unmountOnBlur: true,
+          // }}
         />
       </Drawer.Navigator>
     </>
