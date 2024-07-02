@@ -24,6 +24,7 @@ import {
   Text as SkiaText,
   vec,
   LinearGradient,
+  center,
 } from '@shopify/react-native-skia';
 import inter from '../Assets/fonts/Inter-Medium.ttf';
 import {DATA_For_One_Month} from '../utils/util';
@@ -75,9 +76,7 @@ function ToolTip({x, y, color, activeValue}) {
   const activeValueY = useDerivedValue(
     () => y.value - activeValueWidth.value / 2,
   );
-  const activeValueY1 = useDerivedValue(
-    () => y.value - 3,
-  );
+  const activeValueY1 = useDerivedValue(() => y.value - 3);
   return (
     <>
       <Circle cx={x} cy={activeValueY1} r={4} color={color} />
@@ -110,270 +109,259 @@ function MyAnimatedLine({points, color, strokeWidth}) {
 const Chart = ({data, font, footer}) => {
   const {state, isActive} = useChartPressState({x: 0, y: {highTmp: 0}});
 
-  // find the selected active x value
   let activeXItem = useDerivedValue(() => {
     return data.findIndex(value => value.day === state.x.value.value);
   }).value;
-  // or set a default if desired
   if (activeXItem < 0) {
     activeXItem = 2;
   }
+
   return (
     <>
-      <View style={{height: 250}}>
-        <CartesianChart
-          data={data}
-          xKey="day"
-          yKeys={['highTmp']}
-          axisOptions={{
-            font,
-            // tickCount:data?.length/2,
-            labelColor: {x: '#fff', y: '#fff'},
-            lineColor: '#fff',
-            lineWidth: 0.2,
-          }}
-          domainPadding={20}
-          chartPressState={state}>
-          {({points, chartBounds}) => (
-            <>
-              <MyAnimatedLine
-                points={points?.highTmp}
-                color="red"
-                strokeWidth={1}
-              />
-              {isActive && (
+      <ScrollView horizontal>
+        <View style={{width: data.length * 50, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp']}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: '#fff', y: '#fff'},
+              lineColor: '#fff',
+              lineWidth: 0.2,
+            }}
+            domainPadding={20}
+            chartPressState={state}>
+            {({points, chartBounds}) => (
+              <>
+                <MyAnimatedLine
+                  points={points?.highTmp}
+                  color="red"
+                  strokeWidth={1}
+                />
+                {isActive && (
+                  <ToolTip
+                    x={state.x.position}
+                    y={state.y.highTmp.position}
+                    color={'#fff'}
+                    activeValue={state.y.highTmp.value}
+                  />
+                )}
+              </>
+            )}
+          </CartesianChart>
+        </View>
+      </ScrollView>
+
+      <ScrollView horizontal>
+        <View style={{width: data.length * 50, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp']}
+            domainPadding={20}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: '#fff', y: '#fff'},
+              lineColor: '#000',
+              lineWidth: 0.2,
+              // formatXLabel(value) {
+              //   const date = new Date(2023, value - 1)
+              //   return date.toLocaleString("default", { month: "short" })
+              // },
+            }}
+            chartPressState={state}>
+            {({points, chartBounds}) => (
+              <>
                 <ToolTip
                   x={state.x.position}
                   y={state.y.highTmp.position}
                   color={'#fff'}
                   activeValue={state.y.highTmp.value}
                 />
-              )}
-            </>
-          )}
-        </CartesianChart>
-      </View>
 
-      <View style={{height: 250}}>
-        <CartesianChart
-          data={data}
-          xKey="day"
-          yKeys={['highTmp']}
-          domainPadding={20}
-          axisOptions={{
-            font,
-            // tickCount:data?.length/2,
-            labelColor: {x: '#fff', y: '#fff'},
-            lineColor: '#000',
-            lineWidth: 0.2,
-            // formatXLabel(value) {
-            //   const date = new Date(2023, value - 1)
-            //   return date.toLocaleString("default", { month: "short" })
-            // },
-          }}
-          chartPressState={state}>
-          {({points, chartBounds}) => (
-            <>
-              {isActive && (
+                {points.highTmp.map((point, index) => {
+                  return (
+                    <Bar
+                      key={index}
+                      barCount={points.highTmp.length}
+                      points={[point]}
+                      chartBounds={chartBounds}
+                      animate={{type: 'spring'}}
+                      roundedCorners={{
+                        topLeft: 5,
+                        topRight: 5,
+                      }}>
+                      <LinearGradient
+                        start={vec(0, 0)}
+                        end={vec(0, 400)}
+                        colors={
+                          index == activeXItem
+                            ? ['#FFF', 'green']
+                            : ['#9C51B6', '#5946B2', '#fff']
+                        }
+                      />
+                    </Bar>
+                  );
+                })}
+              </>
+            )}
+          </CartesianChart>
+        </View>
+      </ScrollView>
+
+      <ScrollView horizontal>
+        <View style={{width: data.length * 50, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp']}
+            domainPadding={20}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: '#fff', y: '#fff'},
+              lineColor: '#000',
+              lineWidth: 0.2,
+              // formatXLabel(value) {
+              //   const date = new Date(2023, value - 1)
+              //   return date.toLocaleString("default", { month: "short" })
+              // },
+            }}
+            chartPressState={state}>
+            {({points, chartBounds}) => (
+              <>
                 <ToolTip
                   x={state.x.position}
                   y={state.y.highTmp.position}
                   color={'#fff'}
                   activeValue={state.y.highTmp.value}
                 />
-              )}
 
-              {points.highTmp.map((point, index) => {
-                return (
-                  <Bar
-                    key={index}
-                    barCount={points.highTmp.length}
-                    points={[point]}
-                    chartBounds={chartBounds}
-                    animate={{type: 'spring'}}
-                    roundedCorners={{
-                      topLeft: 5,
-                      topRight: 5,
-                    }}>
-                    <LinearGradient
-                      start={vec(0, 0)}
-                      end={vec(0, 400)}
-                      colors={
-                        index == activeXItem
-                          ? ['#FFF', 'green']
-                          : ['#9C51B6', '#5946B2', '#fff']
-                      }
-                    />
-                  </Bar>
-                );
-              })}
-            </>
-          )}
-        </CartesianChart>
-      </View>
-      <View style={{height: 250}}>
-        <CartesianChart
-          data={data}
-          xKey="day"
-          yKeys={['highTmp']}
-          domainPadding={20}
-          axisOptions={{
-            font,
-            // tickCount:data?.length/2,
-            labelColor: {x: '#fff', y: '#fff'},
-            lineColor: '#000',
-            lineWidth: 0.2,
-            // formatXLabel(value) {
-            //   const date = new Date(2023, value - 1)
-            //   return date.toLocaleString("default", { month: "short" })
-            // },
-          }}
-          chartPressState={state}>
-          {({points, chartBounds}) => (
-            <>
-              {/* <Bar
-                  // color={'red'}
+                {points.highTmp.map((point, index) => {
+                  return (
+                    <Bar
+                      key={index}
+                      barCount={points.highTmp.length}
+                      points={[point]}
+                      chartBounds={chartBounds}
+                      animate={{type: 'spring'}}
+                      roundedCorners={{
+                        topLeft: 5,
+                        topRight: 5,
+                      }}
+                      color={index === 5 || index === 25 || index === 15 ? 'red' : 'rgba(154,205,50,0.6)'}
+                    >
+                      <LinearGradient
+                        colors={
+                          index === 5 || index === 25 || index === 15
+                            ? ['red', '#fff']
+                            : ['rgba(154,205,50,0.6)', '#fff']
+                        }
+                        start={vec(0, 0)}
+                        end={vec(0, 400)}
+                      />
+                    </Bar>
+                  );
+                })}
+              </>
+            )}
+          </CartesianChart>
+        </View>
+      </ScrollView>
+
+      <ScrollView horizontal>
+        <View style={{width: data.length * 50, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp']}
+            domainPadding={20}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: '#fff', y: '#fff'},
+              lineColor: '#000',
+              lineWidth: 0.2,
+              // formatXLabel(value) {
+              //   const date = new Date(2023, value - 1)
+              //   return date.toLocaleString("default", { month: "short" })
+              // },
+            }}
+            chartPressState={state}>
+            {({points, chartBounds}) => (
+              <>
+                <Bar
                   chartBounds={chartBounds}
                   points={points.highTmp}
-                  // opacity={0.5}
                   roundedCorners={{
                     topLeft: 5,
                     topRight: 5,
                   }}
-                  // innerPadding={4}
-               />
+                />
                 <LinearGradient
-                  colors={['rgba(154,205,50,0.6)', '#fff']}
+                  colors={['#9C51B6', '#5946B2', '#fff']}
                   start={vec(0, 0)}
                   end={vec(0, 400)}
-                /> */}
-              {isActive && (
-                <ToolTip
-                  x={state.x.position}
-                  y={state.y.highTmp.position}
-                  color={'#fff'}
-                  activeValue={state.y.highTmp.value}
                 />
-              )}
+                {isActive && (
+                  <ToolTip
+                    x={state.x.position}
+                    y={state.y.highTmp.position}
+                    color={'#fff'}
+                    activeValue={state.y.highTmp.value}
+                  />
+                )}
+              </>
+            )}
+          </CartesianChart>
+        </View>
+      </ScrollView>
 
-              {points.highTmp.map((point, index) => {
-                return (
-                  <Bar
-                    key={index}
-                    barCount={points.highTmp.length}
-                    points={[point]}
-                    chartBounds={chartBounds}
-                    animate={{type: 'spring'}}
-                    roundedCorners={{
-                      topLeft: 5,
-                      topRight: 5,
-                    }}
-                    // color={index === 5? 'red' : 'rgba(154,205,50,0.6)'}
-                  >
-                    <LinearGradient
-                      colors={
-                        index === 5 || index === 25 || index === 15
-                          ? ['red', '#fff']
-                          : ['rgba(154,205,50,0.6)', '#fff']
-                      }
-                      start={vec(0, 0)}
-                      end={vec(0, 400)}
-                    />
-                  </Bar>
-                );
-              })}
-            </>
-          )}
-        </CartesianChart>
-      </View>
-      <View style={{height: 250}}>
-        <CartesianChart
-          data={data}
-          xKey="day"
-          yKeys={['highTmp']}
-          domainPadding={20}
-          axisOptions={{
-            font,
-            // tickCount:data?.length/2,
-            labelColor: {x: '#fff', y: '#fff'},
-            lineColor: '#000',
-            lineWidth: 0.2,
-            // formatXLabel(value) {
-            //   const date = new Date(2023, value - 1)
-            //   return date.toLocaleString("default", { month: "short" })
-            // },
-          }}
-          chartPressState={state}>
-          {({points, chartBounds}) => (
-            <>
-              <Bar
-                // color={'red'}
-                chartBounds={chartBounds}
-                points={points.highTmp}
-                // opacity={0.5}
-                roundedCorners={{
-                  topLeft: 5,
-                  topRight: 5,
-                }}
-                // innerPadding={4}
-              />
-              <LinearGradient
-                colors={['#9C51B6', '#5946B2', '#fff']}
-                start={vec(0, 0)}
-                end={vec(0, 400)}
-              />
-              {isActive && (
-                <ToolTip
-                  x={state.x.position}
-                  y={state.y.highTmp.position}
-                  color={'#fff'}
-                  activeValue={state.y.highTmp.value}
+      <ScrollView horizontal>
+        <View style={{width: data.length * 50, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp']}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: '#fff', y: '#fff'},
+              lineColor: '#000',
+              lineWidth: 0.2,
+            }}
+            domainPadding={20}
+            chartPressState={state}>
+            {({points, chartBounds}) => (
+              <>
+                <MyAnimatedLine
+                  points={points?.highTmp}
+                  color="red"
+                  strokeWidth={1}
                 />
-              )}
-            </>
-          )}
-        </CartesianChart>
-      </View>
-      <View style={{height: 250}}>
-        <CartesianChart
-          data={data}
-          xKey="day"
-          yKeys={['highTmp']}
-          axisOptions={{
-            font,
-            // tickCount:data?.length/2,
-            labelColor: {x: '#fff', y: '#fff'},
-            lineColor: '#000',
-            lineWidth: 0.2,
-          }}
-          domainPadding={20}
-          chartPressState={state}>
-          {({points, chartBounds}) => (
-            <>
-              <MyAnimatedLine
-                points={points?.highTmp}
-                color="red"
-                strokeWidth={1}
-              />
-              <Area
-                points={points.highTmp}
-                y0={chartBounds.bottom}
-                color="red"
-                animate={{type: 'timing', duration: 300}}
-                opacity={0.3}
-              />
-              {isActive && (
-                <ToolTip
-                  x={state.x.position}
-                  y={state.y.highTmp.position}
-                  color={'#fff'}
-                  activeValue={state.y.highTmp.value}
+                <Area
+                  points={points.highTmp}
+                  y0={chartBounds.bottom}
+                  color="red"
+                  animate={{type: 'timing', duration: 300}}
+                  opacity={0.3}
                 />
-              )}
-            </>
-          )}
-        </CartesianChart>
-      </View>
+                {isActive && (
+                  <ToolTip
+                    x={state.x.position}
+                    y={state.y.highTmp.position}
+                    color={'#fff'}
+                    activeValue={state.y.highTmp.value}
+                  />
+                )}
+              </>
+            )}
+          </CartesianChart>
+        </View>
+      </ScrollView>
     </>
   );
 };
