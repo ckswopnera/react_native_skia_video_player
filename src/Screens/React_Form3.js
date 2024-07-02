@@ -27,46 +27,6 @@ const schema = yup.object().shape({
         }
       },
     ),
-  //   password: yup
-  //     .string()
-  //     .test(
-  //       'is-valid-password',
-  //       'Password must be at least 5 characters if provided',
-  //       function (value, {parent}) {
-  //         const {name, newPassword, email} = parent || {};
-
-  //         if (
-  //           (!name || name.length === 0) &&
-  //           (!newPassword || newPassword.length === 0) &&
-  //           (!email || email.length === 0)
-  //         ) {
-  //           return true;
-  //         } else if (
-  //           (name && name.length >= 5) ||
-  //           (newPassword && newPassword.length >= 5) ||
-  //           (email && email.length > 0)
-  //         ) {
-  //           if (!value || value.length === 0) {
-  //             return this.createError({
-  //               message: 'Password is mandatory if any update is given',
-  //               path: this.path,
-  //             });
-  //           } else if (value.length < 5) {
-  //             return this.createError({
-  //               message: 'Password must be at least 5 characters',
-  //               path: this.path,
-  //             });
-  //           } else if (value !== '00000') {
-  //             return this.createError({
-  //               message: 'Not matched. Please try again!',
-  //               path: this.path,
-  //             });
-  //           }
-  //         }
-
-  //         return true;
-  //       },
-  //     ),
   password: yup
     .string()
     .test(
@@ -86,9 +46,7 @@ const schema = yup.object().shape({
             message: 'Password cannot be provided if there are no updates',
             path: this.path,
           });
-        }
-
-        if (
+        } else if (
           (name && name.length > 0) ||
           (newPassword && newPassword.length > 0) ||
           (email && email.length > 0)
@@ -286,9 +244,10 @@ const TextInputField = ({name, control, placeholder, errors}) => {
               color: '#fff',
               position: 'absolute',
               top: -9,
-              left: 12,
+              left: 10,
               backgroundColor: '#000',
               zIndex: 9999,
+              fontFamily: 'Inter-Bold',
             }}>
             {placeholder}
           </Text>

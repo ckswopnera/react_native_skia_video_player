@@ -26,9 +26,12 @@ export default function Screenshot() {
   const webviewRef = useRef(null);
   const [image, setImage] = useState(null);
   const [hidden, sethidden] = useState(false);
+  const [hiddenButton, sethiddenButton] = useState(false);
+
   const [saveImage, setsaveImage] = useState(null);
 
   const deleteScreenshot = () => {
+    sethiddenButton(false);
     if (Platform.OS === 'ios') {
       setImage(null);
     } else if (Platform.OS === 'android') {
@@ -37,6 +40,7 @@ export default function Screenshot() {
   };
   const takeScreenshot = async () => {
     try {
+      sethiddenButton(true);
       if (Platform.OS === 'ios') {
         const snapshot = await makeImageFromView(viewRef);
         console.log('snapshot', snapshot);
@@ -60,9 +64,11 @@ export default function Screenshot() {
 
   useEffect(() => {
     sethidden(false);
+
     const time = setTimeout(() => {
       sethidden(true);
-    }, 6000);
+      sethiddenButton(false);
+    }, 5000);
     return () => {
       clearTimeout(time);
     };
@@ -106,7 +112,7 @@ export default function Screenshot() {
         }}>
         <MaterialIcons name="screenshot" size={34} color={'#000'} />
       </TouchableOpacity>
-      {(saveImage || image) && (
+      {hiddenButton === true && (
         <TouchableOpacity
           style={{
             position: 'absolute',
@@ -125,9 +131,9 @@ export default function Screenshot() {
         </TouchableOpacity>
       )}
 
-      {image && (
+      {image && hiddenButton && (
         <Animatable.View
-          delay={1000}
+          //   delay={1000}
           animation={hidden === false ? 'zoomIn' : 'zoomOut'}
           style={{
             borderColor: 'red',
@@ -159,9 +165,9 @@ export default function Screenshot() {
           </TouchableOpacity>
         </Animatable.View>
       )}
-      {saveImage && (
+      {saveImage && hiddenButton && (
         <Animatable.View
-          delay={1000}
+          //   delay={1000}
           animation={hidden === false ? 'zoomIn' : 'zoomOut'}
           style={{
             borderColor: 'red',

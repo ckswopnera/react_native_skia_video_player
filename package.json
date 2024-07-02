@@ -39,6 +39,7 @@
     "react-native-vector-icons": "^10.1.0",
     "react-native-view-shot": "^3.8.0",
     "react-native-webview": "^13.10.4",
+    "victory-native": "^41.0.1",
     "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },

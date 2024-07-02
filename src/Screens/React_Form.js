@@ -109,9 +109,10 @@ const TextInputField = ({name, control, placeholder, errors}) => {
               color: '#fff',
               position: 'absolute',
               top: -9,
-              left: 12,
+              left: 10,
               backgroundColor: '#000',
-              zIndex:9999
+              zIndex: 9999,
+              fontFamily: 'Inter-Bold',
             }}>
             {placeholder}
           </Text>

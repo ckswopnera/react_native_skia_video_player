@@ -35,7 +35,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Slider} from 'react-native-awesome-slider';
 import * as Animatable from 'react-native-animatable';
-import {msToTime, windowHeight, windowWidth} from '../utils/util';
+import {darkenMatrix, msToTime, overlayMatrix, windowHeight, windowWidth} from '../utils/util';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from '../../store/store';
@@ -54,24 +54,13 @@ const Video = () => {
   const rotation = useSharedValue(0);
   // const {width, height} = useWindowDimensions();
   const [showControl, setShowControl] = useState(true);
+
   const [loop, setloop] = useState(false);
   const seek = useSharedValue(0);
   const paused = useSharedValue(false);
   const volume = useSharedValue(1);
 
-  const darkenMatrix = [
-    1, 0, 0, 0, 0, // Red channel stays the same
-    0, 1, 0, 0, 0, // Green channel stays the same
-    0, 0, 1, 0, 0, // Blue channel stays the same
-    0, 0, 0, 1, 0  // Alpha channel stays the same
-  ];
 
-  const overlayMatrix = [
-    1, 0, 0, 0, 0,   // Red channel stays the same
-    0, 1, 0, 0, 0,   // Green channel stays the same
-    0, 0, 1, 0, 0,   // Blue channel stays the same
-    0, 0, 0, 0.7, 0  // Alpha channel is reduced to 0.7 to apply transparency
-  ];
 
   const {currentFrame, currentTime, size, duration, framerate} = useVideo(
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
@@ -150,6 +139,7 @@ const Video = () => {
 
   useEffect(() => {
     setShowControl(true);
+
     const timer = setTimeout(() => {
       setShowControl(false);
     }, 5000);
@@ -160,7 +150,6 @@ const Video = () => {
   //   max.value=Math.floor(duration / 60000)
   // }, [duration])
 
-  
   useEffect(() => {
     const id = setInterval(() => {
       // console.log(currentTime.value.toFixed(0) / duration);
@@ -261,45 +250,49 @@ const Video = () => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
-      <Animatable.View
-        delay={1000}
-        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
-        style={{
-          position: 'absolute',
-          top: zoom === true ? 15 : 90,
-          right: zoom === true ?15:8,
-          zIndex: 9999,
-        }}>
-        <TouchableOpacity
-          disabled={showControl === true ? false : true}
-          onPress={onZoom}>
-          <MaterialIcons
-            name={zoom !== true ? 'zoom-out-map' : 'zoom-in-map'}
-            size={iconSize}
-            color={iconColor}
-          />
-        </TouchableOpacity>
-      </Animatable.View>
+      {showControl && (
+        <Animatable.View
+          // delay={1000}
+          animation={showControl === true ? 'fadeIn' : 'fadeOut'}
+          style={{
+            position: 'absolute',
+            top: zoom === true ? 15 : 90,
+            right: zoom === true ? 15 : 8,
+            zIndex: 9999,
+          }}>
+          <TouchableOpacity
+            disabled={showControl === true ? false : true}
+            onPress={onZoom}>
+            <MaterialIcons
+              name={zoom !== true ? 'zoom-out-map' : 'zoom-in-map'}
+              size={iconSize}
+              color={iconColor}
+            />
+          </TouchableOpacity>
+        </Animatable.View>
+      )}
 
-      <Animatable.View
-        delay={1000}
-        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
-        style={{
-          position: 'absolute',
-          top: zoom === true ? 15 : 140,
-          right: zoom === true ? 80 : 8,
-          zIndex: 9999,
-        }}>
-        <TouchableOpacity
-          disabled={showControl === true ? false : true}
-          onPress={onVolume}>
-          <MaterialIcons
-            name={volumeControl === true ? 'volume-up' : 'volume-off'}
-            size={iconSize}
-            color={iconColor}
-          />
-        </TouchableOpacity>
-      </Animatable.View>
+      {showControl && (
+        <Animatable.View
+          // delay={1000}
+          animation={showControl === true ? 'fadeIn' : 'fadeOut'}
+          style={{
+            position: 'absolute',
+            top: zoom === true ? 15 : 140,
+            right: zoom === true ? 80 : 8,
+            zIndex: 9999,
+          }}>
+          <TouchableOpacity
+            disabled={showControl === true ? false : true}
+            onPress={onVolume}>
+            <MaterialIcons
+              name={volumeControl === true ? 'volume-up' : 'volume-off'}
+              size={iconSize}
+              color={iconColor}
+            />
+          </TouchableOpacity>
+        </Animatable.View>
+      )}
 
       <TouchableOpacity
         style={{
@@ -317,143 +310,148 @@ const Video = () => {
                 height={zoom === true ? height : 400}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
-           {showControl && (
-            <ColorMatrix matrix={darkenMatrix} />
-          )}
+              {showControl && <ColorMatrix matrix={darkenMatrix} />}
             </Fill>
             {showControl && (
-          <Fill>
-            <ColorMatrix matrix={overlayMatrix} />
-          </Fill>
-        )}
+              <Fill>
+                <ColorMatrix matrix={overlayMatrix} />
+              </Fill>
+            )}
           </Canvas>
         </>
       </TouchableOpacity>
-     
 
-      <Animatable.View
-        delay={1000}
-        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          position: 'absolute',
-          // top: 200,
-          left: 0,
-          right: 0,
-          top: zoom === true ? height / 2 : 180,
-          // bottom: zoom === true ? height/2 : null,
-        }}>
-        <TouchableOpacity
+      {showControl && (
+        <Animatable.View
+          // delay={1000}
+          animation={showControl === true ? 'fadeIn' : 'fadeOut'}
           style={{
-            width: '20%',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
-          disabled={showControl === true ? false : true}
-          onPress={backwardThirty}>
-          <MaterialIcons name="replay-30" size={iconSize} color={iconColor} />
-        </TouchableOpacity>
-        {isLoading === true ? (
-          <View
-            style={{
-              width: '60%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Animated.View style={animatedStyle}>
-              <AntDesign name={'loading1'} size={36} color={iconColor} />
-            </Animated.View>
-          </View>
-        ) : (
+            flexDirection: 'row',
+            alignItems: 'center',
+            position: 'absolute',
+            // top: 200,
+            left: 0,
+            right: 0,
+            top: zoom === true ? height / 2 : 180,
+            // bottom: zoom === true ? height/2 : null,
+          }}>
           <TouchableOpacity
             style={{
-              width: '60%',
-              justifyContent: 'center',
-              alignItems: 'center',
+              width: '20%',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
             }}
             disabled={showControl === true ? false : true}
-            onPress={onPausePlay}>
-            <FontAwesome6
-              name={pause === true ? 'play' : 'pause'}
-              size={46}
+            onPress={backwardThirty}>
+            <MaterialIcons name="replay-30" size={iconSize} color={iconColor} />
+          </TouchableOpacity>
+          {isLoading === true ? (
+            <View
+              style={{
+                width: '60%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Animated.View style={animatedStyle}>
+                <AntDesign name={'loading1'} size={36} color={iconColor} />
+              </Animated.View>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={{
+                width: '60%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              disabled={showControl === true ? false : true}
+              onPress={onPausePlay}>
+              <FontAwesome6
+                name={pause === true ? 'play' : 'pause'}
+                size={46}
+                color={iconColor}
+              />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity
+            style={{
+              width: '20%',
+              justifyContent: 'flex-start',
+              alignItems: 'flex-start',
+            }}
+            disabled={showControl === true ? false : true}
+            onPress={forwardThirty}>
+            <MaterialIcons
+              name="forward-30"
+              size={iconSize}
               color={iconColor}
             />
           </TouchableOpacity>
-        )}
-        <TouchableOpacity
+        </Animatable.View>
+      )}
+      {showControl && (
+        <Animatable.View
+          // delay={1000}
+          animation={showControl === true ? 'fadeIn' : 'fadeOut'}
           style={{
-            width: '20%',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-          }}
-          disabled={showControl === true ? false : true}
-          onPress={forwardThirty}>
-          <MaterialIcons name="forward-30" size={iconSize} color={iconColor} />
-        </TouchableOpacity>
-      </Animatable.View>
-      <Animatable.View
-        delay={1000}
-        animation={showControl === true ? 'fadeIn' : 'fadeOut'}
-        style={{
-          height: 50,
-          position: 'absolute',
-          // top: zoom !== true ? size.height/2:null,
-          // bottom: zoom !== true ? 10 : null,
-          top: zoom === true ? height - 40 : 280,
-          left: 0,
-          right: 0,
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: width,
-        }}>
-        <TextInput
-          editable={false}
-          defaultValue={'00:00:00'}
-          ref={textStamp}
-          style={{
-            color: '#fff',
-            width: zoom === true ? '15%' : '20%',
-            textAlign: 'center',
+            height: 50,
+            position: 'absolute',
+            // top: zoom !== true ? size.height/2:null,
+            // bottom: zoom !== true ? 10 : null,
+            top: zoom === true ? height - 40 : 280,
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-          }}
-        />
-        <Slider
-          disabled={showControl === true ? false : true}
-          style={{
-            width: zoom === true ? '70%' : '60%',
-            height: 40,
-          }}
-          progress={progress}
-          minimumValue={min}
-          maximumValue={max}
-          onSlidingStart={onSlidingStart}
-          onSlidingComplete={onSlidingComplete}
-          heartbeat={true}
-          theme={{
-            disableMinTrackTintColor: '#fff',
-            maximumTrackTintColor: '#fff',
-            minimumTrackTintColor: 'red',
-            cacheTrackTintColor: '#333',
-            bubbleBackgroundColor: '#666',
-            heartbeatColor: 'rgba(0,0,0,0.2)',
-          }}
-        />
+            width: width,
+          }}>
+          <TextInput
+            editable={false}
+            defaultValue={'00:00:00'}
+            ref={textStamp}
+            style={{
+              color: '#fff',
+              width: zoom === true ? '15%' : '20%',
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          />
+          <Slider
+            disabled={showControl === true ? false : true}
+            style={{
+              width: zoom === true ? '70%' : '60%',
+              height: 40,
+            }}
+            progress={progress}
+            minimumValue={min}
+            maximumValue={max}
+            onSlidingStart={onSlidingStart}
+            onSlidingComplete={onSlidingComplete}
+            heartbeat={true}
+            theme={{
+              disableMinTrackTintColor: '#fff',
+              maximumTrackTintColor: '#fff',
+              minimumTrackTintColor: 'red',
+              cacheTrackTintColor: '#333',
+              bubbleBackgroundColor: '#666',
+              heartbeatColor: 'rgba(0,0,0,0.2)',
+            }}
+          />
 
-        <TextInput
-          editable={false}
-          defaultValue={msToTime(duration)}
-          style={{
-            color: '#fff',
-            width: zoom === true ? '15%' : '20%',
-            textAlign: 'center',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Animatable.View>
+          <TextInput
+            editable={false}
+            defaultValue={msToTime(duration)}
+            style={{
+              color: '#fff',
+              width: zoom === true ? '15%' : '20%',
+              textAlign: 'center',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          />
+        </Animatable.View>
+      )}
     </SafeAreaView>
   );
 };

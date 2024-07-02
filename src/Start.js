@@ -27,6 +27,7 @@ import Tanstack_Queryclient from './Screens/Tanstack_Queryclient';
 import React_Form2 from './Screens/React_Form2';
 import React_Form3 from './Screens/React_Form3';
 import Screenshot from './Screens/Screenshot';
+import ChartVictoryNative from './Screens/ChartVictoryNative';
 
 // const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -176,6 +177,11 @@ function MainComponent() {
           //   // headerShown: false,
           //   // unmountOnBlur: true,
           // }}
+        />
+        <Drawer.Screen
+          name="Chart"
+          component={ChartVictoryNative}
+
         />
       </Drawer.Navigator>
     </>
