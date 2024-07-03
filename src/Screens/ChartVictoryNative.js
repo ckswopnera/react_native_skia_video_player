@@ -63,7 +63,7 @@ function ChartVictoryNative() {
 }
 
 function ToolTip({x, y, color, activeValue}) {
-  const font = useFont('Inter-Medium', 11);
+  const font = useFont(inter, 11);
   const activeValueDisplay = useDerivedValue(() =>
     activeValue?.value.toFixed(2),
   );
@@ -118,7 +118,7 @@ const Chart = ({data, font, footer}) => {
 
   return (
     <>
-   <ScrollView horizontal>
+      <ScrollView horizontal>
         <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
@@ -155,7 +155,7 @@ const Chart = ({data, font, footer}) => {
       </ScrollView>
 
       <ScrollView horizontal>
-        <View style={{width: data.length * 20, height: 250,}}>
+        <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -233,13 +233,14 @@ const Chart = ({data, font, footer}) => {
             chartPressState={state}>
             {({points, chartBounds}) => (
               <>
-              {isActive&&
-                <ToolTip
-                  x={state.x.position}
-                  y={state.y.highTmp.position}
-                  color={'#fff'}
-                  activeValue={state.y.highTmp.value}
-                />}
+                {isActive && (
+                  <ToolTip
+                    x={state.x.position}
+                    y={state.y.highTmp.position}
+                    color={'#fff'}
+                    activeValue={state.y.highTmp.value}
+                  />
+                )}
 
                 {points.highTmp.map((point, index) => {
                   return (
