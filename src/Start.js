@@ -61,10 +61,13 @@ const Start = () => {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: '#000',
+          backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
         }}>
-        <ActivityIndicator size="200" color="#00ff00" />
-        <StatusBar barStyle="light-content" backgroundColor={'#000'} />
+        <ActivityIndicator size="200" color={colorScheme === 'dark' ? '#fff' : '#000'} />
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
+        />
       </View>
     );
   }
