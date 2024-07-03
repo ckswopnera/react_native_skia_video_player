@@ -5,11 +5,16 @@ import {
   Text,
   View,
   TouchableOpacity,
+  useColorScheme,
+  StyleSheet,
 } from 'react-native';
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {fetchPosts} from '../utils/util';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const Tanstack_Infinite_Scroll = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const {
     data,
     fetchNextPage,
@@ -34,48 +39,23 @@ const Tanstack_Infinite_Scroll = () => {
   };
   // console.log({status});
 
-  if (isLoading) {
+  if (isLoading)
     return (
       <View
-        style={{
-          backgroundColor: '#000',
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 16,
-            paddingTop: 20,
-            // backgroundColor:'#000'
-          }}>
-          Loading...
-        </Text>
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+        <Text style={[styles.text, {color: theme.textColor}]}>Loading...</Text>
       </View>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
       <View
-        style={{
-          backgroundColor: '#000',
-          flex: 1,
-        }}>
-        <Text
-          style={{
-            color: '#fff',
-            textAlign: 'center',
-            fontSize: 16,
-            paddingTop: 20,
-          }}>
-          Error fetching data
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+        <Text style={[styles.text, {color: theme.textColor}]}>
+          An error has occurred: {error.message}
         </Text>
       </View>
     );
-  }
   const posts = data?.pages?.flatMap(page => {
     // console.log(page.items);
 
@@ -85,58 +65,65 @@ const Tanstack_Infinite_Scroll = () => {
   return (
     <FlatList
       style={{
-        backgroundColor: '#000',
+        backgroundColor: theme.backgroundColor,
       }}
       data={posts}
       keyExtractor={item => item.id.toString()}
       renderItem={({item, index}) => (
-        <ItemComponent item={item} index={index + 1} />
+        <ItemComponent item={item} index={index + 1} theme={theme} />
       )}
       onEndReached={loadMore}
       onEndReachedThreshold={0.7}
       ListFooterComponent={
         isFetchingNextPage ? (
-          <ActivityIndicator color={'#fff'} size={32} />
+          <ActivityIndicator color={theme.activityIndicatorColor} size={32} />
         ) : null
       }
     />
   );
 };
 
-const ItemComponent = ({item, index}) => (
+const ItemComponent = ({item, index, theme}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
     <View style={{flexDirection: 'row'}}>
-      <Text
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-          color: '#fff',
-          textAlign: 'center',
-          paddingRight: 10,
-          alignSelf: 'center',
-          width: '15%',
-        }}>
-        {index}
-      </Text>
+      <Text style={[styles.index, {color: theme.textColor}]}>{index}</Text>
       <View style={{flexDirection: 'column', width: '85%'}}>
-        <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: '#fff',
-            textTransform: 'capitalize',
-            letterSpacing: 1,
-            textDecorationLine: 'underline',
-          }}>
+        <Text style={[styles.title, {color: theme.textColor}]}>
           {item.title}
         </Text>
-        <Text style={{fontSize: 16, color: '#fff', letterSpacing: 1}}>
-          {item.body}
-        </Text>
+        <Text style={[styles.body, {color: theme.textColor}]}>{item.body}</Text>
       </View>
     </View>
   </TouchableOpacity>
 );
 
 export default Tanstack_Infinite_Scroll;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 18,
+  },
+  index: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingRight: 10,
+    alignSelf: 'center',
+    width: '15%',
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    letterSpacing: 1,
+    textDecorationLine: 'underline',
+  },
+  body: {fontSize: 16, letterSpacing: 1},
+});

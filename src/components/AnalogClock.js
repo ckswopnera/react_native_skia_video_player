@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import Svg, { Circle, Line } from 'react-native-svg';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import Svg, {Circle, Line} from 'react-native-svg';
 
-const AnalogClock = () => {
+const AnalogClock = ({stroke,fill}) => {
   const [time, setTime] = useState(new Date());
-
   useEffect(() => {
     const intervalId = setInterval(() => {
       setTime(new Date());
@@ -24,7 +23,15 @@ const AnalogClock = () => {
   return (
     <View style={styles.container}>
       <Svg height="200" width="200" viewBox="0 0 200 200">
-        <Circle cx="100" cy="100" r="95" stroke="black" strokeWidth="2.5" fill="white" />
+        <Circle
+          cx="100"
+          cy="100"
+          r="95"
+          stroke={stroke}
+          strokeWidth="2.5"
+          fill={fill}
+          opacity={0.6}
+        />
         {/* Hour Hand */}
         <Line
           x1="100"

@@ -20,6 +20,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  useColorScheme,
   useWindowDimensions,
 } from 'react-native';
 import Animated, {
@@ -38,9 +39,12 @@ import * as Animatable from 'react-native-animatable';
 import {darkenMatrix, msToTime, overlayMatrix, windowHeight, windowWidth} from '../utils/util';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import Orientation from 'react-native-orientation-locker';
-import {useBearStore} from '../../store/store';
+import {useBearStore} from '../store/store';
+import { darkTheme, lightTheme } from '../Style/theme';
 
 const Video = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [height, setHeight] = useState(windowHeight);
   const [width, setWidth] = useState(windowWidth);
   const textStamp = useRef(null);
@@ -63,8 +67,8 @@ const Video = () => {
 
 
   const {currentFrame, currentTime, size, duration, framerate} = useVideo(
-    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     // 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4',
     {
       paused,
@@ -249,14 +253,15 @@ const Video = () => {
     setShowControl(!showControl);
   };
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: theme.backgroundColor}}>
+      
       {showControl && (
         <Animatable.View
           // delay={1000}
           animation={showControl === true ? 'fadeIn' : 'fadeOut'}
           style={{
             position: 'absolute',
-            top: zoom === true ? 15 : 90,
+            top: zoom === true ? 15 : 10,
             right: zoom === true ? 15 : 8,
             zIndex: 9999,
           }}>
@@ -278,7 +283,7 @@ const Video = () => {
           animation={showControl === true ? 'fadeIn' : 'fadeOut'}
           style={{
             position: 'absolute',
-            top: zoom === true ? 15 : 140,
+            top: zoom === true ? 15 : 60,
             right: zoom === true ? 80 : 8,
             zIndex: 9999,
           }}>
@@ -296,7 +301,8 @@ const Video = () => {
 
       <TouchableOpacity
         style={{
-          height: zoom === true ? height : 400,
+          height: zoom === true ? height : 250,
+          // backgroundColor:'red'
         }}
         onPress={onPressVideo}>
         <>
@@ -307,7 +313,7 @@ const Video = () => {
                 x={0}
                 y={0}
                 width={width}
-                height={zoom === true ? height : 400}
+                height={zoom === true ? height : 250}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
               {showControl && <ColorMatrix matrix={darkenMatrix} />}
@@ -332,7 +338,7 @@ const Video = () => {
             // top: 200,
             left: 0,
             right: 0,
-            top: zoom === true ? height / 2 : 180,
+            top: zoom === true ? height / 2 : 110,
             // bottom: zoom === true ? height/2 : null,
           }}>
           <TouchableOpacity
@@ -397,7 +403,7 @@ const Video = () => {
             position: 'absolute',
             // top: zoom !== true ? size.height/2:null,
             // bottom: zoom !== true ? 10 : null,
-            top: zoom === true ? height - 40 : 280,
+            top: zoom === true ? height - 40 : 200,
             left: 0,
             right: 0,
             flexDirection: 'row',

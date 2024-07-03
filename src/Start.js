@@ -1,46 +1,42 @@
+import React, {useEffect, useState} from 'react';
 import * as Updates from 'expo-updates';
-import {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
-  Image,
   SafeAreaView,
   StatusBar,
-  Text,
-  TouchableOpacity,
+  useColorScheme,
   View,
 } from 'react-native';
-import Clock from './Screens/Clock';
-import {QueryClientProvider, useQuery} from '@tanstack/react-query';
+import {QueryClientProvider} from '@tanstack/react-query';
 import {prefetchData, queryClient} from './utils/util';
-import Tanstack_Infinite_Scroll from './Screens/Tanstack_Infinite_Scroll';
-import UseOnlineManager from './utils/UseOnlineManager';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+import Clock from './Screens/Clock';
+import Tanstack_Infinite_Scroll from './Screens/Tanstack_Infinite_Scroll';
 import Tanstack_Single_Query from './Screens/Tanstack_Single_Query';
-import React_Form from './Screens/React_Form';
-import Video from './skia/Video';
-import Orientation from 'react-native-orientation-locker';
-import {useBearStore} from '../store/store';
 import Tanstack_Queryclient from './Screens/Tanstack_Queryclient';
+import React_Form from './Screens/React_Form';
 import React_Form2 from './Screens/React_Form2';
 import React_Form3 from './Screens/React_Form3';
+import Video from './skia/Video';
 import Screenshot from './Screens/Screenshot';
 import ChartVictoryNative from './Screens/ChartVictoryNative';
+import UseOnlineManager from './utils/UseOnlineManager';
+import Orientation from 'react-native-orientation-locker';
+import {useBearStore} from './store/store';
 
-// const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-export default function Start() {
+const Start = () => {
   const showBar = useBearStore(state => state.showBar);
-
-  const {
-    isUpdateAvailable,
-    isUpdatePending,
-    isChecking,
-    isDownloading,
-  } = Updates.useUpdates();
+  const colorScheme = useColorScheme();
+  const {isUpdateAvailable, isUpdatePending, isChecking, isDownloading} =
+    Updates.useUpdates();
   const [isPrefetched, setIsPrefetched] = useState(false);
 
   useEffect(() => {
@@ -58,18 +54,17 @@ export default function Start() {
     }
   }, [isUpdatePending]);
 
-  // if (queryClient.isFetching()) {
-  //   console.log('At least one query is fetching!')
-  // }
-
   if (!isPrefetched) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',backgroundColor:'#000'}}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#000',
+        }}>
         <ActivityIndicator size="200" color="#00ff00" />
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={'#000'}
-        />
+        <StatusBar barStyle="light-content" backgroundColor={'#000'} />
       </View>
     );
   }
@@ -90,100 +85,72 @@ export default function Start() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationContainer>
+      <NavigationContainer
+        theme={
+          colorScheme === 'dark' ? NavigationDarkTheme : NavigationDefaultTheme
+        }>
         <StatusBar
-          barStyle="light-content"
-          backgroundColor={'#000'}
+          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+          backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
           hidden={!showBar}
         />
         <MainComponent />
       </NavigationContainer>
     </QueryClientProvider>
   );
-}
-function MainComponent() {
+};
+
+const MainComponent = () => {
   const showBar = useBearStore(state => state.showBar);
+  const colorScheme = useColorScheme();
 
   return (
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        // initialRouteName="Video Player"
+        initialRouteName='Video Player"'
         screenOptions={{
           headerShown: showBar,
           drawerHideStatusBarOnOpen: false,
           headerTitleAlign: 'center',
           drawerStyle: {
-            backgroundColor: '#000',
+            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
           },
-          drawerActiveTintColor: '#fff',
-          drawerInactiveTintColor: '#fff',
+          drawerActiveTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+          drawerInactiveTintColor: colorScheme === 'dark' ? '#fff' : '#000',
           headerStyle: {
-            backgroundColor: '#000',
+            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
           },
-          headerTintColor: '#fff',
+          headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
         }}>
         <Drawer.Screen
           name="Timer Clock"
           component={Clock}
           options={{
-            // headerTitleAlign:'center',
             headerTitle: 'Timer Clock',
-            // headerShown: false,
           }}
         />
         <Drawer.Screen
           name="Infine Scroll"
           component={Tanstack_Infinite_Scroll}
-          // options={{headerShown: false}}
         />
-        <Drawer.Screen
-          name="Single Query "
-          component={Tanstack_Single_Query}
-          // options={{headerShown: false}}
-        />
-        <Drawer.Screen
-          name="Query client "
-          component={Tanstack_Queryclient}
-          // options={{headerShown: false}}
-        />
-        <Drawer.Screen
-          name="React Form"
-          component={React_Form}
-          // options={{headerShown: false}}
-        />
-        <Drawer.Screen
-          name="React Form 2"
-          component={React_Form2}
-          // options={{headerShown: false}}
-        />
-        <Drawer.Screen
-          name="React Form 3"
-          component={React_Form3}
-          // options={{headerShown: false}}
-        />
+        <Drawer.Screen name="Single Query " component={Tanstack_Single_Query} />
+        <Drawer.Screen name="Query client " component={Tanstack_Queryclient} />
+        <Drawer.Screen name="React Form" component={React_Form} />
+        <Drawer.Screen name="React Form 2" component={React_Form2} />
+        <Drawer.Screen name="React Form 3" component={React_Form3} />
         <Drawer.Screen
           name="Video Player"
           component={Video}
           options={{
-            // headerShown: false,
             unmountOnBlur: true,
           }}
         />
-         <Drawer.Screen
-          name="Screenshot"
-          component={Screenshot}
-          // options={{
-          //   // headerShown: false,
-          //   // unmountOnBlur: true,
-          // }}
-        />
-        <Drawer.Screen
-          name="Chart"
-          component={ChartVictoryNative}
-
-        />
+        <Drawer.Screen name="Screenshot" component={Screenshot} />
+        <Drawer.Screen name="Chart" component={ChartVictoryNative} />
       </Drawer.Navigator>
     </>
   );
-}
+};
+
+export default Start;

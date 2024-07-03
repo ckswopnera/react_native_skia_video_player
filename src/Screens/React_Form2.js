@@ -5,12 +5,14 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  useColorScheme,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {windowWidth} from '../utils/util';
 import * as Animatable from 'react-native-animatable';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const schema = yup.object().shape({
   name: yup
@@ -48,6 +50,8 @@ const schema = yup.object().shape({
 });
 
 const React_Form2 = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const {
     control,
     handleSubmit,
@@ -68,12 +72,13 @@ const React_Form2 = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
       <TextInputField
         name="name"
         control={control}
         placeholder="Name"
         errors={errors.name}
+        theme={theme}
       />
       {errors.name && (
         <Text style={styles.errorText}>{errors.name.message}</Text>
@@ -84,6 +89,7 @@ const React_Form2 = () => {
         control={control}
         placeholder="Email"
         errors={errors.email}
+        theme={theme}
       />
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
@@ -93,6 +99,7 @@ const React_Form2 = () => {
         control={control}
         placeholder="Password"
         errors={errors.password}
+        theme={theme}
       />
       {errors.password && (
         <Text style={styles.errorText}>{errors.password.message}</Text>
@@ -102,6 +109,7 @@ const React_Form2 = () => {
         control={control}
         placeholder="New Password"
         errors={errors.newPassword}
+        theme={theme}
       />
       {errors.newPassword && (
         <Text style={styles.errorText}>{errors.newPassword.message}</Text>
@@ -111,6 +119,7 @@ const React_Form2 = () => {
         control={control}
         placeholder="Confirm Password"
         errors={errors.confirmPassword}
+        theme={theme}
       />
       {errors.confirmPassword && (
         <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>
@@ -122,7 +131,7 @@ const React_Form2 = () => {
   );
 };
 
-const TextInputField = ({name, control, placeholder, errors}) => {
+const TextInputField = ({name, control, placeholder, errors, theme}) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -131,20 +140,18 @@ const TextInputField = ({name, control, placeholder, errors}) => {
       render={({field: {onChange, onBlur, value}}) => (
         <Animatable.View delay={1000} animation={errors ? 'shake' : undefined}>
           <Text
-            style={{
-              color: '#fff',
-              position: 'absolute',
-              top: -9,
-              left: 10,
-              backgroundColor: '#000',
-              zIndex: 9999,
-              fontFamily: 'Inter-Bold',
-            }}>
+            style={[
+              styles.placeholder,
+              {
+                color: theme.textColor,
+                backgroundColor: theme.textBackgroundCOlor,
+              },
+            ]}>
             {placeholder}
           </Text>
           <TextInput
             // placeholder={placeholder}
-            placeholderTextColor={'#fff'}
+            placeholderTextColor={theme.textColor}
             onBlur={() => {
               onBlur();
               setIsFocused(false);
@@ -152,11 +159,17 @@ const TextInputField = ({name, control, placeholder, errors}) => {
             onFocus={() => setIsFocused(true)}
             onChangeText={onChange}
             value={value}
-            cursorColor={'#fff'}
+            cursorColor={theme.textColor}
             style={[
               styles.input,
-              isFocused && styles.focusedInput,
+              // isFocused && styles.focusedInput,
+
+              isFocused && {borderColor: theme.textColor},
+
               errors && styles.errorBorder,
+              {
+                color: theme.textColor,
+              },
             ]}
           />
         </Animatable.View>
@@ -170,16 +183,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#000',
   },
   input: {
     height: 60,
     borderColor: 'gray',
-    borderWidth: 1,
+    borderWidth: 2,
     marginBottom: 12,
     paddingHorizontal: 12,
     borderRadius: 10,
-    color: '#fff',
   },
   focusedInput: {
     borderColor: '#fff',
@@ -209,6 +220,14 @@ const styles = StyleSheet.create({
     width: windowWidth / 2 + 100,
     marginTop: 100,
   },
+  placeholder:{
+    position: 'absolute',
+    top: -9,
+    left: 10,
+    zIndex: 9999,
+    fontFamily: 'Inter-Bold',
+    paddingHorizontal: 4,
+  }
 });
 
 export default React_Form2;

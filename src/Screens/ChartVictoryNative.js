@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useColorScheme,
   View,
 } from 'react-native';
 import {
@@ -29,8 +30,12 @@ import {
 import inter from '../Assets/fonts/Inter-Bold.ttf';
 import {DATA_For_One_Month} from '../utils/util';
 import {useDerivedValue} from 'react-native-reanimated';
+import {darkTheme, lightTheme} from '../Style/theme';
+const footer = 'Temp Graph';
 
 function ChartVictoryNative() {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const font = useFont(inter, 11);
   if (!font) {
     return (
@@ -41,24 +46,29 @@ function ChartVictoryNative() {
   }
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
-      <FlatList
-        data={DATA_For_One_Month}
-        keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={
-          <Text
-            style={[
-              styles.footer,
-              {fontSize: 20, textDecorationLine: 'underline'},
-            ]}>
-            {footer}
-          </Text>
-        }
-        renderItem={({item, index}) => {
-          return <Chart data={item.data} font={font} footer={item.title} />;
-        }}
-      />
-    </SafeAreaView>
+    <FlatList
+      style={{
+        backgroundColor: theme.backgroundColor,
+      }}
+      data={DATA_For_One_Month}
+      keyExtractor={(item, index) => index.toString()}
+      ListFooterComponent={
+        <Text
+          style={[
+            styles.footer,
+            {
+              fontSize: 20,
+              textDecorationLine: 'underline',
+              color: theme.textColor,
+            },
+          ]}>
+          {footer}
+        </Text>
+      }
+      renderItem={({item, index}) => {
+        return <Chart data={item.data} font={font} footer={item.title} theme={theme}/>;
+      }}
+    />
   );
 }
 
@@ -90,7 +100,6 @@ function ToolTip({x, y, color, activeValue}) {
     </>
   );
 }
-const footer = 'Temp Graph';
 
 function MyAnimatedLine({points, color, strokeWidth}) {
   const {path} = useLinePath(points);
@@ -106,7 +115,7 @@ function MyAnimatedLine({points, color, strokeWidth}) {
   );
 }
 
-const Chart = ({data, font, footer}) => {
+const Chart = ({data, font, footer,theme}) => {
   const {state, isActive} = useChartPressState({x: 0, y: {highTmp: 0}});
 
   let activeXItem = useDerivedValue(() => {
@@ -127,8 +136,8 @@ const Chart = ({data, font, footer}) => {
             axisOptions={{
               font,
               // tickCount:data?.length/2,
-              labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#fff',
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
               lineWidth: 0.2,
             }}
             domainPadding={20}
@@ -144,7 +153,7 @@ const Chart = ({data, font, footer}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={'#fff'}
+                    color={theme.graphTooltiptextColor}
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -164,8 +173,8 @@ const Chart = ({data, font, footer}) => {
             axisOptions={{
               font,
               // tickCount:data?.length/2,
-              labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#000',
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
               lineWidth: 0.2,
               // formatXLabel(value) {
               //   const date = new Date(2023, value - 1)
@@ -178,7 +187,8 @@ const Chart = ({data, font, footer}) => {
                 <ToolTip
                   x={state.x.position}
                   y={state.y.highTmp.position}
-                  color={'#fff'}
+                  color={theme.graphTooltiptextColor}
+
                   activeValue={state.y.highTmp.value}
                 />
 
@@ -222,8 +232,8 @@ const Chart = ({data, font, footer}) => {
             axisOptions={{
               font,
               // tickCount:data?.length/2,
-              labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#000',
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
               lineWidth: 0.2,
               // formatXLabel(value) {
               //   const date = new Date(2023, value - 1)
@@ -237,7 +247,8 @@ const Chart = ({data, font, footer}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={'#fff'}
+                    color={theme.graphTooltiptextColor}
+
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -254,11 +265,13 @@ const Chart = ({data, font, footer}) => {
                         topLeft: 5,
                         topRight: 5,
                       }}
-                      color={
-                        index === 5 || index === 25 || index === 15
-                          ? 'red'
-                          : 'rgba(154,205,50,0.6)'
-                      }>
+                      // color={
+                      //   index === 5 || index === 25 || index === 15
+                      //     ? 'red'
+                      //     : 'rgba(154,205,50,0.6)'
+                      // }
+                      
+                      >
                       <LinearGradient
                         colors={
                           index === 5 || index === 25 || index === 15
@@ -287,8 +300,8 @@ const Chart = ({data, font, footer}) => {
             axisOptions={{
               font,
               // tickCount:data?.length/2,
-              labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#000',
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
               lineWidth: 0.2,
               // formatXLabel(value) {
               //   const date = new Date(2023, value - 1)
@@ -315,7 +328,8 @@ const Chart = ({data, font, footer}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={'#fff'}
+                    color={theme.graphTooltiptextColor}
+
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -334,8 +348,8 @@ const Chart = ({data, font, footer}) => {
             axisOptions={{
               font,
               // tickCount:data?.length/2,
-              labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#fff',
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
               lineWidth: 0.2,
             }}
             domainPadding={20}
@@ -358,7 +372,8 @@ const Chart = ({data, font, footer}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={'#fff'}
+                    color={theme.graphTooltiptextColor}
+
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -385,6 +400,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Inter-Medium',
     fontSize: 16,
-    color: '#fff',
   },
 });

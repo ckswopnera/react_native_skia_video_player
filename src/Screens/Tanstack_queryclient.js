@@ -7,11 +7,16 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
+  useColorScheme,
+  SafeAreaView,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
 import {fetchPosts} from '../utils/util';
+import { darkTheme, lightTheme } from '../Style/theme';
 
 const Tanstack_Queryclient = () => {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const {data, error, isLoading} = useQuery({
     queryKey: ['postsNew'],
     queryFn: fetchPosts,
@@ -21,62 +26,50 @@ const Tanstack_Queryclient = () => {
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#00ff00" />
+      <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+
+        <ActivityIndicator size="large" color={theme.activityIndicatorColor}/>
       </View>
     );
   }
 
-  if (error) {
+  if (error)
     return (
-      <View style={styles.container}>
-        <Text>Error: {error.message}</Text>
+      <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
+        <Text style={[styles.text, { color: theme.textColor }]}>
+          An error has occurred: {error.message}
+        </Text>
       </View>
     );
-  }
-
   return (
-    <View style={styles.container}>
+
       <FlatList
+      style={{
+        backgroundColor: theme.backgroundColor,
+      }}
         data={data.items}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => (
-          <ItemComponent item={item} index={index + 1} />
+          <ItemComponent item={item} index={index + 1} theme={theme} />
         )}
-      />
-    </View>
+/>
   );
 };
 
-const ItemComponent = ({item, index}) => (
+const ItemComponent = ({item, index,theme}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
     <View style={{flexDirection: 'row'}}>
       <Text
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-          color: '#fff',
-          textAlign: 'center',
-          paddingRight: 10,
-          alignSelf: 'center',
-          width: '15%',
-        }}>
+        style={[styles.index,{color: theme.textColor}]}>
         {index}
       </Text>
       <View style={{flexDirection: 'column', width: '85%'}}>
         <Text
-          style={{
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: '#fff',
-            textTransform: 'capitalize',
-            letterSpacing: 1,
-            textDecorationLine: 'underline',
-          }}>
+          style={[styles.title,{color: theme.textColor}]}>
           {item.title}
         </Text>
-        <Text style={{fontSize: 16, color: '#fff', letterSpacing: 1}}>
+        <Text style={[styles.body,{color: theme.textColor}]}>
           {item.body}
         </Text>
       </View>
@@ -89,8 +82,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    backgroundColor: '#000',
+    // paddingHorizontal: 8,
+
   },
   postContainer: {
     marginBottom: 10,
@@ -100,11 +93,21 @@ const styles = StyleSheet.create({
     // borderRadius: 5,
   },
   title: {
-    fontWeight: 'bold',
     fontSize: 16,
-    textAlign: 'left',
-    color: '#fff',
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    letterSpacing: 1,
+    textDecorationLine: 'underline',
   },
+  index: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingRight: 10,
+    alignSelf: 'center',
+    width: '15%',
+  },
+  body: {fontSize: 16, letterSpacing: 1},
 });
 
 export default Tanstack_Queryclient;
