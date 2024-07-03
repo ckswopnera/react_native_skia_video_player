@@ -26,7 +26,7 @@ import {
   LinearGradient,
   center,
 } from '@shopify/react-native-skia';
-import inter from '../Assets/fonts/Inter-Medium.ttf';
+import inter from '../Assets/fonts/Inter-Bold.ttf';
 import {DATA_For_One_Month} from '../utils/util';
 import {useDerivedValue} from 'react-native-reanimated';
 
