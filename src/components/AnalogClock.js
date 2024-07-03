@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import Svg, {Circle, Line} from 'react-native-svg';
 
-const AnalogClock = ({stroke,fill}) => {
+const AnalogClock = ({stroke, fill}) => {
   const [time, setTime] = useState(new Date());
   useEffect(() => {
     const intervalId = setInterval(() => {

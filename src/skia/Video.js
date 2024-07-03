@@ -14,6 +14,7 @@ import {
   Rect,
 } from '@shopify/react-native-skia';
 import {
+  BackHandler,
   Dimensions,
   Platform,
   SafeAreaView,
@@ -36,11 +37,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Slider} from 'react-native-awesome-slider';
 import * as Animatable from 'react-native-animatable';
-import {darkenMatrix, msToTime, overlayMatrix, windowHeight, windowWidth} from '../utils/util';
+import {
+  darkenMatrix,
+  msToTime,
+  overlayMatrix,
+  windowHeight,
+  windowWidth,
+} from '../utils/util';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from '../store/store';
-import { darkTheme, lightTheme } from '../Style/theme';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const Video = () => {
   const colorScheme = useColorScheme();
@@ -63,8 +70,6 @@ const Video = () => {
   const seek = useSharedValue(0);
   const paused = useSharedValue(false);
   const volume = useSharedValue(1);
-
-
 
   const {currentFrame, currentTime, size, duration, framerate} = useVideo(
     // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
@@ -123,6 +128,7 @@ const Video = () => {
       setWidth(window.width);
     };
     const subscription = Dimensions.addEventListener('change', onChange);
+
     return () => {
       if (subscription?.remove) {
         subscription.remove();
@@ -254,7 +260,6 @@ const Video = () => {
   };
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: theme.backgroundColor}}>
-      
       {showControl && (
         <Animatable.View
           // delay={1000}

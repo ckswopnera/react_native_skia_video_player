@@ -196,7 +196,7 @@ export default function Screenshot() {
         <WebView
           ref={webviewRef}
           source={{
-            // uri: 'https://www.google.com/',
+            // uri:'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
             uri: 'https://m.youtube.com/',
           }}
           style={{flex: 1}}

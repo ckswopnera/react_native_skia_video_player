@@ -2,7 +2,7 @@
 import React from 'react';
 import Svg, {Path} from 'react-native-svg';
 
-const GearIcon = ({ width, height, fill}) => (
+const GearIcon = ({width, height, fill}) => (
   <Svg
     width={width}
     height={height}

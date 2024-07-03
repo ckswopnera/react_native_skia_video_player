@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
 import {fetchPosts} from '../utils/util';
-import { darkTheme, lightTheme } from '../Style/theme';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const Tanstack_Queryclient = () => {
   const colorScheme = useColorScheme();
@@ -26,52 +26,46 @@ const Tanstack_Queryclient = () => {
 
   if (isLoading) {
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-
-        <ActivityIndicator size="large" color={theme.activityIndicatorColor}/>
+      <View
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+        <ActivityIndicator size="large" color={theme.activityIndicatorColor} />
       </View>
     );
   }
 
   if (error)
     return (
-      <View style={[styles.container, { backgroundColor: theme.backgroundColor }]}>
-        <Text style={[styles.text, { color: theme.textColor }]}>
+      <View
+        style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
+        <Text style={[styles.text, {color: theme.textColor}]}>
           An error has occurred: {error.message}
         </Text>
       </View>
     );
   return (
-
-      <FlatList
+    <FlatList
       style={{
         backgroundColor: theme.backgroundColor,
       }}
-        data={data.items}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => (
-          <ItemComponent item={item} index={index + 1} theme={theme} />
-        )}
-/>
+      data={data.items}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({item, index}) => (
+        <ItemComponent item={item} index={index + 1} theme={theme} />
+      )}
+    />
   );
 };
 
-const ItemComponent = ({item, index,theme}) => (
+const ItemComponent = ({item, index, theme}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
     <View style={{flexDirection: 'row'}}>
-      <Text
-        style={[styles.index,{color: theme.textColor}]}>
-        {index}
-      </Text>
+      <Text style={[styles.index, {color: theme.textColor}]}>{index}</Text>
       <View style={{flexDirection: 'column', width: '85%'}}>
-        <Text
-          style={[styles.title,{color: theme.textColor}]}>
+        <Text style={[styles.title, {color: theme.textColor}]}>
           {item.title}
         </Text>
-        <Text style={[styles.body,{color: theme.textColor}]}>
-          {item.body}
-        </Text>
+        <Text style={[styles.body, {color: theme.textColor}]}>{item.body}</Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -83,14 +77,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     // paddingHorizontal: 8,
-
   },
   postContainer: {
     marginBottom: 10,
-    // padding: 10,
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    // borderRadius: 5,
   },
   title: {
     fontSize: 16,

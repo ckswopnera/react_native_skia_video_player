@@ -124,7 +124,7 @@ const React_Form2 = () => {
       {errors.confirmPassword && (
         <Text style={styles.errorText}>{errors.confirmPassword.message}</Text>
       )}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
+      <TouchableOpacity style={[styles.button,{backgroundColor:theme.buttonColor}]} onPress={handleSubmit(onSubmit)}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
     </View>
@@ -211,7 +211,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
-    backgroundColor: '#5946B2',
     padding: 14,
     borderRadius: 14,
     // position: 'absolute',

@@ -16,7 +16,7 @@ export const lightTheme = {
 export const darkTheme = {
   backgroundColor: '#000000',
   textColor: '#ffffff',
-  buttonColor: '#bb86fc',
+  buttonColor: 'rgba(96, 130, 182,1)',
   buttonTextColor: '#000000',
   activityIndicatorColor: '#fff',
   clockBackgroundColor: ['rgba(0,0,0,1)', 'rgba(0,0,0,1)', '#fff'],

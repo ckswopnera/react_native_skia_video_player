@@ -63,7 +63,10 @@ const Start = () => {
           alignItems: 'center',
           backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
         }}>
-        <ActivityIndicator size="200" color={colorScheme === 'dark' ? '#fff' : '#000'} />
+        <ActivityIndicator
+          size="200"
+          color={colorScheme === 'dark' ? '#fff' : '#000'}
+        />
         <StatusBar
           barStyle="light-content"
           backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}

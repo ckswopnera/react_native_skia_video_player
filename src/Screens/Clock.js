@@ -10,12 +10,9 @@ import * as Animatable from 'react-native-animatable';
 import {LinearGradient} from 'expo-linear-gradient';
 import AnalogClock from '../components/AnalogClock';
 import SkiaEx from '../skia/SkiaEx';
-import {
-  scale,
-  ScaledSheet,
-} from 'react-native-size-matters';
+import {scale, ScaledSheet} from 'react-native-size-matters';
 import ClockIcon from '../components/ClockIcon';
-import { darkTheme, lightTheme } from '../Style/theme';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const Clock = () => {
   const [secondsPassed, setSecondsPassed] = useState(0);
@@ -65,101 +62,122 @@ const Clock = () => {
   return (
     <>
       <SafeAreaView style={{flex: 1, backgroundColor: '#000'}}>
+        <LinearGradient
+          colors={theme.clockBackgroundColor}
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              // width: windowWidth,
+              width: scale(90),
+              position: 'absolute',
+              top: 20,
+            }}>
+            <Animatable.Text
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+              key={`hours-${secondsPassed}`}
+              animation={parseInt(hours) > 0 ? 'pulse' : undefined}
+              duration={1000}
+              style={[styles.text, {color: theme.clockTextColor}]}>
+              {hours}
+            </Animatable.Text>
+            <Text
+              style={[
+                styles.text,
+                {fontSize: 100, color: theme.clockTextColor},
+              ]}>
+              :
+            </Text>
+            <Animatable.Text
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+              key={`minutes-${secondsPassed}`}
+              animation={
+                parseInt(hours) > 0 || parseInt(minutes) > 0
+                  ? 'pulse'
+                  : undefined
+              }
+              duration={1000}
+              style={[styles.text, {color: theme.clockTextColor}]}>
+              {minutes}
+            </Animatable.Text>
+            <Text
+              style={[
+                styles.text,
+                {fontSize: 100, color: theme.clockTextColor},
+              ]}>
+              :
+            </Text>
+            <Animatable.Text
+              adjustsFontSizeToFit={true}
+              numberOfLines={1}
+              key={`seconds-${secondsPassed}`}
+              animation="pulse"
+              duration={1000}
+              style={[styles.text, {color: theme.clockTextColor}]}>
+              {seconds}
+            </Animatable.Text>
+          </View>
 
-          <LinearGradient
-            colors={theme.clockBackgroundColor}
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          {clockView === true ? (
+            <AnalogClock
+              fill={theme.clockFillColor}
+              stroke={theme.clockTextColor}
+            />
+          ) : (
+            <SkiaEx height={200} width={200} />
+          )}
+          <TouchableOpacity
+            style={{position: 'absolute', left: 1, bottom: 0}}
+            onPress={() => {
+              clockView === false ? setclockView(true) : setclockView(false);
+            }}>
+            <ClockIcon width={150} height={150} fill={theme.clockFillColor} />
+          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              position: 'absolute',
+              bottom: 20,
+            }}>
             <View
               style={{
                 flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                // width: windowWidth,
-                width: scale(90),
-                position: 'absolute',
-                top: 20,
-              }}>
-              <Animatable.Text
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-                key={`hours-${secondsPassed}`}
-                animation={parseInt(hours) > 0 ? 'pulse' : undefined}
-                duration={1000}
-                style={[styles.text,{color:theme.clockTextColor}]}>
-                {hours}
-              </Animatable.Text>
-              <Text style={[styles.text, {fontSize: 100,color:theme.clockTextColor}]}>:</Text>
-              <Animatable.Text
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-                key={`minutes-${secondsPassed}`}
-                animation={
-                  parseInt(hours) > 0 || parseInt(minutes) > 0
-                    ? 'pulse'
-                    : undefined
-                }
-                duration={1000}
-                style={[styles.text,{color:theme.clockTextColor,}]}>
-                {minutes}
-              </Animatable.Text>
-              <Text style={[styles.text, {fontSize: 100,color:theme.clockTextColor}]}>:</Text>
-              <Animatable.Text
-                adjustsFontSizeToFit={true}
-                numberOfLines={1}
-                key={`seconds-${secondsPassed}`}
-                animation="pulse"
-                duration={1000}
-                style={[styles.text,{color:theme.clockTextColor}]}>
-                {seconds}
-              </Animatable.Text>
-            </View>
-
-            {clockView === true ? (
-              <AnalogClock fill={theme.clockFillColor} stroke={theme.clockTextColor}/>
-            ) : (
-              <SkiaEx height={200} width={200} />
-            )}
-            <TouchableOpacity
-              style={{position: 'absolute', left: 1, bottom: 0}}
-              onPress={() => {
-                clockView === false ? setclockView(true) : setclockView(false);
-              }}>
-              <ClockIcon width={150} height={150} fill={theme.clockFillColor} />
-            </TouchableOpacity>
-            <View
-              style={{
                 justifyContent: 'space-evenly',
                 alignItems: 'center',
-                position: 'absolute',
-                bottom: 20,
+                width: '100%',
               }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-evenly',
-                  alignItems: 'center',
-                  width: '100%',
-                }}>
-                <TouchableOpacity style={styles.button} onPress={startTimer}>
-                  <Text style={[styles.buttonText,{color:theme.clockTextColor}]}>Start</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[
-                    styles.button,
-                    {backgroundColor: theme.clockButtonColor},
-                  ]}
-                  onPress={stopTimer}>
-                  <Text style={[styles.buttonText,{color:theme.clockTextColor}]}>Stop</Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity style={styles.button} onPress={startTimer}>
+                <Text
+                  style={[styles.buttonText, {color: theme.clockTextColor}]}>
+                  Start
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.button, {marginTop: 1}]}
-                onPress={resetTimer}>
-                <Text style={[styles.buttonText,{color:theme.clockTextColor}]}>Reset</Text>
+                style={[
+                  styles.button,
+                  {backgroundColor: theme.clockButtonColor},
+                ]}
+                onPress={stopTimer}>
+                <Text
+                  style={[styles.buttonText, {color: theme.clockTextColor}]}>
+                  Stop
+                </Text>
               </TouchableOpacity>
             </View>
-          </LinearGradient>
-    
+            <TouchableOpacity
+              style={[styles.button, {marginTop: 1}]}
+              onPress={resetTimer}>
+              <Text style={[styles.buttonText, {color: theme.clockTextColor}]}>
+                Reset
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </LinearGradient>
       </SafeAreaView>
     </>
   );

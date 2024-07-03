@@ -66,7 +66,14 @@ function ChartVictoryNative() {
         </Text>
       }
       renderItem={({item, index}) => {
-        return <Chart data={item.data} font={font} footer={item.title} theme={theme}/>;
+        return (
+          <Chart
+            data={item.data}
+            font={font}
+            footer={item.title}
+            theme={theme}
+          />
+        );
       }}
     />
   );
@@ -115,7 +122,7 @@ function MyAnimatedLine({points, color, strokeWidth}) {
   );
 }
 
-const Chart = ({data, font, footer,theme}) => {
+const Chart = ({data, font, footer, theme}) => {
   const {state, isActive} = useChartPressState({x: 0, y: {highTmp: 0}});
 
   let activeXItem = useDerivedValue(() => {
@@ -188,7 +195,6 @@ const Chart = ({data, font, footer,theme}) => {
                   x={state.x.position}
                   y={state.y.highTmp.position}
                   color={theme.graphTooltiptextColor}
-
                   activeValue={state.y.highTmp.value}
                 />
 
@@ -248,7 +254,6 @@ const Chart = ({data, font, footer,theme}) => {
                     x={state.x.position}
                     y={state.y.highTmp.position}
                     color={theme.graphTooltiptextColor}
-
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -270,8 +275,7 @@ const Chart = ({data, font, footer,theme}) => {
                       //     ? 'red'
                       //     : 'rgba(154,205,50,0.6)'
                       // }
-                      
-                      >
+                    >
                       <LinearGradient
                         colors={
                           index === 5 || index === 25 || index === 15
@@ -329,7 +333,6 @@ const Chart = ({data, font, footer,theme}) => {
                     x={state.x.position}
                     y={state.y.highTmp.position}
                     color={theme.graphTooltiptextColor}
-
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -373,7 +376,6 @@ const Chart = ({data, font, footer,theme}) => {
                     x={state.x.position}
                     y={state.y.highTmp.position}
                     color={theme.graphTooltiptextColor}
-
                     activeValue={state.y.highTmp.value}
                   />
                 )}
