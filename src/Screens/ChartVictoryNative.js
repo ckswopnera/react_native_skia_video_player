@@ -63,7 +63,7 @@ function ChartVictoryNative() {
 }
 
 function ToolTip({x, y, color, activeValue}) {
-  const font = useFont(inter, 11);
+  const font = useFont('Inter-Medium', 11);
   const activeValueDisplay = useDerivedValue(() =>
     activeValue?.value.toFixed(2),
   );
@@ -118,8 +118,8 @@ const Chart = ({data, font, footer}) => {
 
   return (
     <>
-      <ScrollView horizontal>
-        <View style={{width: data.length * 50, height: 250}}>
+      {/* <ScrollView horizontal>
+        <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -152,10 +152,10 @@ const Chart = ({data, font, footer}) => {
             )}
           </CartesianChart>
         </View>
-      </ScrollView>
+      </ScrollView> */}
 
       <ScrollView horizontal>
-        <View style={{width: data.length * 50, height: 250}}>
+        <View style={{width: data.length * 20, height: 250,}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -213,7 +213,7 @@ const Chart = ({data, font, footer}) => {
       </ScrollView>
 
       <ScrollView horizontal>
-        <View style={{width: data.length * 50, height: 250}}>
+        <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -233,12 +233,13 @@ const Chart = ({data, font, footer}) => {
             chartPressState={state}>
             {({points, chartBounds}) => (
               <>
+              {isActive&&
                 <ToolTip
                   x={state.x.position}
                   y={state.y.highTmp.position}
                   color={'#fff'}
                   activeValue={state.y.highTmp.value}
-                />
+                />}
 
                 {points.highTmp.map((point, index) => {
                   return (
@@ -252,8 +253,11 @@ const Chart = ({data, font, footer}) => {
                         topLeft: 5,
                         topRight: 5,
                       }}
-                      color={index === 5 || index === 25 || index === 15 ? 'red' : 'rgba(154,205,50,0.6)'}
-                    >
+                      color={
+                        index === 5 || index === 25 || index === 15
+                          ? 'red'
+                          : 'rgba(154,205,50,0.6)'
+                      }>
                       <LinearGradient
                         colors={
                           index === 5 || index === 25 || index === 15
@@ -273,7 +277,7 @@ const Chart = ({data, font, footer}) => {
       </ScrollView>
 
       <ScrollView horizontal>
-        <View style={{width: data.length * 50, height: 250}}>
+        <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -321,7 +325,7 @@ const Chart = ({data, font, footer}) => {
       </ScrollView>
 
       <ScrollView horizontal>
-        <View style={{width: data.length * 50, height: 250}}>
+        <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
             xKey="day"
@@ -330,7 +334,7 @@ const Chart = ({data, font, footer}) => {
               font,
               // tickCount:data?.length/2,
               labelColor: {x: '#fff', y: '#fff'},
-              lineColor: '#000',
+              lineColor: '#fff',
               lineWidth: 0.2,
             }}
             domainPadding={20}
