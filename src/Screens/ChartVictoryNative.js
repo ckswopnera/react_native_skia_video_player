@@ -118,7 +118,7 @@ const Chart = ({data, font, footer}) => {
 
   return (
     <>
-    {/*<ScrollView horizontal>
+   <ScrollView horizontal>
         <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
             data={data}
@@ -152,7 +152,7 @@ const Chart = ({data, font, footer}) => {
             )}
           </CartesianChart>
         </View>
-      </ScrollView>*/}
+      </ScrollView>
 
       <ScrollView horizontal>
         <View style={{width: data.length * 20, height: 250,}}>
