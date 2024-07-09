@@ -8,9 +8,11 @@ export const lightTheme = {
   clockButtonColor: '#5946B2',
   clockTextColor: '#fff',
   clockFillColor: '#5946B2',
+  smallClockFillColor: '#5946B2',
+
   textBackgroundCOlor:'#fff',
   graphLableColor:'#000',
-  graphTooltiptextColor:'#000',
+  graphTooltipTextColor:'#000',
 };
 
 export const darkTheme = {
@@ -22,9 +24,11 @@ export const darkTheme = {
   clockBackgroundColor: ['rgba(0,0,0,1)', 'rgba(0,0,0,1)', '#fff'],
   clockButtonColor: 'rgba(220, 20, 60,1)',
   clockTextColor: '#fff',
-  clockFillColor: '#999',
+  clockFillColor: '#fff',
+  smallClockFillColor: '#999',
+
   textBackgroundCOlor:'#000',
   graphLableColor:'#fff',
-  graphTooltiptextColor:'#fff',
+  graphTooltipTextColor:'#fff',
 
 };

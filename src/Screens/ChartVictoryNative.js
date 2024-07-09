@@ -28,7 +28,7 @@ import {
   center,
 } from '@shopify/react-native-skia';
 import inter from '../Assets/fonts/Inter-Bold.ttf';
-import {DATA_For_One_Month} from '../utils/util';
+import {candleStickData, DATA_For_One_Month} from '../utils/util';
 import {useDerivedValue} from 'react-native-reanimated';
 import {darkTheme, lightTheme} from '../Style/theme';
 const footer = 'Temp Graph';
@@ -134,6 +134,7 @@ const Chart = ({data, font, footer, theme}) => {
 
   return (
     <>
+
       <ScrollView horizontal>
         <View style={{width: data.length * 20, height: 250}}>
           <CartesianChart
@@ -160,7 +161,7 @@ const Chart = ({data, font, footer, theme}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={theme.graphTooltiptextColor}
+                    color={theme.graphTooltipTextColor}
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -194,7 +195,7 @@ const Chart = ({data, font, footer, theme}) => {
                 <ToolTip
                   x={state.x.position}
                   y={state.y.highTmp.position}
-                  color={theme.graphTooltiptextColor}
+                  color={theme.graphTooltipTextColor}
                   activeValue={state.y.highTmp.value}
                 />
 
@@ -253,7 +254,7 @@ const Chart = ({data, font, footer, theme}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={theme.graphTooltiptextColor}
+                    color={theme.graphTooltipTextColor}
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -332,7 +333,7 @@ const Chart = ({data, font, footer, theme}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={theme.graphTooltiptextColor}
+                    color={theme.graphTooltipTextColor}
                     activeValue={state.y.highTmp.value}
                   />
                 )}
@@ -375,7 +376,7 @@ const Chart = ({data, font, footer, theme}) => {
                   <ToolTip
                     x={state.x.position}
                     y={state.y.highTmp.position}
-                    color={theme.graphTooltiptextColor}
+                    color={theme.graphTooltipTextColor}
                     activeValue={state.y.highTmp.value}
                   />
                 )}
