@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions, Alert} from 'react-native';
+import {View, StyleSheet, Dimensions, Alert, useColorScheme} from 'react-native';
 import Svg, {
   Circle,
   Image,
@@ -19,6 +19,7 @@ import Animated, {
 
 import Seats from '../Assets/svg/seats.svg';
 import {TextInput} from 'react-native-gesture-handler';
+import { darkTheme, lightTheme } from '../Style/theme';
 
 const {width} = Dimensions.get('window');
 const CIRCLE_RADIUS = width / 4;
@@ -27,10 +28,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedCircle2 = Animated.createAnimatedComponent(Circle);
 const AnimatedText = Animated.createAnimatedComponent(SvgText);
 
-const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
+const CircularProgressAnimation = ({total_no_of_seats, no_of_seats,theme}) => {
   const progressValue = useSharedValue(0);
   const progressPercentage = (no_of_seats / total_no_of_seats) * 100;
-  console.log({progressPercentage});
   React.useEffect(() => {
     const normalizedProgress = progressPercentage / 100;
     progressValue.value = withTiming(normalizedProgress, {duration: 2000}); // pass to the duration if you want to slow the animation
@@ -94,7 +94,7 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
       x:
         !Number.isInteger(progressPercentage) &&
         Number.isFinite(progressPercentage)
-          ? x + 15
+          ? x + 17
           : x + 8,
       y: y + 5,
     };
@@ -115,7 +115,7 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
             cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
             cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
             r={CIRCLE_RADIUS}
-            stroke="rgba(0,0,0,0.2)"
+            stroke={theme.progressBarBackgroundColor}
             strokeWidth={STROKE_WIDTH + 10}
             strokeDasharray={CIRCLE_RADIUS * Math.PI * 2}
             fill="none"
@@ -137,7 +137,7 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
             cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
             cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
             r={25}
-            stroke="rgba(0,0,0,0.2)"
+            stroke={theme.progressBarSmallCircleBackgroundColor}
             strokeWidth={4}
             animatedProps={animatedPropsCircle2}
             strokeLinecap="round"
@@ -165,7 +165,7 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
             %
           </AnimatedText>
           <SvgText
-            fill="#000"
+            fill={theme.textColor}
             fontSize="12"
             fontWeight="bold"
             //   textAnchor="middle"
@@ -173,9 +173,11 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
             y={CIRCLE_RADIUS + STROKE_WIDTH / 2 + 30}>
             <TSpan
               x={
-                no_of_seats.length <= 2
+                no_of_seats.length > 0
                   ? CIRCLE_RADIUS + STROKE_WIDTH / 2 - 28
-                  : CIRCLE_RADIUS + STROKE_WIDTH / 2 - 38
+                  : no_of_seats.length > 2
+                  ? CIRCLE_RADIUS + STROKE_WIDTH / 2 - 38
+                  : CIRCLE_RADIUS + STROKE_WIDTH / 2 - 16
               }
               dy="0em"
               fontSize={22}>
@@ -203,12 +205,25 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats}) => {
         />
 
         {/* <SvgXml xml={Seats} height={40} width={40}/> */}
+        <View
+          style={{
+            height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 50,
+            width: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 50,
+            borderStyle: 'dashed',
+            borderWidth: 1,
+            borderColor: theme.progressBarDottedCircleBorderColor,
+            position: 'absolute',
+            borderRadius: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
+          }}
+        />
       </View>
     </>
   );
 };
 
 const CircularProgress = () => {
+    const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [total_no_of_seats, settotal_no_of_seats] = useState(0);
   const [no_of_seats, setno_of_seats] = useState(0);
   return (
@@ -216,19 +231,22 @@ const CircularProgress = () => {
       <CircularProgressAnimation
         total_no_of_seats={total_no_of_seats}
         no_of_seats={no_of_seats}
+        theme={theme}
       />
 
       <TextInput
         placeholder="Total Seat"
-        placeholderTextColor={'#000'}
+        placeholderTextColor={theme.textColor}
         keyboardType="numeric"
         onChangeText={e => settotal_no_of_seats(e)}
-        style={styles.textinput}
+        style={[styles.textinput,{
+            color:theme.textColor,borderColor:theme.borderColor
+        }]}
       />
       <TextInput
         keyboardType="numeric"
         placeholder="Booked Seat"
-        placeholderTextColor={'#000'}
+        placeholderTextColor={theme.textColor}
         onChangeText={e => {
           console.log(e);
           if (parseInt(e) >= 0 && parseInt(e) <= total_no_of_seats) {
@@ -240,7 +258,10 @@ const CircularProgress = () => {
             Alert.alert('booked seat can not exceed total seat');
           }
         }}
-        style={styles.textinput}
+        style={[styles.textinput,{
+            color:theme.textColor,borderColor:theme.borderColor
+
+        }]}
       />
     </View>
   );
@@ -253,14 +274,15 @@ const styles = StyleSheet.create({
     // backgroundColor:'yellow',
     height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 40,
     width: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
+    // borderStyle:'dashed',borderWidth:1,borderColor:'#000'
   },
   textinput: {
     borderWidth: 1,
-    borderColor: 'red',
     padding: 14,
     width: '90%',
-    marginVertical: 4,
+    marginVertical: 14,
     borderRadius: 12,
+    top:20,
   },
 });
 

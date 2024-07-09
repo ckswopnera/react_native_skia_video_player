@@ -2,6 +2,7 @@ export const lightTheme = {
   backgroundColor: '#ffffff',
   textColor: '#000000',
   buttonColor: '#6200ee',
+  borderColor:'#000',
   buttonTextColor: '#ffffff',
   activityIndicatorColor: '#000',
   clockBackgroundColor: ['#fff', '#5946B2', '#5946B2'],
@@ -9,10 +10,13 @@ export const lightTheme = {
   clockTextColor: '#fff',
   clockFillColor: '#5946B2',
   smallClockFillColor: '#5946B2',
-
   textBackgroundCOlor:'#fff',
   graphLableColor:'#000',
   graphTooltipTextColor:'#000',
+  progressBarBackgroundColor:"rgba(0,0,0,0.2)",
+  progressBarSmallCircleBackgroundColor:"rgba(0,0,0,0.2)",
+  progressBarDottedCircleBorderColor:"#000",
+
 };
 
 export const darkTheme = {
@@ -20,15 +24,18 @@ export const darkTheme = {
   textColor: '#ffffff',
   buttonColor: 'rgba(96, 130, 182,1)',
   buttonTextColor: '#000000',
+  borderColor:'#fff',
   activityIndicatorColor: '#fff',
   clockBackgroundColor: ['rgba(0,0,0,1)', 'rgba(0,0,0,1)', '#fff'],
   clockButtonColor: 'rgba(220, 20, 60,1)',
   clockTextColor: '#fff',
   clockFillColor: '#fff',
   smallClockFillColor: '#999',
-
   textBackgroundCOlor:'#000',
   graphLableColor:'#fff',
   graphTooltipTextColor:'#fff',
+  progressBarBackgroundColor:"rgba(255,0,0,0.3)",
+  progressBarSmallCircleBackgroundColor:"rgba(255,0,0,0.4)",
+  progressBarDottedCircleBorderColor:"#fff",
 
 };
