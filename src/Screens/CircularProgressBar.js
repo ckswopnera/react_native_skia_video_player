@@ -1,7 +1,14 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions, Alert, useColorScheme} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  useColorScheme,
+} from 'react-native';
 import Svg, {
   Circle,
+  Defs,
   Image,
   Text as SvgText,
   SvgXml,
@@ -13,13 +20,11 @@ import Animated, {
   useAnimatedProps,
   withTiming,
   useDerivedValue,
-  runOnJS,
-  runOnUI,
 } from 'react-native-reanimated';
 
 import Seats from '../Assets/svg/seats.svg';
 import {TextInput} from 'react-native-gesture-handler';
-import { darkTheme, lightTheme } from '../Style/theme';
+import {darkTheme, lightTheme} from '../Style/theme';
 
 const {width} = Dimensions.get('window');
 const CIRCLE_RADIUS = width / 4;
@@ -28,18 +33,32 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedCircle2 = Animated.createAnimatedComponent(Circle);
 const AnimatedText = Animated.createAnimatedComponent(SvgText);
 
-const CircularProgressAnimation = ({total_no_of_seats, no_of_seats,theme}) => {
+const CircularProgressAnimation = ({
+  total_no_of_seats,
+  booked_no_of_seats,
+  theme,
+}) => {
+  // console.log({total_no_of_seats}, {booked_no_of_seats});
   const progressValue = useSharedValue(0);
-  const progressPercentage = (no_of_seats / total_no_of_seats) * 100;
-  React.useEffect(() => {
+  const progressPercentage =
+    total_no_of_seats > 0 ? (booked_no_of_seats / total_no_of_seats) * 100 : 0;
+  const [bookedStateSpace, setbookedStateSpace] = useState(0);
+  useEffect(() => {
     const normalizedProgress = progressPercentage / 100;
     progressValue.value = withTiming(normalizedProgress, {duration: 2000}); // pass to the duration if you want to slow the animation
   }, [progressPercentage]);
 
+  useEffect(() => {
+    let newBookedStateSpace = '';
+    for (let i = 0; i < booked_no_of_seats.toString().length; i++) {
+      newBookedStateSpace += booked_no_of_seats.toString()[i] + '  ';
+    }
+    setbookedStateSpace(newBookedStateSpace.trim());
+  }, [total_no_of_seats, booked_no_of_seats]);
+
   const animatedPropsCircle1 = useAnimatedProps(() => {
     const circumference = CIRCLE_RADIUS * Math.PI * 2;
     const strokeDashoffset = circumference * (1 - progressValue.value);
-
     return {
       strokeDashoffset,
     };
@@ -61,10 +80,6 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats,theme}) => {
     };
   });
 
-  const animatedTextValue = useDerivedValue(() => {
-    return `${Math.round(progressValue.value * 100)}`;
-  });
-
   const animatedPropsText = useAnimatedProps(() => {
     const x =
       CIRCLE_RADIUS +
@@ -80,6 +95,7 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats,theme}) => {
       y: y + 5,
     };
   });
+
   const animatedPropsText2 = useAnimatedProps(() => {
     const x =
       CIRCLE_RADIUS +
@@ -90,178 +106,209 @@ const CircularProgressAnimation = ({total_no_of_seats, no_of_seats,theme}) => {
       STROKE_WIDTH / 2 +
       Math.sin(progressValue.value * 2 * Math.PI) * CIRCLE_RADIUS;
 
+    const adjustedX =
+      !Number.isInteger(progressPercentage) &&
+      Number.isFinite(progressPercentage)
+        ? x + 16
+        : progressPercentage === 0 || progressPercentage.toString().length === 1
+        ? x + 7
+        : x + 14;
+
     return {
-      x:
-        !Number.isInteger(progressPercentage) &&
-        Number.isFinite(progressPercentage)
-          ? x + 17
-          : x + 8,
+      x: adjustedX,
       y: y + 5,
     };
   });
 
   return (
-    <>
-      <View style={styles.container}>
-        <Svg
-          width={CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80}
-          height={CIRCLE_RADIUS * 2 + STROKE_WIDTH + 40}
-          viewBox={`0 -20 ${CIRCLE_RADIUS * 2 + STROKE_WIDTH} ${
-            CIRCLE_RADIUS * 2 + STROKE_WIDTH + 45
-          }`}
-          // style={{backgroundColor: 'yellow'}}
-        >
-          <Circle
-            cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            r={CIRCLE_RADIUS}
-            stroke={theme.progressBarBackgroundColor}
-            strokeWidth={STROKE_WIDTH + 10}
-            strokeDasharray={CIRCLE_RADIUS * Math.PI * 2}
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          <AnimatedCircle
-            cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            r={CIRCLE_RADIUS}
-            stroke="red"
-            strokeWidth={STROKE_WIDTH + 8}
-            strokeDasharray={CIRCLE_RADIUS * Math.PI * 2}
-            animatedProps={animatedPropsCircle1}
-            strokeLinecap="round"
-            fill="none"
-          />
-          <AnimatedCircle2
-            cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            r={25}
-            stroke={theme.progressBarSmallCircleBackgroundColor}
-            strokeWidth={4}
-            animatedProps={animatedPropsCircle2}
-            strokeLinecap="round"
-            fill="#fff"
-          />
-
-          <AnimatedText
-            fill="#000"
-            fontSize="12"
-            fontWeight="bold"
-            animatedProps={animatedPropsText}
-            textAnchor="middle">
-            {!Number.isInteger(progressPercentage) &&
-            Number.isFinite(progressPercentage)
-              ? progressPercentage.toFixed(2)
-              : progressPercentage}
-          </AnimatedText>
-
-          <AnimatedText
-            fill="#000"
-            fontSize="12"
-            fontWeight="bold"
-            animatedProps={animatedPropsText2}
-            textAnchor="middle">
-            %
-          </AnimatedText>
-          <SvgText
-            fill={theme.textColor}
-            fontSize="12"
-            fontWeight="bold"
-            //   textAnchor="middle"
-            x={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-            y={CIRCLE_RADIUS + STROKE_WIDTH / 2 + 30}>
-            <TSpan
-              x={
-                no_of_seats.length > 0
-                  ? CIRCLE_RADIUS + STROKE_WIDTH / 2 - 28
-                  : no_of_seats.length > 2
-                  ? CIRCLE_RADIUS + STROKE_WIDTH / 2 - 38
-                  : CIRCLE_RADIUS + STROKE_WIDTH / 2 - 16
-              }
-              dy="0em"
-              fontSize={22}>
-              {no_of_seats}
-            </TSpan>
-            <TSpan x={CIRCLE_RADIUS + STROKE_WIDTH / 2} dy="0em" fontSize={16}>
-              / {total_no_of_seats}
-            </TSpan>
-            <TSpan x={CIRCLE_RADIUS + STROKE_WIDTH / 2 - 45} dy="1.5em">
-              No. of Seats Filled
-            </TSpan>
-          </SvgText>
-        </Svg>
-        <LocalSvg
-          asset={require('../Assets/svg/seats.svg')}
-          height={70}
-          width={70}
-          style={{
-            // backgroundColor:'yellow',
-            position: 'absolute',
-            // alignSelf:'center',
-            bottom: (CIRCLE_RADIUS * 2 + STROKE_WIDTH + 20) / 2,
-            right: (CIRCLE_RADIUS * 2 + STROKE_WIDTH + 20) / 2 - 4,
-          }}
+    <View style={styles.container}>
+      <Svg
+        width={CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80}
+        height={CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80}
+        viewBox={`0 -20 ${CIRCLE_RADIUS * 2 + STROKE_WIDTH} ${
+          CIRCLE_RADIUS * 2 + STROKE_WIDTH + 45
+        }`}
+        // style={{backgroundColor: 'yellow'}}
+      >
+        <Circle
+          cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          r={CIRCLE_RADIUS}
+          stroke={theme.progressBarBackgroundColor}
+          strokeWidth={STROKE_WIDTH + 10}
+          strokeDasharray={CIRCLE_RADIUS * Math.PI * 2}
+          fill="none"
+          strokeLinecap="round"
         />
 
-        {/* <SvgXml xml={Seats} height={40} width={40}/> */}
-        <View
-          style={{
-            height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 50,
-            width: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 50,
-            borderStyle: 'dashed',
-            borderWidth: 1,
-            borderColor: theme.progressBarDottedCircleBorderColor,
-            position: 'absolute',
-            borderRadius: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
-          }}
+        <AnimatedCircle
+          cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          r={CIRCLE_RADIUS}
+          stroke="red"
+          strokeWidth={STROKE_WIDTH + 8}
+          strokeDasharray={CIRCLE_RADIUS * Math.PI * 2}
+          animatedProps={animatedPropsCircle1}
+          strokeLinecap="round"
+          fill="none"
         />
-      </View>
-    </>
+
+        <AnimatedCircle2
+          cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          r={24}
+          stroke={theme.progressBarSmallCircleShadowBackgroundColor}
+          strokeWidth={4}
+          animatedProps={animatedPropsCircle2}
+          strokeLinecap="round"
+          fill="rgba(0,0,0,0.4)"
+          opacity={1}
+        />
+        <AnimatedCircle2
+          cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          r={22}
+          stroke={theme.progressBarSmallCircleBackgroundColor}
+          strokeWidth={1}
+          animatedProps={animatedPropsCircle2}
+          strokeLinecap="round"
+          fill="#fff"
+          opacity={1}
+        />
+
+        <AnimatedText
+          fill="#000"
+          fontSize="12"
+          fontWeight="bold"
+          animatedProps={animatedPropsText}
+          textAnchor="middle">
+          {!Number.isInteger(progressPercentage) &&
+          Number.isFinite(progressPercentage)
+            ? progressPercentage.toFixed(2)
+            : progressPercentage}
+        </AnimatedText>
+
+        <AnimatedText
+          fill="#000"
+          fontSize="12"
+          fontWeight="bold"
+          animatedProps={animatedPropsText2}
+          textAnchor="middle">
+          %
+        </AnimatedText>
+        <SvgText
+          fill={theme.textColor}
+          fontSize="12"
+          fontWeight="bold"
+          // textAnchor="middle"
+          x={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          y={CIRCLE_RADIUS + STROKE_WIDTH / 2 + 30}>
+          <TSpan
+            x={
+              booked_no_of_seats === 0
+                ? CIRCLE_RADIUS + STROKE_WIDTH / 2 - 17
+                : CIRCLE_RADIUS +
+                  STROKE_WIDTH / 2 -
+                  (17 + bookedStateSpace.length * 4)
+            }
+            dy="0em"
+            fontSize={22}>
+            {booked_no_of_seats}
+          </TSpan>
+          <TSpan x={CIRCLE_RADIUS + STROKE_WIDTH / 2} dy="0em" fontSize={16}>
+            / {total_no_of_seats}
+          </TSpan>
+          <TSpan x={CIRCLE_RADIUS + STROKE_WIDTH / 2 - 45} dy="1.5em">
+            No. of Seats Filled
+          </TSpan>
+        </SvgText>
+      </Svg>
+      <LocalSvg
+        asset={require('../Assets/svg/seats.svg')}
+        height={70}
+        width={70}
+        style={{
+          // backgroundColor:'yellow',
+          position: 'absolute',
+          // alignSelf:'center',
+          bottom: (CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80) / 2,
+          right: (CIRCLE_RADIUS * 2 + STROKE_WIDTH + 20) / 2 - 7,
+        }}
+      />
+
+      {/* <SvgXml xml={Seats} height={40} width={40}/> */}
+      <View
+        style={{
+          height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 90,
+          width: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 90,
+          borderStyle: 'dashed',
+          borderWidth: 1,
+          borderColor: theme.progressBarDottedCircleBorderColor,
+          position: 'absolute',
+          borderRadius: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
+        }}
+      />
+    </View>
   );
 };
 
 const CircularProgress = () => {
-    const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [total_no_of_seats, settotal_no_of_seats] = useState(0);
-  const [no_of_seats, setno_of_seats] = useState(0);
+  const [booked_no_of_seats, setno_of_seats] = useState(0);
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <CircularProgressAnimation
-        total_no_of_seats={total_no_of_seats}
-        no_of_seats={no_of_seats}
+        total_no_of_seats={parseInt(total_no_of_seats)}
+        booked_no_of_seats={parseInt(booked_no_of_seats)}
         theme={theme}
       />
-
       <TextInput
         placeholder="Total Seat"
         placeholderTextColor={theme.textColor}
         keyboardType="numeric"
-        onChangeText={e => settotal_no_of_seats(e)}
-        style={[styles.textinput,{
-            color:theme.textColor,borderColor:theme.borderColor
-        }]}
+        onChangeText={e => {
+          if (parseInt(e) >= 0) {
+            settotal_no_of_seats(e);
+          } else if (parseInt(e) < 0) {
+            settotal_no_of_seats(0);
+
+            Alert.alert('booked seat can not be negative');
+          } else {
+            settotal_no_of_seats(0);
+          }
+        }}
+        style={[
+          styles.textinput,
+          {
+            color: theme.textColor,
+            borderColor: theme.borderColor,
+          },
+        ]}
       />
       <TextInput
         keyboardType="numeric"
         placeholder="Booked Seat"
         placeholderTextColor={theme.textColor}
         onChangeText={e => {
-          console.log(e);
           if (parseInt(e) >= 0 && parseInt(e) <= total_no_of_seats) {
             setno_of_seats(e);
-          } else if (e.length === 0) {
-            console.log(e.length);
-            setno_of_seats(0);
-          } else {
+          } else if (e < 0) {
+            Alert.alert('booked seat can not be negative');
+          } else if (e > total_no_of_seats) {
             Alert.alert('booked seat can not exceed total seat');
+          } else {
+            setno_of_seats(0);
           }
         }}
-        style={[styles.textinput,{
-            color:theme.textColor,borderColor:theme.borderColor
-
-        }]}
+        style={[
+          styles.textinput,
+          {
+            color: theme.textColor,
+            borderColor: theme.borderColor,
+          },
+        ]}
       />
     </View>
   );
@@ -271,10 +318,8 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor:'yellow',
-    height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 40,
+    height: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
     width: CIRCLE_RADIUS * 2 + STROKE_WIDTH + 80,
-    // borderStyle:'dashed',borderWidth:1,borderColor:'#000'
   },
   textinput: {
     borderWidth: 1,
@@ -282,7 +327,7 @@ const styles = StyleSheet.create({
     width: '90%',
     marginVertical: 14,
     borderRadius: 12,
-    top:20,
+    top: 20,
   },
 });
 
