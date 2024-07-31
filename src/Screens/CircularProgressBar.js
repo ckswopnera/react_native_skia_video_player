@@ -4,7 +4,7 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
-  useColorScheme,
+  useColorScheme,TextInput
 } from 'react-native';
 import Svg, {
   Circle,
@@ -20,10 +20,10 @@ import Animated, {
   useAnimatedProps,
   withTiming,
   useDerivedValue,
+  runOnJS,
 } from 'react-native-reanimated';
 
 import Seats from '../Assets/svg/seats.svg';
-import {TextInput} from 'react-native-gesture-handler';
 import {darkTheme, lightTheme} from '../Style/theme';
 
 const {width} = Dimensions.get('window');
@@ -31,6 +31,7 @@ const CIRCLE_RADIUS = width / 4;
 const STROKE_WIDTH = 10;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedCircle2 = Animated.createAnimatedComponent(Circle);
+const AnimatedCircle3 = Animated.createAnimatedComponent(Circle);
 const AnimatedText = Animated.createAnimatedComponent(SvgText);
 
 const CircularProgressAnimation = ({
@@ -43,6 +44,12 @@ const CircularProgressAnimation = ({
   const progressPercentage =
     total_no_of_seats > 0 ? (booked_no_of_seats / total_no_of_seats) * 100 : 0;
   const [bookedStateSpace, setbookedStateSpace] = useState(0);
+
+  const [percentageText, setpercentageText] = useState(0);
+  const circle3Radius = 24;
+  const circle2Radius = 23;
+  const circle1Radius = 24;
+
   useEffect(() => {
     const normalizedProgress = progressPercentage / 100;
     progressValue.value = withTiming(normalizedProgress, {duration: 2000}); // pass to the duration if you want to slow the animation
@@ -80,6 +87,24 @@ const CircularProgressAnimation = ({
     };
   });
 
+  const animatedPropsCircle3 = useAnimatedProps(() => {
+    const x =
+      CIRCLE_RADIUS +
+      STROKE_WIDTH / 2 +
+      Math.cos(progressValue.value * 2 * Math.PI) * CIRCLE_RADIUS;
+    const y =
+      CIRCLE_RADIUS +
+      STROKE_WIDTH / 2 +
+      Math.sin(progressValue.value * 2 * Math.PI) * CIRCLE_RADIUS;
+
+    const circumference = circle3Radius * Math.PI * 2;
+    const strokeDashoffset = circumference * (1 - progressValue.value);
+    return {
+      cx: x,
+      cy: y,
+      strokeDashoffset,
+    };
+  });
   const animatedPropsText = useAnimatedProps(() => {
     const x =
       CIRCLE_RADIUS +
@@ -107,10 +132,9 @@ const CircularProgressAnimation = ({
       Math.sin(progressValue.value * 2 * Math.PI) * CIRCLE_RADIUS;
 
     const adjustedX =
-      !Number.isInteger(progressPercentage) &&
-      Number.isFinite(progressPercentage)
+      !Number.isInteger(percentageText) && Number.isFinite(percentageText)
         ? x + 16
-        : progressPercentage === 0 || progressPercentage.toString().length === 1
+        : percentageText === 0 || percentageText.toString().length === 1
         ? x + 7
         : x + 14;
 
@@ -119,6 +143,10 @@ const CircularProgressAnimation = ({
       y: y + 5,
     };
   });
+
+  useDerivedValue(() => {
+    runOnJS(setpercentageText)(progressValue.value * 100);
+  }, [progressValue.value]);
 
   return (
     <View style={styles.container}>
@@ -156,7 +184,7 @@ const CircularProgressAnimation = ({
         <AnimatedCircle2
           cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
           cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-          r={24}
+          r={circle1Radius}
           stroke={theme.progressBarSmallCircleShadowBackgroundColor}
           strokeWidth={4}
           animatedProps={animatedPropsCircle2}
@@ -167,13 +195,24 @@ const CircularProgressAnimation = ({
         <AnimatedCircle2
           cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
           cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
-          r={22}
+          r={circle2Radius}
           stroke={theme.progressBarSmallCircleBackgroundColor}
           strokeWidth={1}
           animatedProps={animatedPropsCircle2}
           strokeLinecap="round"
           fill="#fff"
           opacity={1}
+        />
+        <AnimatedCircle3
+          cx={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          cy={CIRCLE_RADIUS + STROKE_WIDTH / 2}
+          r={24}
+          stroke={theme.progressBarSmallCircleAnimationStrokeColor}
+          strokeWidth={4}
+          strokeDasharray={circle3Radius * Math.PI * 2}
+          animatedProps={animatedPropsCircle3}
+          strokeLinecap="round"
+          fill="none"
         />
 
         <AnimatedText
@@ -182,10 +221,14 @@ const CircularProgressAnimation = ({
           fontWeight="bold"
           animatedProps={animatedPropsText}
           textAnchor="middle">
-          {!Number.isInteger(progressPercentage) &&
+          {/* {!Number.isInteger(progressPercentage) &&
           Number.isFinite(progressPercentage)
             ? progressPercentage.toFixed(2)
-            : progressPercentage}
+            : progressPercentage} */}
+          {/* {percentageText} */}
+          {!Number.isInteger(percentageText) && Number.isFinite(percentageText)
+            ? percentageText.toFixed(2)
+            : percentageText}
         </AnimatedText>
 
         <AnimatedText
@@ -252,7 +295,7 @@ const CircularProgressAnimation = ({
   );
 };
 
-const CircularProgress = () => {
+const CircularProgressBar = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const [total_no_of_seats, settotal_no_of_seats] = useState(0);
@@ -268,6 +311,7 @@ const CircularProgress = () => {
         placeholder="Total Seat"
         placeholderTextColor={theme.textColor}
         keyboardType="numeric"
+        value={total_no_of_seats}
         onChangeText={e => {
           if (parseInt(e) >= 0) {
             settotal_no_of_seats(e);
@@ -291,6 +335,8 @@ const CircularProgress = () => {
         keyboardType="numeric"
         placeholder="Booked Seat"
         placeholderTextColor={theme.textColor}
+        value={booked_no_of_seats}
+
         onChangeText={e => {
           if (parseInt(e) >= 0 && parseInt(e) <= total_no_of_seats) {
             setno_of_seats(e);
@@ -331,4 +377,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CircularProgress;
+export default CircularProgressBar;

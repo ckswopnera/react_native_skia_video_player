@@ -89,9 +89,15 @@ const ItemComponent = ({item, index, theme}) => (
     <View style={{flexDirection: 'row'}}>
       <Text style={[styles.index, {color: theme.textColor}]}>{index}</Text>
       <View style={{flexDirection: 'column', width: '85%'}}>
+        <View style={{
+          backgroundColor:'rgba(255,0,0,0.6)',
+          borderRadius:8,
+          paddingVertical:4,
+        }}>
         <Text style={[styles.title, {color: theme.textColor}]}>
           {item.title}
         </Text>
+        </View>
         <Text style={[styles.body, {color: theme.textColor}]}>{item.body}</Text>
       </View>
     </View>
@@ -123,7 +129,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textTransform: 'capitalize',
     letterSpacing: 1,
-    textDecorationLine: 'underline',
+    // textDecorationLine: 'underline',
+    paddingHorizontal:8,
+
   },
-  body: {fontSize: 16, letterSpacing: 1},
+  body: {fontSize: 16, letterSpacing: 1,
+    paddingHorizontal:8,
+  },
 });

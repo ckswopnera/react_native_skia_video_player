@@ -31,7 +31,12 @@ import Orientation from 'react-native-orientation-locker';
 import {useBearStore} from './store/store';
 import Tanstack_Queryclient from './Screens/Tanstack_queryclient';
 import CandleStickChart from './Screens/CandleStickChart';
-import CircularProgress from './Screens/CircularProgressBar';
+import RandomAvatar from './Screens/RandomAvatar';
+import CircularProgressBar from './Screens/CircularProgressBar';
+import CardScan from './Screens/CardScan';
+import Fab from './Screens/FloatingActionButton';
+import { AnimatedColorGradient } from './Screens/AnimatedColorGradient';
+import AnimTab1 from './Screens/AnimatedBottomTab1';
 
 const Drawer = createDrawerNavigator();
 
@@ -71,8 +76,9 @@ const Start = () => {
           color={colorScheme === 'dark' ? '#fff' : '#000'}
         />
         <StatusBar
-          barStyle="light-content"
+          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
           backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
+          // translucent={false}
         />
       </View>
     );
@@ -117,7 +123,7 @@ const MainComponent = () => {
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        initialRouteName='Circular ProgressBar'
+        // initialRouteName='Circular ProgressBar'
         screenOptions={{
           headerShown: showBar,
           drawerHideStatusBarOnOpen: false,
@@ -154,9 +160,25 @@ const MainComponent = () => {
         <Drawer.Screen name="Screenshot" component={Screenshot} />
         <Drawer.Screen name="Chart" component={ChartVictoryNative} />
         <Drawer.Screen name="Candlestick Chart" component={CandleStickChart} />
-        <Drawer.Screen name="Circular ProgressBar" component={CircularProgress} />
+        <Drawer.Screen
+          name="Circular ProgressBar"
+          component={CircularProgressBar}
+        />
+        <Drawer.Screen
+          name="Random Avatar"
+          component={RandomAvatar}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Card Scan"
+          component={CardScan}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen name="Floating ActionButton" component={Fab} />
+        <Drawer.Screen name="Animated Gradient" component={AnimatedColorGradient} />
+        <Drawer.Screen name="Animated BottomTab 1" component={AnimTab1} />
 
-
+        
       </Drawer.Navigator>
     </>
   );
