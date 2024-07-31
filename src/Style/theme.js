@@ -17,6 +17,9 @@ export const lightTheme = {
   progressBarSmallCircleBackgroundColor: 'rgba(0,0,0,0.2)',
   progressBarDottedCircleBorderColor: '#000',
   progressBarSmallCircleShadowBackgroundColor: 'rgba(0,0,0,0.2)',
+  progressBarSmallCircleAnimationStrokeColor: 'rgba(220, 20, 60,1)',
+  progressBarAvatarStrokeColor: 'rgba(0,0,0,0.2)',
+  progressBarAvatarAnimatedStrokeColor: '#6200ee',
 };
 
 export const darkTheme = {
@@ -38,4 +41,21 @@ export const darkTheme = {
   progressBarSmallCircleBackgroundColor: 'rgba(255,0,0,0.4)',
   progressBarDottedCircleBorderColor: '#fff',
   progressBarSmallCircleShadowBackgroundColor: 'rgba(255,0,0,0.6)',
+  progressBarSmallCircleAnimationStrokeColor: '#f3f3f3',
+  progressBarAvatarStrokeColor: 'rgba(255,255,255,0.4)',
+  progressBarAvatarAnimatedStrokeColor: '#fff',
+};
+
+export const Colors = {
+  lightRed: '#ff4f7e',
+  white: '#fff',
+  darkRed: '#d9365e',
+  red: '#ff2f68',
+  accent: '#112233',
+  black: '#000',
+  primary: '#637aff',
+  green: '#60c5a8',
+  purple: '#8f06e4',
+  yellow: '#f8c907',
+  dark: '#333',
 };

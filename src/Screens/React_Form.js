@@ -142,6 +142,7 @@ const TextInputField = ({name, control, placeholder, errors, theme}) => {
                 color: theme.textColor,
               },
             ]}
+            autoComplete='cc-number'
           />
         </Animatable.View>
       )}
