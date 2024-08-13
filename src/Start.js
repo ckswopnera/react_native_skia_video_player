@@ -46,14 +46,14 @@ import BezierCurve from './Screens/Bezier Curve';
 import PaperFold from './Screens/PaperFold';
 import ActionMenu from './Screens/Animated Action Menu/Moti_ActionMenu';
 import SkeletonComponent from './Screens/Skeleton';
-import { AnimatedColorGradient } from './Screens/AnimatedColorGradient';
+import {AnimatedColorGradient} from './Screens/AnimatedColorGradient';
 import CircularAnimatedMenu from './Screens/Animated Action Menu/CircularAnimatedMenu';
 import Rainbow1 from './Screens/Rainbow 1';
 import Rainbow2 from './Screens/Rainbow 2';
 import Cyclone from './Screens/Cyclone';
 import CloudRainAnimation from './Screens/Rain';
-import Tanstack_Infinite_Button from './Screens/Tanstack/Tanstack_Infinite_Button';
-import UseQueryInfinite from './Screens/Tanstack/Tanstack_Infinite_Scroll_with_usequey';
+import Tanstack_Infinite_Button from './Screens/Tanstack/Tanstack_Infinite_Button_with_useInfiniteQuery';
+import UseQueryInfinite from './Screens/Tanstack/Tanstack_Infinite_Button_with_usequery';
 
 const Drawer = createDrawerNavigator();
 
@@ -140,7 +140,7 @@ const MainComponent = () => {
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        initialRouteName='UseQuery Infinite'
+        initialRouteName="Single Query"
         screenOptions={{
           headerShown: showBar,
           drawerHideStatusBarOnOpen: false,
@@ -164,12 +164,14 @@ const MainComponent = () => {
           name="Infinite Scroll"
           component={Tanstack_Infinite_Scroll}
         />
-        <Drawer.Screen name="Single Query " component={Tanstack_Single_Query} />
+        <Drawer.Screen name="Single Query" component={Tanstack_Single_Query} />
         <Drawer.Screen name="Query client " component={Tanstack_Queryclient} />
-        <Drawer.Screen name="Infinite Button" component={Tanstack_Infinite_Button} />
+        <Drawer.Screen
+          name="UseinfiniteQuery Button"
+          component={Tanstack_Infinite_Button}
+        />
         <Drawer.Screen name="UseQuery Infinite" component={UseQueryInfinite} />
-        
-        
+
         <Drawer.Screen name="React Form" component={React_Form} />
         <Drawer.Screen name="React Form 2" component={React_Form2} />
         <Drawer.Screen name="React Form 3" component={React_Form3} />
@@ -198,25 +200,64 @@ const MainComponent = () => {
         <Drawer.Screen name="Floating ActionButton" component={Fab} />
         <Drawer.Screen name="Action Menu using Moti" component={ActionMenu} />
         <Drawer.Screen name="Switches" component={Switches} />
-        <Drawer.Screen name="Animated Gradient" component={AnimatedColorGradient} options={{unmountOnBlur: true}}/>
+        <Drawer.Screen
+          name="Animated Gradient"
+          component={AnimatedColorGradient}
+          options={{unmountOnBlur: true}}
+        />
         <Drawer.Screen name="Animated BottomTab 1" component={AnimTab1} />
         <Drawer.Screen name="Animated BottomTab 2" component={AnimTab2} />
         <Drawer.Screen name="Animated BottomTab 3" component={AnimTab3} />
         <Drawer.Screen name="Bezier Curve" component={BezierCurve} />
-        <Drawer.Screen name="Circle Wave" component={WaveForm1} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="FullScreen Wave" component={WaveForm2} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Square Wave" component={WaveForm3} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Skeleton Component" component={SkeletonComponent} />
-        <Drawer.Screen name="Paper Fold" component={PaperFold} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Circular Animated Menu" component={CircularAnimatedMenu} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Rainbow 1" component={Rainbow1} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Rainbow 2" component={Rainbow2} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="Cyclone" component={Cyclone} options={{unmountOnBlur: true}}/>
-        <Drawer.Screen name="CloudRainAnimation" component={CloudRainAnimation} options={{unmountOnBlur: true}}/>
-
-        
-        
-        
+        <Drawer.Screen
+          name="Circle Wave"
+          component={WaveForm1}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="FullScreen Wave"
+          component={WaveForm2}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Square Wave"
+          component={WaveForm3}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Skeleton Component"
+          component={SkeletonComponent}
+        />
+        <Drawer.Screen
+          name="Paper Fold"
+          component={PaperFold}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Circular Animated Menu"
+          component={CircularAnimatedMenu}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Rainbow 1"
+          component={Rainbow1}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Rainbow 2"
+          component={Rainbow2}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="Cyclone"
+          component={Cyclone}
+          options={{unmountOnBlur: true}}
+        />
+        <Drawer.Screen
+          name="CloudRainAnimation"
+          component={CloudRainAnimation}
+          options={{unmountOnBlur: true}}
+        />
       </Drawer.Navigator>
     </>
   );
