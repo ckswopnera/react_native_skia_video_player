@@ -26,10 +26,7 @@ const Tanstack_Infinite_Scroll = () => {
   } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    getNextPageParam: (lastPage, pages) => {console.log({lastPage},{
-      pages
-    })
-    return lastPage.nextCursor},
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
   });
 
   const loadMore = () => {

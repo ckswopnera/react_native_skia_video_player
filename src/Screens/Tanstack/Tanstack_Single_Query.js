@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
 import {darkTheme, lightTheme} from '../../Style/theme';
+import { singleQuery } from '../../utils/util';
 
 export default function Tanstack_Single_Query() {
   const colorScheme = useColorScheme();
@@ -15,10 +16,8 @@ export default function Tanstack_Single_Query() {
 
   const {isLoading, error, data} = useQuery({
     queryKey: ['repoData'],
-    queryFn: () =>
-      fetch('https://api.github.com/repos/TanStack/query').then(res =>
-        res.json(),
-      ),
+    queryFn: singleQuery,
+    staleTime: 5000,
   });
 
   if (isLoading)
