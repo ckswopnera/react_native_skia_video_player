@@ -12,6 +12,7 @@ import {
   ImageFormat,
   Paint,
   Rect,
+  BackdropBlur,
 } from '@shopify/react-native-skia';
 import {
   BackHandler,
@@ -165,18 +166,21 @@ const Video = () => {
       // console.log(currentTime.value.toFixed(0) / duration);
       if (currentTime?.value > 0) {
         const progressRatio = currentTime.value.toFixed(0) / duration;
+        // console.log({progressRatio})
         if (progressRatio >= 0 && progressRatio < 1) {
           progress.value = progressRatio;
           changeText();
         } else if (progressRatio >= 1) {
-          paused.value = true;
-          setPause(true);
+          setTimeout(() => {
+            // paused.value = true;
+            setPause(true);
+          }, 4000);
         }
         setisLoading(false);
       } else {
         setisLoading(true);
       }
-    }, 1000);
+    }, 500);
     return () => clearInterval(id);
   }, [currentTime, duration]);
 
@@ -223,15 +227,30 @@ const Video = () => {
   };
 
   const onSlidingComplete = e => {
-    // console.log('e',e)
-    if (e * duration !== duration) {
+    // console.log({e});
+    // if (e * duration !== duration) {
+    //   seek.value = e * duration;
+    //   paused.value = false;
+    //   setPause(false);
+    // }
+    // else {
+    //   seek.value = e * duration - 2000;
+    //   paused.value = false;
+    //   setPause(false);
+    // }
+    if (e >= 0 && e < 1) {
       seek.value = e * duration;
       paused.value = false;
       setPause(false);
     } else {
       seek.value = e * duration - 2000;
-      paused.value = false;
       setPause(false);
+      paused.value = false;
+
+      setTimeout(() => {
+        paused.value = true;
+        setPause(true);
+      }, 4000);
     }
   };
   const onSlidingStart = () => {
@@ -321,12 +340,23 @@ const Video = () => {
                 height={zoom === true ? height : 250}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
-              {showControl && <ColorMatrix matrix={darkenMatrix} />}
+              {/* {showControl && <ColorMatrix matrix={darkenMatrix} />} */}
             </Fill>
             {showControl && (
-              <Fill>
-                <ColorMatrix matrix={overlayMatrix} />
-              </Fill>
+              // <Fill>
+              //   <ColorMatrix matrix={overlayMatrix} />
+              // </Fill>
+
+              <BackdropBlur
+                blur={4}
+                clip={{
+                  x: 0,
+                  y: 0,
+                  width: width,
+                  height: zoom === true ? height : 250,
+                }}>
+                <Fill color="rgba(0, 0, 0, 0.6)" />
+              </BackdropBlur>
             )}
           </Canvas>
         </>

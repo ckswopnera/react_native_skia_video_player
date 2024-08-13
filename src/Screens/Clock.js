@@ -135,7 +135,7 @@ const Clock = () => {
             onPress={() => {
               clockView === false ? setclockView(true) : setclockView(false);
             }}>
-            <ClockIcon width={150} height={150} fill={theme.clockFillColor} />
+            <ClockIcon width={150} height={150} fill={theme.smallClockFillColor} />
           </TouchableOpacity>
           <View
             style={{

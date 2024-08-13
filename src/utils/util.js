@@ -2,6 +2,9 @@ import {Alert, Dimensions, Platform} from 'react-native';
 import {QueryClient, onlineManager} from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
 
+export const windowWidth = Dimensions.get('window').width;
+export const windowHeight = Dimensions.get('window').height;
+
 export const queryClient = new QueryClient();
 export const prefetchData = async () => {
   await queryClient.prefetchQuery({
@@ -9,20 +12,19 @@ export const prefetchData = async () => {
     queryFn: fetchPosts,
   });
 };
-export const windowWidth = Dimensions.get('window').width;
-export const windowHeight = Dimensions.get('window').height;
 
-export const fetchPosts = async ({pageParam = 1}) => {
+export const fetchPosts = async ({pageParam=1}) => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`,
   );
   const data = await response.json();
-
   return {
     items: data,
-    nextCursor: pageParam + 1,
+    nextCursor: pageParam+1,
+    prevCursor: pageParam-1 ,
   };
 };
+
 
 export const msToTime = duration => {
   var milliseconds = parseInt((duration % 1000) / 100),
@@ -38,61 +40,91 @@ export const msToTime = duration => {
 };
 
 export const darkenMatrix = [
-  1,0,0,0,0, // Red channel stays the same0,
-  1,0,0,0, // Green channel stays the same
-  0,0,1,0,0, // Blue channel stays the same
-  0,0,0,1,0, // Alpha channel stays the same
+  1,
+  0,
+  0,
+  0,
+  0, // Red channel stays the same0,
+  1,
+  0,
+  0,
+  0, // Green channel stays the same
+  0,
+  0,
+  1,
+  0,
+  0, // Blue channel stays the same
+  0,
+  0,
+  0,
+  1,
+  0, // Alpha channel stays the same
 ];
 
 export const overlayMatrix = [
-  1,0,0,0,0, // Red channel stays the same
-  0,1,0,0,0, // Green channel stays the same
-  0,0,1,0,0, // Blue channel stays the same
-  0,0,0,0.7,0, // Alpha channel is reduced to 0.7 to apply transparency
+  1,
+  0,
+  0,
+  0,
+  0, // Red channel stays the same
+  0,
+  1,
+  0,
+  0,
+  0, // Green channel stays the same
+  0,
+  0,
+  1,
+  0,
+  0, // Blue channel stays the same
+  0,
+  0,
+  0,
+  0.7,
+  0, // Alpha channel is reduced to 0.7 to apply transparency
 ];
 
 export const DATA_For_One_Month = [
-  {title:'Month 1',
-  data:
-  [
-    {day: 1, highTmp: 35},
-    {day: 2, highTmp: 36},
-    {day: 3, highTmp: 34},
-    {day: 4, highTmp: 37},
-    {day: 5, highTmp: 39},
-    {day: 6, highTmp: 38},
-    {day: 7, highTmp: 35},
-    {day: 8, highTmp: 33},
-    {day: 9, highTmp: 34.2},
-    {day: 10, highTmp: 36},
-    {day: 11, highTmp: 37},
-    {day: 12, highTmp: 35},
-    {day: 13, highTmp: 34},
-    {day: 14, highTmp: 36},
-    {day: 15, highTmp: 38},
-    {day: 16, highTmp: 37},
-    {day: 17, highTmp: 36},
-    {day: 18, highTmp: 35},
-    {day: 19, highTmp: 33},
-    {day: 20, highTmp: 34},
-    {day: 21, highTmp: 35},
-    {day: 22, highTmp: 37},
-    {day: 23, highTmp: 36},
-    {day: 24, highTmp: 38},
-    {day: 25, highTmp: 39},
-    {day: 26, highTmp: 37},
-    {day: 27, highTmp: 36},
-    {day: 28, highTmp: 35},
-    {day: 29, highTmp: 34},
-    {day: 30, highTmp: 36},
-    // {day: 31, highTmp: 38},
-    // {day: 32, highTmp: 38},
-    // {day: 33, highTmp: 38},
-    // {day: 34, highTmp: 38},
-    // {day: 35, highTmp: 38},
-
-  ],
-},
+  {
+    title: 'Month 1',
+    data: [
+      {day: 1, highTmp: 35},
+      {day: 2, highTmp: 36},
+      {day: 3, highTmp: 34},
+      {day: 4, highTmp: 37},
+      {day: 5, highTmp: 39},
+      {day: 6, highTmp: 38},
+      {day: 7, highTmp: 35},
+      {day: 8, highTmp: 33},
+      {day: 9, highTmp: 34.2},
+      {day: 10, highTmp: 36},
+      {day: 11, highTmp: 37},
+      {day: 12, highTmp: 35},
+      {day: 13, highTmp: 34},
+      {day: 14, highTmp: 36},
+      {day: 15, highTmp: 38},
+      {day: 16, highTmp: 37},
+      {day: 17, highTmp: 36},
+      {day: 18, highTmp: 35},
+      {day: 19, highTmp: 33},
+      {day: 20, highTmp: 34},
+      {day: 21, highTmp: 35},
+      {day: 22, highTmp: 37},
+      {day: 23, highTmp: 36},
+      {day: 24, highTmp: 38},
+      {day: 25, highTmp: 39},
+      {day: 26, highTmp: 37},
+      {day: 27, highTmp: 36},
+      {day: 28, highTmp: 35},
+      {day: 29, highTmp: 34},
+      {day: 30, highTmp: 36},
+      // {day: 31, highTmp: 38},
+      // {day: 32, highTmp: 38},
+      // {day: 33, highTmp: 38},
+      // {day: 34, highTmp: 38},
+      // {day: 35, highTmp: 38},
+    ],
+  },
   // {title:'Month 2',
   //   data:
   // [
@@ -165,3 +197,33 @@ export const DATA_For_One_Month = [
   // ]}
 ];
 
+export const candleStickData = [
+  {
+    timestamp: 1625945400000,
+    open: 33575.25,
+    high: 33600.52,
+    low: 33475.12,
+    close: 33520.11,
+  },
+  {
+    timestamp: 1625946300000,
+    open: 33545.25,
+    high: 33560.52,
+    low: 33510.12,
+    close: 33520.11,
+  },
+  {
+    timestamp: 1625947200000,
+    open: 33510.25,
+    high: 33515.52,
+    low: 33250.12,
+    close: 33250.11,
+  },
+  {
+    timestamp: 1625948100000,
+    open: 33215.25,
+    high: 33430.52,
+    low: 33215.12,
+    close: 33420.11,
+  },
+];

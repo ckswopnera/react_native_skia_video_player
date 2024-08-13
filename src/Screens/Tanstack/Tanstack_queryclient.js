@@ -1,51 +1,47 @@
+// MyComponent.js
 import React from 'react';
 import {
-  FlatList,
-  ActivityIndicator,
-  Text,
   View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  FlatList,
   TouchableOpacity,
   useColorScheme,
-  StyleSheet,
+  SafeAreaView,
 } from 'react-native';
-import {useInfiniteQuery} from '@tanstack/react-query';
-import {fetchPosts} from '../utils/util';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {useQuery} from '@tanstack/react-query';
+import {fetchPosts} from '../../utils/util';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
-const Tanstack_Infinite_Scroll = () => {
+const Tanstack_Queryclient = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    status,
-    isLoading,
-    error,
-  } = useInfiniteQuery({
-    queryKey: ['posts'],
+  const {data, error, isLoading} = useQuery({
+    queryKey: ['postsNew'],
     queryFn: fetchPosts,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+    getNextPageParam: (lastPage, pages) => {
+      console.log(
+        {lastPage},
+        {
+          pages,
+        },
+      );
+      return lastPage;
+    },
+
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
-  const loadMore = () => {
-    // console.log({hasNextPage});
-    // console.log({isFetchingNextPage});
-
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  };
-  // console.log({status});
-
-  if (isLoading)
+  if (isLoading) {
     return (
       <View
         style={[styles.container, {backgroundColor: theme.backgroundColor}]}>
-        <Text style={[styles.text, {color: theme.textColor}]}>Loading...</Text>
+        <ActivityIndicator size="large" color={theme.activityIndicatorColor} />
       </View>
     );
+  }
 
   if (error)
     return (
@@ -56,29 +52,24 @@ const Tanstack_Infinite_Scroll = () => {
         </Text>
       </View>
     );
-  const posts = data?.pages?.flatMap(page => {
-    // console.log(page.items);
 
-    return page.items;
+  const postsNew = data?.items?.flatMap(page => {
+    // console.log(page);
+
+    return page;
   });
-
   return (
     <FlatList
       style={{
         backgroundColor: theme.backgroundColor,
       }}
-      data={posts}
-      keyExtractor={item => item.id.toString()}
+      data={postsNew}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={({item, index}) => (
-        <ItemComponent item={item} index={index + 1} theme={theme} />
+        <>
+          <ItemComponent item={item} index={index + 1} theme={theme} />
+        </>
       )}
-      onEndReached={loadMore}
-      onEndReachedThreshold={0.7}
-      ListFooterComponent={
-        isFetchingNextPage ? (
-          <ActivityIndicator color={theme.activityIndicatorColor} size={32} />
-        ) : null
-      }
     />
   );
 };
@@ -98,17 +89,22 @@ const ItemComponent = ({item, index, theme}) => (
   </TouchableOpacity>
 );
 
-export default Tanstack_Infinite_Scroll;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    // paddingHorizontal: 8,
   },
-  text: {
-    textAlign: 'center',
-    fontSize: 18,
+  postContainer: {
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'capitalize',
+    letterSpacing: 1,
+    textDecorationLine: 'underline',
   },
   index: {
     fontSize: 14,
@@ -118,12 +114,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '15%',
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
-    letterSpacing: 1,
-    textDecorationLine: 'underline',
-  },
   body: {fontSize: 16, letterSpacing: 1},
 });
+
+export default Tanstack_Queryclient;

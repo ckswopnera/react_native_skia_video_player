@@ -10,9 +10,9 @@ import {
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {windowWidth} from '../utils/util';
+import {windowWidth} from '../../utils/util';
 import * as Animatable from 'react-native-animatable';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 const schema = yup.object().shape({
   name: yup
@@ -23,33 +23,17 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required('Password is required')
-    .min(3, 'Password must be at least 3 characters')
-    .test(
-      'is-00000',
-      'Not matched. Please try again!',
-      value => value === '00000',
-    ),
-  newPassword: yup
-    .string()
-    .required('Password is required')
-    .min(5, 'Password must be at least 5 characters')
-    .test(
-      'passwords-match',
-      'Password must not match with old password',
-      function (value) {
-        return this.parent.password !== value;
-      },
-    ),
+    .min(5, 'Password must be at least 5 characters'),
   confirmPassword: yup
     .string()
     .required('Confirm Password is required')
     // .oneOf([yup.ref('password'), null], 'Passwords must match'),
     .test('passwords-match', 'Password must match', function (value) {
-      return this.parent.newPassword === value;
+      return this.parent.password === value;
     }),
 });
 
-const React_Form2 = () => {
+const React_Form = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const {
@@ -62,8 +46,6 @@ const React_Form2 = () => {
       name: '',
       email: '',
       password: '',
-      newPassword: '',
-      confirmPassword: '',
     },
   });
 
@@ -104,16 +86,7 @@ const React_Form2 = () => {
       {errors.password && (
         <Text style={styles.errorText}>{errors.password.message}</Text>
       )}
-      <TextInputField
-        name="newPassword"
-        control={control}
-        placeholder="New Password"
-        errors={errors.newPassword}
-        theme={theme}
-      />
-      {errors.newPassword && (
-        <Text style={styles.errorText}>{errors.newPassword.message}</Text>
-      )}
+
       <TextInputField
         name="confirmPassword"
         control={control}
@@ -163,14 +136,13 @@ const TextInputField = ({name, control, placeholder, errors, theme}) => {
             style={[
               styles.input,
               // isFocused && styles.focusedInput,
-
               isFocused && {borderColor: theme.textColor},
-
               errors && styles.errorBorder,
               {
                 color: theme.textColor,
               },
             ]}
+            autoComplete='cc-number'
           />
         </Animatable.View>
       )}
@@ -190,7 +162,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 12,
     paddingHorizontal: 12,
-    borderRadius: 10,
+    borderRadius: 18,
   },
   focusedInput: {
     borderColor: '#fff',
@@ -200,7 +172,7 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
-    marginBottom: 18,
+    marginBottom: 8,
     bottom: 12,
   },
   buttonText: {
@@ -211,6 +183,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   button: {
+
     padding: 14,
     borderRadius: 14,
     // position: 'absolute',
@@ -219,14 +192,14 @@ const styles = StyleSheet.create({
     width: windowWidth / 2 + 100,
     marginTop: 100,
   },
-  placeholder:{
+  placeholder: {
     position: 'absolute',
     top: -9,
     left: 10,
     zIndex: 9999,
     fontFamily: 'Inter-Bold',
     paddingHorizontal: 4,
-  }
+  },
 });
 
-export default React_Form2;
+export default React_Form;
