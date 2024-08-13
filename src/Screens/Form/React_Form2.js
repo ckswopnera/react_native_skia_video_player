@@ -10,9 +10,9 @@ import {
 import {useForm, Controller} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import {windowWidth} from '../utils/util';
+import {windowWidth} from '../../utils/util';
 import * as Animatable from 'react-native-animatable';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 const schema = yup.object().shape({
   name: yup

@@ -7,9 +7,9 @@ import {
   useColorScheme,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import {Colors} from '../Style/theme';
-import Icon, {Icons} from '../components/Icons';
-import ColorScreen from '../components/ColorScreen';
+import {Colors} from '../../Style/theme';
+import Icon, {Icons} from '../../components/Icons';
+import ColorScreen from '../../components/ColorScreen';
 
 const TabArr = [
   {

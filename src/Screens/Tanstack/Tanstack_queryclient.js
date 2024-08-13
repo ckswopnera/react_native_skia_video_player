@@ -11,8 +11,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {fetchPosts} from '../utils/util';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {fetchPosts} from '../../utils/util';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 const Tanstack_Queryclient = () => {
   const colorScheme = useColorScheme();
@@ -20,6 +20,16 @@ const Tanstack_Queryclient = () => {
   const {data, error, isLoading} = useQuery({
     queryKey: ['postsNew'],
     queryFn: fetchPosts,
+    getNextPageParam: (lastPage, pages) => {
+      console.log(
+        {lastPage},
+        {
+          pages,
+        },
+      );
+      return lastPage;
+    },
+
     staleTime: Infinity,
     cacheTime: Infinity,
   });
@@ -42,15 +52,23 @@ const Tanstack_Queryclient = () => {
         </Text>
       </View>
     );
+
+  const postsNew = data?.items?.flatMap(page => {
+    // console.log(page);
+
+    return page;
+  });
   return (
     <FlatList
       style={{
         backgroundColor: theme.backgroundColor,
       }}
-      data={data.items}
+      data={postsNew}
       keyExtractor={(item, index) => index.toString()}
       renderItem={({item, index}) => (
-        <ItemComponent item={item} index={index + 1} theme={theme} />
+        <>
+          <ItemComponent item={item} index={index + 1} theme={theme} />
+        </>
       )}
     />
   );

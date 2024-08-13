@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useQuery} from '@tanstack/react-query';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 export default function Tanstack_Single_Query() {
   const colorScheme = useColorScheme();

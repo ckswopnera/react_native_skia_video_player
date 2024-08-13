@@ -12,6 +12,7 @@ import {
   ImageFormat,
   Paint,
   Rect,
+  BackdropBlur,
 } from '@shopify/react-native-skia';
 import {
   BackHandler,
@@ -339,12 +340,23 @@ const Video = () => {
                 height={zoom === true ? height : 250}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
-              {showControl && <ColorMatrix matrix={darkenMatrix} />}
+              {/* {showControl && <ColorMatrix matrix={darkenMatrix} />} */}
             </Fill>
             {showControl && (
-              <Fill>
-                <ColorMatrix matrix={overlayMatrix} />
-              </Fill>
+              // <Fill>
+              //   <ColorMatrix matrix={overlayMatrix} />
+              // </Fill>
+
+              <BackdropBlur
+                blur={4}
+                clip={{
+                  x: 0,
+                  y: 0,
+                  width: width,
+                  height: zoom === true ? height : 250,
+                }}>
+                <Fill color="rgba(0, 0, 0, 0.6)" />
+              </BackdropBlur>
             )}
           </Canvas>
         </>

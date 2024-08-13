@@ -9,8 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useInfiniteQuery} from '@tanstack/react-query';
-import {fetchPosts} from '../utils/util';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {fetchPosts} from '../../utils/util';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 const Tanstack_Infinite_Scroll = () => {
   const colorScheme = useColorScheme();
@@ -26,7 +26,10 @@ const Tanstack_Infinite_Scroll = () => {
   } = useInfiniteQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+    getNextPageParam: (lastPage, pages) => {console.log({lastPage},{
+      pages
+    })
+    return lastPage.nextCursor},
   });
 
   const loadMore = () => {
@@ -68,7 +71,7 @@ const Tanstack_Infinite_Scroll = () => {
         backgroundColor: theme.backgroundColor,
       }}
       data={posts}
-      keyExtractor={item => item.id.toString()}
+      keyExtractor={(item,index) => index.toString()}
       renderItem={({item, index}) => (
         <ItemComponent item={item} index={index + 1} theme={theme} />
       )}
