@@ -37,7 +37,7 @@ export const CocaCola = ({size, value}) => {
   const waveClipWidth = waveLength * waveClipCount;
   const waveHeight = fillCircleRadius * 0.1;
   const fontSize = radius / 2;
-  const font = useFont(require('../Assets/fonts/Inter-Bold.ttf'), fontSize);
+  const font = useFont(require('../../Assets/fonts/Inter-Bold.ttf'), fontSize);
   const textWidth = font ? font.measureText(`${value}`).width : 0;
   const textTranslateX = radius - textWidth * 0.5;
   const textTransform = [{translateY: size * 0.5 - fontSize * 0.7}];

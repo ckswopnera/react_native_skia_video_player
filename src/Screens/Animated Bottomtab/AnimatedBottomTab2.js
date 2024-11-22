@@ -11,8 +11,6 @@ import {Colors} from '../../Style/theme';
 import Icon, {Icons} from '../../components/Icons';
 import ColorScreen from '../../components/ColorScreen';
 import * as Animatable from 'react-native-animatable';
-import {size} from '@shopify/react-native-skia';
-import Animated from 'react-native-reanimated';
 
 const TabArr = [
   {

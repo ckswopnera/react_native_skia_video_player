@@ -10,7 +10,7 @@ export const lightTheme = {
   clockTextColor: '#fff',
   clockFillColor: '#5946B2',
   smallClockFillColor: '#5946B2',
-  textBackgroundCOlor: '#fff',
+  textBackgroundColor: '#fff',
   graphLableColor: '#000',
   graphTooltipTextColor: '#000',
   progressBarBackgroundColor: 'rgba(0,0,0,0.2)',
@@ -20,6 +20,7 @@ export const lightTheme = {
   progressBarSmallCircleAnimationStrokeColor: 'rgba(220, 20, 60,1)',
   progressBarAvatarStrokeColor: 'rgba(0,0,0,0.2)',
   progressBarAvatarAnimatedStrokeColor: '#6200ee',
+  tableBorderColor:'#666',
 };
 
 export const darkTheme = {
@@ -34,7 +35,7 @@ export const darkTheme = {
   clockTextColor: '#fff',
   clockFillColor: '#fff',
   smallClockFillColor: '#999',
-  textBackgroundCOlor: '#000',
+  textBackgroundColor: '#000',
   graphLableColor: '#fff',
   graphTooltipTextColor: '#fff',
   progressBarBackgroundColor: 'rgba(255,0,0,0.3)',
@@ -44,6 +45,8 @@ export const darkTheme = {
   progressBarSmallCircleAnimationStrokeColor: '#f3f3f3',
   progressBarAvatarStrokeColor: 'rgba(255,255,255,0.4)',
   progressBarAvatarAnimatedStrokeColor: '#fff',
+  tableBorderColor:'rgba(220, 20, 60,1)',
+
 };
 
 export const Colors = {

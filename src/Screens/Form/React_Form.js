@@ -117,7 +117,7 @@ const TextInputField = ({name, control, placeholder, errors, theme}) => {
               styles.placeholder,
               {
                 color: theme.textColor,
-                backgroundColor: theme.textBackgroundCOlor,
+                backgroundColor: theme.textBackgroundColor,
               },
             ]}>
             {placeholder}

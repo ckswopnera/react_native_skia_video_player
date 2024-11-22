@@ -47,8 +47,8 @@ import {
 } from '../utils/util';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 import Orientation from 'react-native-orientation-locker';
-import {useBearStore} from '../store/store';
 import {darkTheme, lightTheme} from '../Style/theme';
+import { useBoundStore } from '../store/MainStore';
 
 const Video = () => {
   const colorScheme = useColorScheme();
@@ -56,7 +56,7 @@ const Video = () => {
   const [height, setHeight] = useState(windowHeight);
   const [width, setWidth] = useState(windowWidth);
   const textStamp = useRef(null);
-  const setShowBar = useBearStore(state => state.setShowBar);
+  const {setShowBar} = useBoundStore();
   const iconColor = '#fff';
   const iconSize = 32;
   const [pause, setPause] = useState(false);
@@ -64,7 +64,6 @@ const Video = () => {
   const [volumeControl, setVolumeControl] = useState(true);
   const [isLoading, setisLoading] = useState(true);
   const rotation = useSharedValue(0);
-  // const {width, height} = useWindowDimensions();
   const [showControl, setShowControl] = useState(true);
 
   const [loop, setloop] = useState(false);
@@ -72,7 +71,14 @@ const Video = () => {
   const paused = useSharedValue(false);
   const volume = useSharedValue(1);
 
-  const {currentFrame, currentTime, size, duration, framerate} = useVideo(
+  const {
+    currentFrame,
+    currentTime,
+    size,
+    duration,
+    framerate,
+    rotation: rot,
+  } = useVideo(
     // 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
     'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
     // 'https://www.taxmann.com/emailer/images/CompaniesAct.mp4',
@@ -86,6 +92,7 @@ const Video = () => {
 
   // const src = rect(0, 0, size.width, size.height);
   // const dst = rect(0, 0, width, height);
+  // const transform = fitbox('cover', src, dst, rot);
 
   const progress = useSharedValue(0);
   const min = useSharedValue(0);
@@ -257,15 +264,16 @@ const Video = () => {
     paused.value = true;
   };
   const onZoom = () => {
-    setZoom(!zoom);
+    zoom === false ? setZoom(true) : setZoom(false);
     zoom === false
       ? Orientation.lockToLandscape()
       : Orientation.lockToPortrait();
     zoom === false ? setShowBar(false) : setShowBar(true);
     // SystemNavigationBar.navigationHide();
     zoom === false
-      ? SystemNavigationBar.fullScreen(true)
-      : SystemNavigationBar.fullScreen(false);
+      ? SystemNavigationBar.leanBack(true)
+      : // &&  SystemNavigationBar.setFitsSystemWindows()
+        SystemNavigationBar.leanBack(false);
     // SystemNavigationBar.setFitsSystemWindows(true);
   };
 
@@ -325,7 +333,7 @@ const Video = () => {
 
       <TouchableOpacity
         style={{
-          height: zoom === true ? height : 250,
+          height: zoom === true ? width : 250,
           // backgroundColor:'red'
         }}
         onPress={onPressVideo}>
@@ -340,19 +348,14 @@ const Video = () => {
                 height={zoom === true ? height : 250}
                 fit={zoom === true ? 'cover' : 'contain'}
               />
-              {/* {showControl && <ColorMatrix matrix={darkenMatrix} />} */}
             </Fill>
             {showControl && (
-              // <Fill>
-              //   <ColorMatrix matrix={overlayMatrix} />
-              // </Fill>
-
               <BackdropBlur
                 blur={4}
                 clip={{
                   x: 0,
                   y: 0,
-                  width: width,
+                  // width: width,
                   height: zoom === true ? height : 250,
                 }}>
                 <Fill color="rgba(0, 0, 0, 0.6)" />

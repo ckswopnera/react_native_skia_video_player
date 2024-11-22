@@ -1,46 +1,269 @@
-import {Alert, Dimensions, Platform} from 'react-native';
-import {QueryClient, onlineManager} from '@tanstack/react-query';
+import {
+  Alert,
+  Button,
+  Dimensions,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  QueryClient,
+  onlineManager,
+  useQueryClient,
+} from '@tanstack/react-query';
 import NetInfo from '@react-native-community/netinfo';
+import {toast} from 'sonner-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 
 export const windowWidth = Dimensions.get('window').width;
 export const windowHeight = Dimensions.get('window').height;
-
+export const gToken =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3MjQ5MTA3ODMsImV4cCI6MTc1NjQ0Njc4MywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.VZzn2OKVadlHaw_Q8xmZEa4qx6vonKguso34eqE4Ghc';
 export const queryClient = new QueryClient();
+
 export const prefetchData = async () => {
   await queryClient.prefetchQuery({
-    queryKey: ['postsNew'],
+    queryKey: ['prefetchQuery'],
     queryFn: fetchPosts,
+    staleTime: 5000,
   });
 };
-
-export const fetchPosts = async ({pageParam = 1}) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`,
-  );
-  const data = await response.json();
-  return {
-    items: data,
-    nextCursor: pageParam + 1,
-    prevCursor: pageParam > 1 ? pageParam - 1 : undefined,
-  };
+export const tokenCheck = async loginData => {
+  // console.log({loginData})
+  try {
+    const response = await fetch(`https://dummyjson.com/auth/login`, {
+      method: 'POST',
+      body: JSON.stringify({
+        username: 'emilys',
+        password: 'emilyspass',
+        expiresInMins: 1,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log({err});
+    throw err;
+  }
 };
 
-export const singleQuery = async () => {
-  const response = await fetch('https://api.github.com/repos/TanStack/query');
-  const data = await response.json();
-  return data;
+export const tokenExpiryCheck = async token => {
+  // console.log('test',token)
+  try {
+    const response = await fetch('https://dummyjson.com/auth/me', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log({err});
+    throw err;
+  }
+};
+export const fetchPosts = async ({pageParam = 1}) => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`,
+    );
+    const data = await response.json();
+    return {
+      items: data,
+      nextCursor: pageParam + 1,
+      prevCursor: pageParam > 1 ? pageParam - 1 : undefined,
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const singleQuery = async count => {
+  // console.log({count})
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/users?_limit=${count}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.log({err});
+    throw err;
+  }
+};
+
+export const fetchPosts_Crud = async signal => {
+  // console.log({signal})
+  try {
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/posts?_limit=10',
+      // 'https://jsonplaceholder.typicode.com/posts/1',
+      {
+        signal,
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log('fetchPosts_Crud error', err);
+    throw err;
+  }
+};
+
+export const fetchTest_Crud = async (data, signal) => {
+  console.log('fetchTest_Crud', signal, data);
+  try {
+    const response = await fetch(
+      'https://jsonplaceholder.typicode.com/posts/1',
+      {
+        signal,
+      },
+    );
+    if (!response.ok) {
+      throw new Error('Failed to update post');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log('Error in createPost_Crud:', err);
+    throw err;
+  }
+};
+
+export const createPost_Crud = async (postId, signal) => {
+  console.log('createPost_Crud', signal, postId);
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      signal: signal,
+      method: 'POST',
+      body: JSON.stringify({
+        title: 'foo',
+        body: 'bar',
+        userId: 1,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    // console.log({response})
+    if (!response.ok) {
+      throw new Error('Failed to update post');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (err) {
+    console.log('Error in createPost_Crud:', err);
+    throw err;
+  }
+};
+export const updatePost_Crud = async (postId, signal) => {
+  console.log('updatePost_Crud', {signal}, {postId});
+
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      {
+        signal: signal,
+        method: 'PUT',
+        body: JSON.stringify({
+          id: postId,
+          title: 'foo',
+          body: 'bar',
+          userId: 1,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      },
+    );
+    console.log({response});
+    if (!response.ok) {
+      throw new Error('Failed to update post');
+    }
+    const data = await response.json();
+    // console.log({data});
+
+    return data;
+  } catch (error) {
+    console.log('Error in updatePost_Crud:', error);
+    throw error;
+  }
+};
+
+export const deletePost_Crud = async (postId, signal) => {
+  try {
+    console.log('deletePost_Crud', postId, signal);
+
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${postId}`,
+      {
+        signal: signal,
+        method: 'DELETE',
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to delete post');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log('Error in deletePost_Crud:', error);
+    throw error;
+  }
 };
 
 export const infiniteFunction = async ({pageParam = 1}) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`,
-  );
-  const result = await response.json();
-  return {
-    data: result,
-    nextId: pageParam + 1,
-    previousId: pageParam > 1 ? pageParam - 1 : undefined,
-  };
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${pageParam}&_limit=10`,
+    );
+    const result = await response.json();
+    return {
+      data: result,
+      nextId: pageParam + 1,
+      previousId: pageParam > 1 ? pageParam - 1 : undefined,
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const fetchProjects = async (page = 1) => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`,
+    );
+    return await response.json();
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const fetchProjectsSuspense = async (page = 1) => {
+  try {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=14`,
+    );
+    return await response.json();
+  } catch (err) {
+    throw err;
+  }
 };
 
 export const msToTime = duration => {
@@ -106,6 +329,7 @@ export const DATA_For_One_Month = [
     title: 'Month 1',
     data: [
       {day: 1, highTmp: 35},
+
       {day: 2, highTmp: 36},
       {day: 3, highTmp: 34},
       {day: 4, highTmp: 37},
@@ -244,3 +468,163 @@ export const candleStickData = [
     close: 33420.11,
   },
 ];
+
+export const toast_success = () => {
+  toast.success('Operation successful!', {
+    // className: 'bg-green-500',
+    // style: { backgroundColor: 'blue' },
+    description: 'Everything worked as expected.',
+    // duration: 6000,
+    // icon: <SomeIcon />,
+  });
+};
+export const toast_error = (e,f) => {
+  // console.log({e}, {f});
+  toast.error(e, {
+    // className: 'bg-green-500',
+    // style: { backgroundColor: 'blue' },
+    description: f,
+    // duration: 6000,
+    // icon: <SomeIcon />,
+    duration: Infinity,
+  });
+};
+export const toast_warning = () => {
+  toast.warning('Operation warning!', {
+    // className: 'bg-green-500',
+    style: {alignItems: 'center', justifyContent: 'center'},
+    description: 'Everything worked as expected.',
+    // duration: 6000,
+    // icon: <SomeIcon />,
+  });
+};
+
+export const toast_action = () => {
+  toast.success('Operation warning!', {
+    // className: 'bg-green-500',
+    style: {alignItems: 'center', justifyContent: 'center'},
+    description: 'Everything worked as expected.',
+    // duration: 6000,
+    // icon: <SomeIcon />,
+
+    action: {
+      label: 'Ok',
+      onClick: () => console.log('Ok!'),
+    },
+    cancel: {
+      label: 'Cancel',
+      onClick: () => console.log('Cancel!'),
+    },
+    duration: Infinity,
+    // closeButton: true,
+
+  });
+};
+export const toast_custom = (e, f) => {
+  if (e !== undefined || f !== undefined) {
+    toast.custom(
+      <View
+        style={{
+          elevation: 4,
+          backgroundColor: '#fff',
+          paddingVertical: 20,
+          paddingRight: 20,
+          paddingLeft: 10,
+          width: '90%',
+          borderRadius: 12,
+          marginVertical: 4,
+          // pa
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <FontAwesome6
+            name="triangle-exclamation"
+            size={30}
+            color={'rgba(255,51,51,1)'}
+          />
+          <View
+            style={{
+              width: '85%',
+            }}>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                fontSize: 16,
+                color: '#000',
+              }}>
+              {e}
+            </Text>
+            <Text
+              style={{
+                fontWeight: 'semibold',
+              }}>
+              {f}
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingTop: 10,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Decline');
+                  toast.dismiss();
+                }}
+                style={
+                  {
+                    // width: '80%',
+                  }
+                }>
+                <Text>Decline</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Ask me later');
+                  toast.dismiss();
+                }}
+                style={
+                  {
+                    // width: '80%',
+                  }
+                }>
+                <Text>Ask me later</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  console.log('Accepted');
+                  // toast.dismiss();
+                }}
+                style={{
+                  // width: '80%',
+                  borderWidth: 1,
+                  borderColor: '#000',
+                  borderRadius: 8,
+                  padding: 10,
+                }}>
+                <Text
+                  style={{
+                    color: '#000',
+                  }}>
+                  Accept
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </View>,
+      {duration: Infinity},
+    );
+  }
+};
+
+export const toast_loading = () => {
+  toast.loading('Loading...', {
+    description: 'Everything worked as expected.',
+  });
+};

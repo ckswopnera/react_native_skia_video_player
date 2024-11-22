@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
-  useColorScheme,TextInput
+  useColorScheme,
+  TextInput,
 } from 'react-native';
 import Svg, {
   Circle,
@@ -265,6 +266,7 @@ const CircularProgressAnimation = ({
             No. of Seats Filled
           </TSpan>
         </SvgText>
+        
       </Svg>
       <LocalSvg
         asset={require('../Assets/svg/seats.svg')}
@@ -336,7 +338,6 @@ const CircularProgressBar = () => {
         placeholder="Booked Seat"
         placeholderTextColor={theme.textColor}
         value={booked_no_of_seats}
-
         onChangeText={e => {
           if (parseInt(e) >= 0 && parseInt(e) <= total_no_of_seats) {
             setno_of_seats(e);

@@ -11,6 +11,7 @@ import {
 import {useInfiniteQuery} from '@tanstack/react-query';
 import {fetchPosts} from '../../utils/util';
 import {darkTheme, lightTheme} from '../../Style/theme';
+import * as Animatable from 'react-native-animatable';
 
 const Tanstack_Infinite_Scroll = () => {
   const colorScheme = useColorScheme();
@@ -38,7 +39,42 @@ const Tanstack_Infinite_Scroll = () => {
     }
   };
   // console.log({status});
-
+  const fromRight = {
+    from: {
+      opacity: 0,
+      transform: [
+        {
+          translateX: 500,
+        },
+      ],
+    },
+    to: {
+      opacity: 1,
+      transform: [
+        {
+          translateX: 0,
+        },
+      ],
+    },
+  };
+  const fromLeft = {
+    from: {
+      opacity: 0,
+      transform: [
+        {
+          translateX: -500,
+        },
+      ],
+    },
+    to: {
+      opacity: 1,
+      transform: [
+        {
+          translateX: 0,
+        },
+      ],
+    },
+  };
   if (isLoading)
     return (
       <View
@@ -58,20 +94,28 @@ const Tanstack_Infinite_Scroll = () => {
     );
   const posts = data?.pages?.flatMap(page => {
     // console.log(page.items);
-
     return page.items;
   });
-
+  // console.log(posts?.pages)
   return (
     <FlatList
       style={{
         backgroundColor: theme.backgroundColor,
       }}
       data={posts}
-      keyExtractor={(item,index) => index.toString()}
-      renderItem={({item, index}) => (
-        <ItemComponent item={item} index={index + 1} theme={theme} />
-      )}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={({item, index}) => {
+        console.log(item);
+        return (
+          <ItemComponent
+            item={item}
+            index={index + 1}
+            theme={theme}
+            fromRight={fromRight}
+            fromLeft={fromLeft}
+          />
+        );
+      }}
       onEndReached={loadMore}
       onEndReachedThreshold={0.7}
       ListFooterComponent={
@@ -83,22 +127,33 @@ const Tanstack_Infinite_Scroll = () => {
   );
 };
 
-const ItemComponent = ({item, index, theme}) => (
+const ItemComponent = ({item, index, theme, fromRight, fromLeft}) => (
   <TouchableOpacity
     style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
     <View style={{flexDirection: 'row'}}>
-      <Text style={[styles.index, {color: theme.textColor}]}>{index}</Text>
+      <Animatable.Text
+        animation={fromLeft}
+        style={[styles.index, {color: theme.textColor}]}>
+        {index}
+      </Animatable.Text>
       <View style={{flexDirection: 'column', width: '85%'}}>
-        <View style={{
-          backgroundColor:'rgba(255,0,0,0.6)',
-          borderRadius:8,
-          paddingVertical:4,
-        }}>
-        <Text style={[styles.title, {color: theme.textColor}]}>
-          {item.title}
-        </Text>
+        <View
+          style={{
+            backgroundColor: 'rgba(255,0,0,0.6)',
+            borderRadius: 8,
+            paddingVertical: 4,
+          }}>
+          <Animatable.Text
+            animation={fromRight}
+            style={[styles.title, {color: theme.textColor}]}>
+            {item.title}
+          </Animatable.Text>
         </View>
-        <Text style={[styles.body, {color: theme.textColor}]}>{item.body}</Text>
+        <Animatable.Text
+          animation={fromRight}
+          style={[styles.body, {color: theme.textColor}]}>
+          {item.body}
+        </Animatable.Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -130,10 +185,7 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
     letterSpacing: 1,
     // textDecorationLine: 'underline',
-    paddingHorizontal:8,
-
+    paddingHorizontal: 8,
   },
-  body: {fontSize: 16, letterSpacing: 1,
-    paddingHorizontal:8,
-  },
+  body: {fontSize: 16, letterSpacing: 1, paddingHorizontal: 8},
 });

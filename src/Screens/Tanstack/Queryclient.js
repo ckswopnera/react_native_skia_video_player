@@ -13,12 +13,13 @@ import {
 import {useQuery} from '@tanstack/react-query';
 import {fetchPosts} from '../../utils/util';
 import {darkTheme, lightTheme} from '../../Style/theme';
+import * as Animatable from 'react-native-animatable';
 
 const Tanstack_Queryclient = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const {data, error, isLoading} = useQuery({
-    queryKey: ['postsNew'],
+    queryKey: ['prefetchQuery'],
     queryFn: fetchPosts,
     getNextPageParam: (lastPage, pages) => {
       console.log(
@@ -55,9 +56,87 @@ const Tanstack_Queryclient = () => {
 
   const postsNew = data?.items?.flatMap(page => {
     // console.log(page);
-
     return page;
   });
+
+  const zoomIn = {
+    0: {
+      transform: [
+        {
+          scale: 1,
+        },
+        {
+          translateX: 400,
+          
+        },
+      ],
+      // color:'#fff',
+
+    },
+    1: {
+      transform: [
+        {
+          scale: 1,
+        },
+        {
+          translateX: 0,
+        },
+      ],
+      // color:'#000',
+
+    },
+  };
+
+  const rotateIn = {
+    0: {
+      transform: [
+        {
+          scale: 1,
+        },
+        {
+          rotateZ: '0deg',
+        },
+      ],
+      color:'#fff',
+    },
+    1: {
+      transform: [
+        {
+          scale: 1,
+        },
+        {
+          rotateZ: '360deg',
+        },
+      ],
+      color:'red',
+
+    },
+  };
+  const ItemComponent = ({item, index, theme}) => 
+    <TouchableOpacity
+      style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
+      <View style={{flexDirection: 'row'}}>
+        <Animatable.Text
+          animation={rotateIn}
+          style={[styles.index, {color: theme.textColor}]}>
+          {index}
+        </Animatable.Text>
+        <View style={{flexDirection: 'column', width: '85%'}}>
+          <Animatable.Text
+            animation={zoomIn}
+            style={[styles.title, {color: theme.textColor}]}>
+            {item.title}
+          </Animatable.Text>
+          <Animatable.Text
+            animation={zoomIn}
+            style={[styles.body, {color: theme.textColor}]}>
+            {item.body}
+          </Animatable.Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  ;
+
   return (
     <FlatList
       style={{
@@ -73,21 +152,6 @@ const Tanstack_Queryclient = () => {
     />
   );
 };
-
-const ItemComponent = ({item, index, theme}) => (
-  <TouchableOpacity
-    style={{padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-    <View style={{flexDirection: 'row'}}>
-      <Text style={[styles.index, {color: theme.textColor}]}>{index}</Text>
-      <View style={{flexDirection: 'column', width: '85%'}}>
-        <Text style={[styles.title, {color: theme.textColor}]}>
-          {item.title}
-        </Text>
-        <Text style={[styles.body, {color: theme.textColor}]}>{item.body}</Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
 
 const styles = StyleSheet.create({
   container: {
