@@ -122,7 +122,7 @@ const Clock = () => {
             </Animatable.Text>
           </View>
 
-          {clockView === true ? (
+          {clockView !== true ? (
             <AnalogClock
               fill={theme.clockFillColor}
               stroke={theme.clockTextColor}

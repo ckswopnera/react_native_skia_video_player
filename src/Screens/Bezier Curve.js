@@ -5,7 +5,6 @@ import {Canvas, Path, Circle} from '@shopify/react-native-skia';
 // Define the cubic Bézier path
 const PATH_D = 'M0,50 C25,100 75,0 100,50 C125,100 175,0 200,50';
 
-// Define cubic Bézier curve control points
 const CONTROL_POINTS = [
   {x: 0, y: 50},
   {x: 25, y: 100},
@@ -16,7 +15,6 @@ const CONTROL_POINTS = [
   {x: 200, y: 50},
 ];
 
-// Utility function to calculate a point on a cubic Bézier curve
 const cubicBezier = (t, p0, p1, p2, p3) => {
   const u = 1 - t;
   const tt = t * t;
@@ -33,25 +31,20 @@ const cubicBezier = (t, p0, p1, p2, p3) => {
 const Waveform = () => {
   const [circlePos, setCirclePos] = useState({x: 0, y: 50});
 
-  // Handle touch interactions with PanResponder
   const panResponder = PanResponder.create({
     onMoveShouldSetPanResponder: () => true,
     onPanResponderMove: event => {
       const x = event.nativeEvent.locationX;
 
-      // Clamp x to valid range
       const clampedX = Math.max(0, Math.min(200, x));
 
-      // Find the cubic Bézier segment that contains the x coordinate
       let segmentIndex = Math.floor(clampedX / 100) * 3;
       segmentIndex = Math.min(segmentIndex, CONTROL_POINTS.length - 4);
       const segmentStartX = CONTROL_POINTS[segmentIndex].x;
       const segmentEndX = CONTROL_POINTS[segmentIndex + 3].x;
 
-      // Normalize x to the segment range [0, 1]
       const t = (clampedX - segmentStartX) / (segmentEndX - segmentStartX);
 
-      // Calculate y using cubicBezier function
       const p0 = CONTROL_POINTS[segmentIndex];
       const p1 = CONTROL_POINTS[segmentIndex + 1];
       const p2 = CONTROL_POINTS[segmentIndex + 2];
