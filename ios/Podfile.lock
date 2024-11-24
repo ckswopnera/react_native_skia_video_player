@@ -1609,7 +1609,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - CardIO
     - libwebp
     - lottie-ios
     - MMKV
