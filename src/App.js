@@ -82,6 +82,9 @@ import VisionCamera from './Screens/VisionCamera/VisionCamera';
 import App_State from './Screens/App_State';
 import Notification from './Screens/Notification';
 import ScratchScreen from './Screens/ScratchScreen';
+import React_Form_Zod from './Screens/Form/React_Form_Zod';
+import Wheel from './Screens/Wheel';
+import LuckyWheel from './Screens/LuckyWheel/LuckyWheel';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -113,7 +116,7 @@ const App = () => {
         return data;
       } catch (error) {
         console.log('Error fetching token:', error);
-        toast_error('Error!', error);
+        toast_error('Error!', 'Error fetching token:');
       }
     };
 
@@ -158,29 +161,30 @@ const App = () => {
     }
   }, [isUpdatePending]);
 
-  if (isLoading === true) {
-    return (
-      <View
-        style={[
-          styles.loadingView,
-          {
-            backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
-          },
-        ]}>
-        <ActivityIndicator
-          size="200"
-          color={colorScheme === 'dark' ? '#fff' : '#000'}
-        />
-        <StatusBar
-          barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
-          backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
-          // translucent={false}
-        />
-      </View>
-    );
-  } else if (isTokenExpired) {
-    return <TokenExpiredScreen />;
-  } else {
+  // if (isLoading === true) {
+  //   return (
+  //     <View
+  //       style={[
+  //         styles.loadingView,
+  //         {
+  //           backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
+  //         },
+  //       ]}>
+  //       <ActivityIndicator
+  //         size="200"
+  //         color={colorScheme === 'dark' ? '#fff' : '#000'}
+  //       />
+  //       <StatusBar
+  //         barStyle={colorScheme === 'dark' ? 'light-content' : 'dark-content'}
+  //         backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
+  //         // translucent={false}
+  //       />
+  //     </View>
+  //   );
+  // } else 
+  // if (isTokenExpired) {
+  //   return <TokenExpiredScreen />;
+  // } else {
     return (
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
@@ -224,7 +228,7 @@ const App = () => {
         </SafeAreaProvider>
       </QueryClientProvider>
     );
-  }
+  // }
 };
 
 const MainComponent = () => {
@@ -234,7 +238,7 @@ const MainComponent = () => {
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        initialRouteName="Notification"
+        initialRouteName="Wheel Fortune"
         screenOptions={{
           headerShown: showBar,
           drawerHideStatusBarOnOpen: false,
@@ -305,6 +309,8 @@ const MainComponent = () => {
         <Drawer.Screen name="React Form" component={React_Form} />
         <Drawer.Screen name="React Form 2" component={React_Form2} />
         <Drawer.Screen name="React Form 3" component={React_Form3} />
+        <Drawer.Screen name="React Form Using Zod" component={React_Form_Zod} />
+
         <Drawer.Screen
           name="Video Player"
           component={Video}
@@ -439,6 +445,16 @@ const MainComponent = () => {
         <Drawer.Screen
           name="ScratchScreen"
           component={ScratchScreen}
+          options={{unmountOnBlur: true}}
+        />
+          <Drawer.Screen
+          name="Wheel Fortune"
+          component={LuckyWheel}
+          options={{unmountOnBlur: true}}
+        />
+   <Drawer.Screen
+          name="Wheel"
+          component={Wheel}
           options={{unmountOnBlur: true}}
         />
       </Drawer.Navigator>
