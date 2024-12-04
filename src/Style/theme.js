@@ -21,6 +21,9 @@ export const lightTheme = {
   progressBarAvatarStrokeColor: 'rgba(0,0,0,0.2)',
   progressBarAvatarAnimatedStrokeColor: '#6200ee',
   tableBorderColor:'#666',
+  bottomNavColor: 'rgba(95, 37, 159,1)',
+  bottomNavQrScanColor: '#fff',
+  bottomNavQrScanBorderColor: 'rgba(95, 37, 159,1)',
 };
 
 export const darkTheme = {
@@ -46,7 +49,9 @@ export const darkTheme = {
   progressBarAvatarStrokeColor: 'rgba(255,255,255,0.4)',
   progressBarAvatarAnimatedStrokeColor: '#fff',
   tableBorderColor:'rgba(220, 20, 60,1)',
-
+  bottomNavColor: 'rgba(95, 37, 159,1)',
+  bottomNavQrScanColor: '#000',
+  bottomNavQrScanBorderColor: 'transparent',
 };
 
 export const Colors = {
@@ -57,6 +62,7 @@ export const Colors = {
   accent: '#112233',
   black: '#000',
   primary: '#637aff',
+  primary2: 'rgba(95, 37, 159,1)',
   green: '#60c5a8',
   purple: '#8f06e4',
   yellow: '#f8c907',

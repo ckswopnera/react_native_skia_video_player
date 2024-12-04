@@ -30,6 +30,18 @@ export default function ColorScreen({route, navigation}) {
         setBgColor(Colors.yellow);
         break;
       }
+      case 'HomeNavigator': {
+        setBgColor(Colors.red);
+        break;
+      }
+      case 'QrScan': {
+        setBgColor(Colors.purple);
+        break;
+      }
+      case 'HistoryNavigator': {
+        setBgColor(Colors.yellow);
+        break;
+      }
       default:
         setBgColor(Colors.white);
     }

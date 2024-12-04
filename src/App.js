@@ -85,6 +85,7 @@ import ScratchScreen from './Screens/ScratchScreen';
 import React_Form_Zod from './Screens/Form/React_Form_Zod';
 import Wheel from './Screens/Wheel';
 import LuckyWheel from './Screens/LuckyWheel/LuckyWheel';
+import AnimTab4 from './Screens/Animated Bottomtab/AnimatedBottomTab4';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -347,6 +348,8 @@ const MainComponent = () => {
         <Drawer.Screen name="Animated BottomTab 1" component={AnimTab1} />
         <Drawer.Screen name="Animated BottomTab 2" component={AnimTab2} />
         <Drawer.Screen name="Animated BottomTab 3" component={AnimTab3} />
+        <Drawer.Screen name="Animated BottomTab 4" component={AnimTab4} />
+
         <Drawer.Screen name="Bezier Curve" component={BezierCurve} />
         <Drawer.Screen
           name="Circle Wave"
