@@ -1,30 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import * as Animatable from 'react-native-animatable'
-import Animated, { FadeIn, useAnimatedRef } from 'react-native-reanimated';
-import { Colors } from '../Style/theme';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import Animated, {FadeIn, useAnimatedRef} from 'react-native-reanimated';
+import {Colors} from '../Style/theme';
 import AppHeader from './MyHeader';
 
-
-export default function ColorScreen({ route, navigation }) {
+export default function ColorScreen({route, navigation}) {
   const viewRef = useAnimatedRef(null);
   const [bgColor, setBgColor] = useState();
   useEffect(() => {
     switch (route.name) {
-      case 'Home': { setBgColor(Colors.primary); break; }
-      case 'Search': { setBgColor(Colors.green); break; }
-      case 'Add': { setBgColor(Colors.red); break; }
-      case 'Account': { setBgColor(Colors.purple); break; }
-      case 'Like': { setBgColor(Colors.yellow); break; }
-      default: setBgColor(Colors.white);
+      case 'Home': {
+        setBgColor(Colors.primary);
+        break;
+      }
+      case 'Search': {
+        setBgColor(Colors.green);
+        break;
+      }
+      case 'Add': {
+        setBgColor(Colors.red);
+        break;
+      }
+      case 'Account': {
+        setBgColor(Colors.purple);
+        break;
+      }
+      case 'Like': {
+        setBgColor(Colors.yellow);
+        break;
+      }
+      case 'HomeNavigator': {
+        setBgColor(Colors.white);
+        break;
+      }
+      case 'QrScan': {
+        setBgColor(Colors.white);
+        break;
+      }
+      case 'HistoryNavigator': {
+        setBgColor(Colors.white);
+        break;
+      }
+      default:
+        setBgColor(Colors.white);
     }
-  }, [])
+  }, []);
 
   return (
-    <Animated.View ref={viewRef} entering={FadeIn.duration(800)}
-      style={{flex: 1,
-      backgroundColor: bgColor 
-      }}>
+    <Animated.View
+      ref={viewRef}
+      entering={FadeIn.duration(800)}
+      style={{...styles.container, backgroundColor: bgColor}}>
       {/* <AppHeader
         menu
         onPressMenu={() => navigation.goBack()}
@@ -32,10 +59,13 @@ export default function ColorScreen({ route, navigation }) {
         right="more-vertical"
         onRightPress={() => console.log('right')}
       /> */}
-      <View style={{flex: 1, backgroundColor: bgColor }}>
-      </View>
+      <View style={{...styles.container, backgroundColor: bgColor}}></View>
     </Animated.View>
-  )
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

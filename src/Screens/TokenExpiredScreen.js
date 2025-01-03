@@ -53,7 +53,7 @@ const ErrorPage = () => {
         console.log(data);
       } catch (error) {
         console.log('Error fetching token:', error);
-        toast_error('Error!', error);
+        toast_error('Error!', 'Error fetching token:');
 
       }
     };

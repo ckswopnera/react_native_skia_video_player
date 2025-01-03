@@ -17,6 +17,7 @@ import {
   useAnimatedPath,
   useChartPressState,
   useLinePath,
+  StackedBar,
 } from 'victory-native';
 import {
   Circle,
@@ -27,13 +28,13 @@ import {
   LinearGradient,
   center,
 } from '@shopify/react-native-skia';
-import inter from '../Assets/fonts/Inter-Bold.ttf';
-import {candleStickData, DATA_For_One_Month} from '../utils/util';
+import inter from "../../Assets/fonts/Inter-Bold.ttf";
+import {candleStickData, DATA_For_One_Month} from '../../utils/util';
 import {useDerivedValue} from 'react-native-reanimated';
-import {darkTheme, lightTheme} from '../Style/theme';
+import {darkTheme, lightTheme} from '../../Style/theme';
 const footer = 'Temp Graph';
 
-function ChartVictoryNative() {
+export default function ChartVictoryNative() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? darkTheme : lightTheme;
   const font = useFont(inter, 11);
@@ -80,6 +81,7 @@ function ChartVictoryNative() {
 }
 
 function ToolTip({x, y, color, activeValue}) {
+
   const font = useFont(inter, 11);
   const activeValueDisplay = useDerivedValue(() =>
     activeValue?.value.toFixed(2),
@@ -124,7 +126,8 @@ function MyAnimatedLine({points, color, strokeWidth}) {
 
 const Chart = ({data, font, footer, theme}) => {
   const {state, isActive} = useChartPressState({x: 0, y: {highTmp: 0}});
-
+  const [roundedCorner] = useState(5);
+  const [innerPadding] = useState(0.33);
   let activeXItem = useDerivedValue(() => {
     return data.findIndex(value => value.day === state.x.value.value);
   }).value;
@@ -134,6 +137,79 @@ const Chart = ({data, font, footer, theme}) => {
 
   return (
     <>
+      <ScrollView horizontal>
+        <View style={{width: data.length * 20, height: 250}}>
+          <CartesianChart
+            data={data}
+            xKey="day"
+            yKeys={['highTmp', 'topTmp']}
+            domain={{y: [-50, 150]}}
+            axisOptions={{
+              font,
+              // tickCount:data?.length/2,
+              labelColor: {x: theme.graphLableColor, y: theme.graphLableColor},
+              lineColor: theme.graphLableColor,
+              lineWidth: 0.2,
+            }}
+            padding={5}
+            domainPadding={20}
+            chartPressState={state}>
+            {({points, chartBounds}) => {
+              return (
+                <>
+                  <StackedBar
+                    innerPadding={innerPadding}
+                    chartBounds={chartBounds}
+                    points={[points.highTmp, points.topTmp]}
+                    barOptions={({isBottom, isTop, columnIndex, rowIndex}) => {
+                      return {
+                        roundedCorners: isTop
+                          ? {
+                              topLeft: roundedCorner,
+                              topRight: roundedCorner,
+                            }
+                          : isBottom
+                          ? {
+                              bottomRight: roundedCorner,
+                              bottomLeft: roundedCorner,
+                            }
+                          : undefined,
+                        children:
+                          rowIndex % 2 === 0 && columnIndex === 1 ? (
+                            <LinearGradient
+                              start={vec(100, 100)}
+                              end={vec(10, 100)}
+                              colors={['purple', 'purple']}
+                            />
+                          ) : (
+                            <LinearGradient
+                              start={vec(100, 100)}
+                              end={vec(10, 100)}
+                              colors={['red', 'orange']}
+                            />
+                          ),
+                      };
+                    }}
+                  />
+                  <LinearGradient
+                    colors={['#9C51B6', '#5946B2', '#fff']}
+                    start={vec(0, 0)}
+                    end={vec(0, 400)}
+                  />
+                    {isActive && (
+                  <ToolTip
+                    x={state.x.position}
+                    y={state.y.highTmp.position}
+                    color={theme.graphTooltipTextColor}
+                    activeValue={state.y.highTmp.value}
+                  />
+                )}
+                </>
+              );
+            }}
+          </CartesianChart>
+        </View>
+      </ScrollView>
 
       <ScrollView horizontal>
         <View style={{width: data.length * 20, height: 250}}>
@@ -215,7 +291,7 @@ const Chart = ({data, font, footer, theme}) => {
                         start={vec(0, 0)}
                         end={vec(0, 400)}
                         colors={
-                          index == activeXItem
+                          index === activeXItem
                             ? ['#FFF', 'green']
                             : ['#9C51B6', '#5946B2', '#fff']
                         }
@@ -356,7 +432,7 @@ const Chart = ({data, font, footer, theme}) => {
               lineColor: theme.graphLableColor,
               lineWidth: 0.2,
             }}
-            domainPadding={20}
+            domainPadding={0}
             chartPressState={state}>
             {({points, chartBounds}) => (
               <>
@@ -389,7 +465,7 @@ const Chart = ({data, font, footer, theme}) => {
   );
 };
 
-export default ChartVictoryNative;
+
 
 const styles = StyleSheet.create({
   container: {

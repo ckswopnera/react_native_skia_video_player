@@ -21,6 +21,9 @@ export const lightTheme = {
   progressBarAvatarStrokeColor: 'rgba(0,0,0,0.2)',
   progressBarAvatarAnimatedStrokeColor: '#6200ee',
   tableBorderColor:'#666',
+  bottomNavColor: 'rgba(95, 37, 159,1)',
+  bottomNavQrScanColor: '#fff',
+  bottomNavQrScanBorderColor: 'rgba(95, 37, 159,1)',
 };
 
 export const darkTheme = {
@@ -46,7 +49,9 @@ export const darkTheme = {
   progressBarAvatarStrokeColor: 'rgba(255,255,255,0.4)',
   progressBarAvatarAnimatedStrokeColor: '#fff',
   tableBorderColor:'rgba(220, 20, 60,1)',
-
+  bottomNavColor: 'rgba(95, 37, 159,1)',
+  bottomNavQrScanColor: '#000',
+  bottomNavQrScanBorderColor: 'transparent',
 };
 
 export const Colors = {
@@ -57,8 +62,25 @@ export const Colors = {
   accent: '#112233',
   black: '#000',
   primary: '#637aff',
+  primary2: 'rgba(95, 37, 159,1)',
   green: '#60c5a8',
   purple: '#8f06e4',
   yellow: '#f8c907',
   dark: '#333',
+};
+
+
+export const appColors = {
+  tint: "#f04d21",
+  androidHeader: { dark: "#262626", light: "#fafafa" },
+  viewBackground: { dark: "#404040", light: "#f5f5f5" },
+  text: { dark: "#fafafa", light: "#262626" },
+  cardBackground: { dark: "#525252", light: "#fff" },
+  cardBorder: { dark: "#a1a1aa", light: "#a1a1aa" },
+  success: { dark: "#7ee17e", light: "#085408" },
+  error: { dark: "#c84c4c", light: "#9e1a1a" },
+  infoCardActive: { dark: "#c4b5fd", light: "#8b5cf6" },
+  buttonBackgroundColor: { dark: "#737373", light: "#e7e7e7" },
+  buttonBorderColor: { dark: "#a3a3a3", light: "white" },
+  buttonUnderlayColor: { dark: "#8b5cf6", light: "#ddd6fe" },
 };
