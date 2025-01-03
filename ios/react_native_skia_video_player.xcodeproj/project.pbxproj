@@ -11,14 +11,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		16CB5FB15FB2D2D5EFC17BFB /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E6F5DB038DD44050D9CED45 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */; };
 		22010B007CD140D38C58B760 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA5CDF16C0294376A099388A /* Inter-Thin.ttf */; };
+		5B225E21B77AFAD7ED7026B5 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FD30075AAB8BB2E0A7C09F8 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */; };
 		69FF43FBFE89D2517A252033 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6ACF67C0FCA491A2ACC6A1 /* ExpoModulesProvider.swift */; };
 		714EBE565DAA4F4BAB5B4CAA /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED76DA7CE2C3406BAA9FE709 /* Inter-Regular.ttf */; };
 		749D044A5A8B4DBAA691C38F /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 208E1608F5D4432CAD10E1B2 /* Inter-Medium.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		8301F02E681C9C0181D38FA3 /* libPods-react_native_skia_video_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FDAB7E62B75FFEAF620FE1 /* libPods-react_native_skia_video_player.a */; };
 		9A08EF9208BA4FF9AE326D40 /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5A18DE8B9C6471F9F384C0D /* Inter-ExtraBold.ttf */; };
-		9B13D6E179FFCDB6B04D233D /* libPods-react_native_skia_video_player.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 491EE0BD8B7782A8375E6051 /* libPods-react_native_skia_video_player.a */; };
 		9BD6933DF4754FE1B7B50297 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEF59FC9BDF447579A63ADF5 /* Inter-SemiBold.ttf */; };
 		A58276126D3C4C4BA9C12AAA /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D68EF7F22CE4FAE89CB78FC /* Inter-Black.ttf */; };
 		AA40DE2A5F1B40A1A6B76234 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F012499DB64E4241AF936591 /* Inter-Bold.ttf */; };
@@ -42,7 +42,9 @@
 		00E356EE1AD99517003FC87E /* react_native_skia_video_playerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = react_native_skia_video_playerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* react_native_skia_video_playerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = react_native_skia_video_playerTests.m; sourceTree = "<group>"; };
+		02B8ABEA5CC7465748CE4D07 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig"; sourceTree = "<group>"; };
 		1008700394FBD9D2FE754502 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		13426AA4C0D319B71E94DE08 /* Pods-react_native_skia_video_player.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player.release.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* react_native_skia_video_player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = react_native_skia_video_player.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = react_native_skia_video_player/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = react_native_skia_video_player/AppDelegate.mm; sourceTree = "<group>"; };
@@ -50,44 +52,23 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = react_native_skia_video_player/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = react_native_skia_video_player/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = react_native_skia_video_player/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		180D914C689827C2F4E4DBC2 /* Pods-react_native_skia_video_player.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player.debug.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player.debug.xcconfig"; sourceTree = "<group>"; };
 		208E1608F5D4432CAD10E1B2 /* Inter-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Medium.ttf"; path = "../src/Assets/fonts/Inter-Medium.ttf"; sourceTree = "<group>"; };
+		27FDAB7E62B75FFEAF620FE1 /* libPods-react_native_skia_video_player.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_skia_video_player.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28B5D8574847E34A0E205D4A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = react_native_skia_video_player/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		2E6F5DB038DD44050D9CED45 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		437865A028514A3B8A8D9CB1 /* Inter-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Light.ttf"; path = "../src/Assets/fonts/Inter-Light.ttf"; sourceTree = "<group>"; };
-		491EE0BD8B7782A8375E6051 /* libPods-react_native_skia_video_player.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_skia_video_player.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		65424A072C2190A2008B0EDB /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		65424A082C2190A2008B0EDB /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		65424A092C2190A2008B0EDB /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
-		65424A0A2C2190A2008B0EDB /* FontAwesome6_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Brands.ttf"; sourceTree = "<group>"; };
-		65424A0B2C2190A2008B0EDB /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
-		65424A0C2C2190A2008B0EDB /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		65424A0D2C2190A2008B0EDB /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
-		65424A0E2C2190A2008B0EDB /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		65424A0F2C2190A2008B0EDB /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		65424A102C2190A2008B0EDB /* AntDesign.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
-		65424A112C2190A2008B0EDB /* FontAwesome6_Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Regular.ttf"; sourceTree = "<group>"; };
-		65424A122C2190A2008B0EDB /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		65424A132C2190A2008B0EDB /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		65424A142C2190A2008B0EDB /* Zocial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		65424A152C2190A2008B0EDB /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		65424A162C2190A2008B0EDB /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		65424A172C2190A2008B0EDB /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
-		65424A182C2190A2008B0EDB /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		65424A192C2190A2008B0EDB /* FontAwesome6_Solid.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome6_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome6_Solid.ttf"; sourceTree = "<group>"; };
+		49007CFCED508BE33AB1FA59 /* Pods-react_native_skia_video_player.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player.debug.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player.debug.xcconfig"; sourceTree = "<group>"; };
+		6FD30075AAB8BB2E0A7C09F8 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D68EF7F22CE4FAE89CB78FC /* Inter-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Black.ttf"; path = "../src/Assets/fonts/Inter-Black.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = react_native_skia_video_player/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8695FBE091F148D582DA1FF2 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraLight.ttf"; path = "../src/Assets/fonts/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
-		AD4935186B134831449ACCF6 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B5A18DE8B9C6471F9F384C0D /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-ExtraBold.ttf"; path = "../src/Assets/fonts/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
 		CA5CDF16C0294376A099388A /* Inter-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Thin.ttf"; path = "../src/Assets/fonts/Inter-Thin.ttf"; sourceTree = "<group>"; };
 		CB6ACF67C0FCA491A2ACC6A1 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-react_native_skia_video_player/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		DEF59FC9BDF447579A63ADF5 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/Assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
-		EA77F2B7A9F9D14B6C243AA0 /* Pods-react_native_skia_video_player.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player.release.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED76DA7CE2C3406BAA9FE709 /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/Assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		F012499DB64E4241AF936591 /* Inter-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Bold.ttf"; path = "../src/Assets/fonts/Inter-Bold.ttf"; sourceTree = "<group>"; };
-		F19C7E8F5F281AE584BD3249 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig"; sourceTree = "<group>"; };
+		F287DD8BF5FA13CF0DC58B01 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig"; path = "Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16CB5FB15FB2D2D5EFC17BFB /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a in Frameworks */,
+				5B225E21B77AFAD7ED7026B5 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B13D6E179FFCDB6B04D233D /* libPods-react_native_skia_video_player.a in Frameworks */,
+				8301F02E681C9C0181D38FA3 /* libPods-react_native_skia_video_player.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,7 +111,6 @@
 		13B07FAE1A68108700A75B9A /* react_native_skia_video_player */ = {
 			isa = PBXGroup;
 			children = (
-				65424A062C219044008B0EDB /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -147,8 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				491EE0BD8B7782A8375E6051 /* libPods-react_native_skia_video_player.a */,
-				2E6F5DB038DD44050D9CED45 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */,
+				27FDAB7E62B75FFEAF620FE1 /* libPods-react_native_skia_video_player.a */,
+				6FD30075AAB8BB2E0A7C09F8 /* libPods-react_native_skia_video_player-react_native_skia_video_playerTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,32 +147,6 @@
 				CA5CDF16C0294376A099388A /* Inter-Thin.ttf */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		65424A062C219044008B0EDB /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				65424A102C2190A2008B0EDB /* AntDesign.ttf */,
-				65424A092C2190A2008B0EDB /* Entypo.ttf */,
-				65424A122C2190A2008B0EDB /* EvilIcons.ttf */,
-				65424A152C2190A2008B0EDB /* Feather.ttf */,
-				65424A182C2190A2008B0EDB /* FontAwesome.ttf */,
-				65424A0D2C2190A2008B0EDB /* FontAwesome5_Brands.ttf */,
-				65424A082C2190A2008B0EDB /* FontAwesome5_Regular.ttf */,
-				65424A0E2C2190A2008B0EDB /* FontAwesome5_Solid.ttf */,
-				65424A0A2C2190A2008B0EDB /* FontAwesome6_Brands.ttf */,
-				65424A112C2190A2008B0EDB /* FontAwesome6_Regular.ttf */,
-				65424A192C2190A2008B0EDB /* FontAwesome6_Solid.ttf */,
-				65424A162C2190A2008B0EDB /* Fontisto.ttf */,
-				65424A172C2190A2008B0EDB /* Foundation.ttf */,
-				65424A132C2190A2008B0EDB /* Ionicons.ttf */,
-				65424A0C2C2190A2008B0EDB /* MaterialCommunityIcons.ttf */,
-				65424A072C2190A2008B0EDB /* MaterialIcons.ttf */,
-				65424A0F2C2190A2008B0EDB /* Octicons.ttf */,
-				65424A0B2C2190A2008B0EDB /* SimpleLineIcons.ttf */,
-				65424A142C2190A2008B0EDB /* Zocial.ttf */,
-			);
-			name = Fonts;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -239,10 +193,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				180D914C689827C2F4E4DBC2 /* Pods-react_native_skia_video_player.debug.xcconfig */,
-				EA77F2B7A9F9D14B6C243AA0 /* Pods-react_native_skia_video_player.release.xcconfig */,
-				AD4935186B134831449ACCF6 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */,
-				F19C7E8F5F281AE584BD3249 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */,
+				49007CFCED508BE33AB1FA59 /* Pods-react_native_skia_video_player.debug.xcconfig */,
+				13426AA4C0D319B71E94DE08 /* Pods-react_native_skia_video_player.release.xcconfig */,
+				F287DD8BF5FA13CF0DC58B01 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */,
+				02B8ABEA5CC7465748CE4D07 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -271,13 +225,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "react_native_skia_video_playerTests" */;
 			buildPhases = (
-				956E0869BB327126B52D33A8 /* [CP] Check Pods Manifest.lock */,
+				FED16ABCF5A7070CED6F3802 /* [CP] Check Pods Manifest.lock */,
 				243FA1858C5735D0E7B13A9C /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				14E3721DBC1220E5F118AC41 /* [CP] Embed Pods Frameworks */,
-				D2ECA51936941DD67AF62C1E /* [CP] Copy Pods Resources */,
+				A02129053B6D83E76930D00D /* [CP] Embed Pods Frameworks */,
+				63F6F63BC092D901FE332A64 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -293,14 +247,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "react_native_skia_video_player" */;
 			buildPhases = (
-				226643DA828C24661481B753 /* [CP] Check Pods Manifest.lock */,
+				E45C0B7FF3E8307D9A34A60C /* [CP] Check Pods Manifest.lock */,
 				606C0BE16C38542CA46615EA /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				F7A8BEF20FBFF4B36EAC6012 /* [CP] Embed Pods Frameworks */,
-				F51618A6D817DEA7CC74CF36 /* [CP] Copy Pods Resources */,
+				1C95C356E55AF0E19580E135 /* [CP] Embed Pods Frameworks */,
+				3655169FF661497F3CE39FFD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -394,43 +348,21 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
-		14E3721DBC1220E5F118AC41 /* [CP] Embed Pods Frameworks */ = {
+		1C95C356E55AF0E19580E135 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		226643DA828C24661481B753 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-react_native_skia_video_player-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		243FA1858C5735D0E7B13A9C /* [Expo] Configure project */ = {
@@ -452,6 +384,23 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/expo-configure-project.sh\"\n";
 		};
+		3655169FF661497F3CE39FFD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		606C0BE16C38542CA46615EA /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -471,7 +420,63 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-react_native_skia_video_player/expo-configure-project.sh\"\n";
 		};
-		956E0869BB327126B52D33A8 /* [CP] Check Pods Manifest.lock */ = {
+		63F6F63BC092D901FE332A64 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A02129053B6D83E76930D00D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E45C0B7FF3E8307D9A34A60C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-react_native_skia_video_player-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FED16ABCF5A7070CED6F3802 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -491,57 +496,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D2ECA51936941DD67AF62C1E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player-react_native_skia_video_playerTests/Pods-react_native_skia_video_player-react_native_skia_video_playerTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F51618A6D817DEA7CC74CF36 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F7A8BEF20FBFF4B36EAC6012 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-react_native_skia_video_player/Pods-react_native_skia_video_player-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -579,7 +533,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AD4935186B134831449ACCF6 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */;
+			baseConfigurationReference = F287DD8BF5FA13CF0DC58B01 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -608,7 +562,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F19C7E8F5F281AE584BD3249 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */;
+			baseConfigurationReference = 02B8ABEA5CC7465748CE4D07 /* Pods-react_native_skia_video_player-react_native_skia_video_playerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -634,7 +588,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 180D914C689827C2F4E4DBC2 /* Pods-react_native_skia_video_player.debug.xcconfig */;
+			baseConfigurationReference = 49007CFCED508BE33AB1FA59 /* Pods-react_native_skia_video_player.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -662,7 +616,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EA77F2B7A9F9D14B6C243AA0 /* Pods-react_native_skia_video_player.release.xcconfig */;
+			baseConfigurationReference = 13426AA4C0D319B71E94DE08 /* Pods-react_native_skia_video_player.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

@@ -191,7 +191,11 @@ export default function AnimTab4() {
 
   return (
     <>
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={{
+        tabBarStyle:{
+          // zIndex:9999
+        }
+      }}>
         {TabArr.map((item, index) => {
           return (
             <Tab.Screen

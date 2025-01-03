@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-  const ProgressBar = ({ totalStep, currentStep }) => {
-
+const ProgressBar = ({totalStep, currentStep}) => {
   const renderSteps = () => {
     return Array.from({length: totalStep}, (_, index) => {
       const step = index + 1;
@@ -35,11 +34,7 @@ import * as Animatable from 'react-native-animatable';
           return (
             <Text
               key={index}
-              style={[
-                styles.label,
-                {color: isActive ? '#ffd843' : '#d8d8d8'},
-              ]}
-            >
+              style={[styles.label, {color: isActive ? '#ffd843' : '#d8d8d8'}]}>
               {index + 1}
             </Text>
           );
@@ -77,7 +72,8 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#fff',
-    fontSize: 12,
+    fontSize: 14,
+    fontFamily: 'DancingScript-Bold',
   },
 });
 

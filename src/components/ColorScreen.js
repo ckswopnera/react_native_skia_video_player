@@ -31,15 +31,15 @@ export default function ColorScreen({route, navigation}) {
         break;
       }
       case 'HomeNavigator': {
-        setBgColor(Colors.red);
+        setBgColor(Colors.white);
         break;
       }
       case 'QrScan': {
-        setBgColor(Colors.purple);
+        setBgColor(Colors.white);
         break;
       }
       case 'HistoryNavigator': {
-        setBgColor(Colors.yellow);
+        setBgColor(Colors.white);
         break;
       }
       default:

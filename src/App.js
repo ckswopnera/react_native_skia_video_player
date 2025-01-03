@@ -16,6 +16,7 @@ import {
   toast_error,
   tokenCheck,
   tokenExpiryCheck,
+  windowHeight,
 } from './utils/util';
 import {
   NavigationContainer,
@@ -31,11 +32,10 @@ import React_Form2 from './Screens/Form/React_Form2';
 import React_Form3 from './Screens/Form/React_Form3';
 import Video from './skia/Video';
 import Screenshot from './Screens/Screenshot';
-import ChartVictoryNative from './Screens/ChartVictoryNative';
+import ChartVictoryNative from './Screens/Victory_Native/ChartVictory_Native';
 import UseOnlineManager from './utils/UseOnlineManager';
 import Orientation from 'react-native-orientation-locker';
 import Tanstack_Queryclient from './Screens/Tanstack/Queryclient';
-import CandleStickChart from './Screens/CandleStickChart';
 import RandomAvatar from './Screens/RandomAvatar';
 import CircularProgressBar from './Screens/CircularProgressBar';
 import CardScan from './Screens/CardScan';
@@ -83,9 +83,15 @@ import App_State from './Screens/App_State';
 import Notification from './Screens/Notification';
 import ScratchScreen from './Screens/ScratchScreen';
 import React_Form_Zod from './Screens/Form/React_Form_Zod';
-import Wheel from './Screens/Wheel';
 import LuckyWheel from './Screens/LuckyWheel/LuckyWheel';
 import AnimTab4 from './Screens/Animated Bottomtab/AnimatedBottomTab4';
+import MainDrawer from './MainDrawer';
+import ConfettiButton from './Screens/ConfettiCanon';
+import PanZoomPage from './Screens/Victory_Native/PanAndZoom';
+import StackedChartComplex from './Screens/Stacked_Chart/StackedChart_Complex';
+import StackedBarChartPage from './Screens/Stacked_Chart/Stacked_Chart';
+import CandleStickChart from './Screens/Victory_Native/CandleStickChart';
+import SnowFall from './Screens/SnowFall';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -182,56 +188,56 @@ const App = () => {
   //       />
   //     </View>
   //   );
-  // } else 
+  // } else
   // if (isTokenExpired) {
   //   return <TokenExpiredScreen />;
   // } else {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <SafeAreaProvider>
-          <GestureHandlerRootView>
-            <NavigationContainer
-              theme={
-                colorScheme === 'dark'
-                  ? NavigationDarkTheme
-                  : NavigationDefaultTheme
-              }>
-              <StatusBar
-                barStyle={
-                  colorScheme === 'dark' ? 'light-content' : 'dark-content'
-                }
-                backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
-                hidden={!showBar}
-              />
-              <Stack.Navigator
-                initialRouteName="MainComponent"
-                screenOptions={{
-                  headerShown: false,
-                }}>
-                <Stack.Screen name="MainComponent" component={MainComponent} />
-                <Stack.Screen name="CachePage" component={CachePage} />
-                <Stack.Screen
-                  name="TokenExpired"
-                  component={TokenExpiredScreen}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
-            <Toaster
-              position="bottom-center"
-              toastOptions={{
-                closeButtonIconStyle: {color: '#000'},
-              }}
-              richColors="true"
-              // closeButton="true"
-              theme="system"
+  return (
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <GestureHandlerRootView>
+          <NavigationContainer
+            theme={
+              colorScheme === 'dark'
+                ? NavigationDarkTheme
+                : NavigationDefaultTheme
+            }>
+            <StatusBar
+              barStyle={
+                colorScheme === 'dark' ? 'light-content' : 'dark-content'
+              }
+              backgroundColor={colorScheme === 'dark' ? '#000' : '#fff'}
+              hidden={!showBar}
             />
-          </GestureHandlerRootView>
-        </SafeAreaProvider>
-      </QueryClientProvider>
-    );
+            <Stack.Navigator
+              initialRouteName="MainComponent"
+              screenOptions={{
+                headerShown: false,
+              }}>
+              <Stack.Screen name="MainComponent" component={MainComponent} />
+              <Stack.Screen name="CachePage" component={CachePage} />
+              <Stack.Screen
+                name="TokenExpired"
+                component={TokenExpiredScreen}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              closeButtonIconStyle: {color: '#000'},
+            }}
+            richColors="true"
+            // closeButton="true"
+            theme="system"
+          />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
+    </QueryClientProvider>
+  );
   // }
 };
-
+const getDrawerContent = props => <MainDrawer {...props} />;
 const MainComponent = () => {
   const showBar = useBoundStore(state => state.showBar);
   const colorScheme = useColorScheme();
@@ -239,14 +245,18 @@ const MainComponent = () => {
     <>
       <UseOnlineManager />
       <Drawer.Navigator
-        initialRouteName="Wheel Fortune"
+        // drawerContent={getDrawerContent}
+        initialRouteName="SnowFall"
         screenOptions={{
-          headerShown: showBar,
+          headerShown:  showBar,
           drawerHideStatusBarOnOpen: false,
           headerTitleAlign: 'center',
           drawerStyle: {
             backgroundColor: colorScheme === 'dark' ? '#000' : '#fff',
             borderRightWidth: colorScheme === 'dark' ? 1 : 0,
+            // width:'100%',
+            // height:windowHeight-100,
+
             // borderColor: 'red',
           },
           drawerActiveTintColor: colorScheme === 'dark' ? '#fff' : '#000',
@@ -319,7 +329,13 @@ const MainComponent = () => {
         />
         <Drawer.Screen name="Screenshot" component={Screenshot} />
         <Drawer.Screen name="Chart" component={ChartVictoryNative} />
+        <Drawer.Screen name="StackedChart" component={StackedBarChartPage} />
+        <Drawer.Screen name="StackedChartComplex" component={StackedChartComplex} />
+
+        
         <Drawer.Screen name="Candlestick Chart" component={CandleStickChart} />
+        <Drawer.Screen name="Pan Zoom Chart" component={PanZoomPage} />
+
         <Drawer.Screen
           name="Circular ProgressBar"
           component={CircularProgressBar}
@@ -450,16 +466,23 @@ const MainComponent = () => {
           component={ScratchScreen}
           options={{unmountOnBlur: true}}
         />
-          <Drawer.Screen
+        <Drawer.Screen
           name="Wheel Fortune"
           component={LuckyWheel}
           options={{unmountOnBlur: true}}
         />
-   <Drawer.Screen
-          name="Wheel"
-          component={Wheel}
+        <Drawer.Screen
+          name="Confetti Canon"
+          component={ConfettiButton}
           options={{unmountOnBlur: true}}
         />
+         <Drawer.Screen
+          name="SnowFall"
+          component={SnowFall}
+          options={{unmountOnBlur: true}}
+        />
+
+
       </Drawer.Navigator>
     </>
   );

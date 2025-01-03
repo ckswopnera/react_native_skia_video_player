@@ -6,6 +6,7 @@ import {
   Animated,
   TouchableOpacity,
   Image,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import * as d3Shape from 'd3-shape';
 
@@ -27,6 +28,7 @@ class WheelOfFortune extends Component {
       wheelOpacity: new Animated.Value(1),
       imageLeft: new Animated.Value(width / 2 - 30),
       imageTop: new Animated.Value(height / 2 - 70),
+      centerImage: this.props.options.icon[0],
     };
     this.angle = 0;
 
@@ -34,13 +36,12 @@ class WheelOfFortune extends Component {
   }
 
   prepareWheel = () => {
-    // console.log(this.props);
-
+    // console.log('props',this.props);
     this.Rewards = this.props.options.rewards;
     this.RewardCount = this.Rewards.length;
-
+    this.RewardImg = this.props.options.icon;
     this.numberOfSegments = this.RewardCount;
-    this.fontSize = 18;
+    this.fontSize = 16;
     this.oneTurn = 360;
     this.angleBySegment = this.oneTurn / this.numberOfSegments;
     this.angleOffset = this.angleBySegment / 2;
@@ -84,6 +85,10 @@ class WheelOfFortune extends Component {
       }
 
       this.angle = event.value;
+      const currentSegmentIndex = this._getWinnerIndex();
+      this.setState({
+        centerImage: this._wheelPaths[currentSegmentIndex].imgValue,
+      });
     });
   };
 
@@ -116,13 +121,16 @@ class WheelOfFortune extends Component {
       const instance = d3Shape
         .arc()
         .padAngle(0.01)
-        .outerRadius(width / 2)
+        .outerRadius(width / 2 - 10)
         .innerRadius(this.props.options.innerRadius || 100);
       return {
         path: instance(arc),
         color: colors[index % colors.length],
         value: this.Rewards[index],
         centroid: instance.centroid(arc),
+        textColor: this.props?.options?.textcolors[index],
+        icon: this.props?.options?.icon[index],
+        imgValue: this.RewardImg[index]
       };
     });
   };
@@ -159,54 +167,139 @@ class WheelOfFortune extends Component {
         finished: true,
         winner: this._wheelPaths[winnerIndex].value,
       });
-      console.log(this._wheelPaths[winnerIndex])
+      console.log(this._wheelPaths[winnerIndex]);
       this.props.getWinner(
         this._wheelPaths[winnerIndex].value,
         winnerIndex,
         this.state.finished,
-        this._wheelPaths[winnerIndex]
+        this._wheelPaths[winnerIndex],
+        this._wheelPaths[winnerIndex],
       );
     });
   };
 
-  _textRender = (x, y, number, i) => (
-    <Text
-      x={x - number.length * 5}
-      y={y - 80}
-      fill={
-        this.props.options.textColor ? this.props.options.textColor : '#fff'
-      }
-      textAnchor="middle"
-      fontSize={this.fontSize}>
-      {Array.from({length: number.length}).map((_, j) => {
-        // Render reward text vertically
-        if (this.props.options.textAngle === 'vertical') {
-          return (
-            <TSpan x={x} dy={this.fontSize} key={`arc-${i}-slice-${j}`}>
-              {number.charAt(j)}
-            </TSpan>
-          );
-        }
-        // Render reward text horizontally
-        else {
-          return (
-            <TSpan
-              y={y - 40}
-              dx={this.fontSize * 0.07}
-              key={`arc-${i}-slice-${j}`}>
-              {number.charAt(j)}
-            </TSpan>
-          );
-        }
-      })}
-    </Text>
-  );
+  imageResponsiveRender = (x, y, number, i) => {
+    return (
+      <Animated.View
+        style={{
+          width: width,
+          height: width,
+          alignSelf: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1,
+          top: -20,
+          position: 'absolute',
+        }}>
+        <Svg width={30} height={30} viewBox={`0 0 57 100`}>
+          <Image
+            source={this.props.options.icon[i]}
+            style={{
+              position: 'absolute',
+              top:
+                this.props.options.textAngle === 'oppvertical' &&
+                this.props.options.angleStep !== false
+                  ? y * 1.34
+                  : this.props.options.textAngle === 'horizontal'
+                  ? y / 1.2
+                  : y / 2,
+              left:
+                this.props.options.textAngle === 'oppvertical' &&
+                this.props.options.angleStep !== false
+                  ? x * 1.34
+                  : this.props.options.textAngle === 'horizontal'
+                  ? x / 1.2
+                  : x / 2,
+              height: 30,
+              width: 30,
+              resizeMode: 'contain',
+            }}
+          />
+        </Svg>
+      </Animated.View>
+    );
+  };
+
+  _textRender = (x, y, number, i) => {
+    const charSpacing = this.fontSize - 5; // Spacing between characters
+    const baseAngle = -90; // Fixed base angle for each letter
+    return (
+      <>
+        <Text
+          x={x - number.length * 5}
+          y={
+            this.props.options.textAngle === 'vertical'
+              ? y - 65
+              : this.props.options.textAngle === 'oppvertical'
+              ? y - 60
+              : y - 50
+          }
+          fill={
+            this.props.options.textColor ? this.props.options.textColor : '#fff'
+          }
+          textAnchor="middle"
+          fontSize={this.fontSize}>
+          {Array.from({length: number.length}).map((_, j) => {
+            // Render reward text vertically
+            if (this.props.options.textAngle === 'vertical') {
+              return (
+                <TSpan x={x} dy={this.fontSize - 2} key={`arc-${i}-slice-${j}`}>
+                  {number.charAt(j)}
+                </TSpan>
+              );
+            }
+            if (this.props.options.textAngle === 'oppvertical') {
+              if (this.props.options.angleStep === false) {
+                return (
+                  <TSpan
+                    x={x}
+                    dy={this.fontSize - 2}
+                    key={`arc-${i}-slice-${j}`}>
+                    {/* Rotate vertically */}
+                    {number.charAt(number.length - 1 - j)}
+                  </TSpan>
+                );
+              } else {
+                const charY = y + j * charSpacing; // Vertical positioning
+                const charAngle = baseAngle + 5; // Fixed angle for each letter
+                const adjustedX =
+                  x + Math.cos((Math.PI / 180) * charAngle) * 3 + 5; // Adjust horizontally for perfect centering
+                return (
+                  <TSpan
+                    x={adjustedX + 10} //text position change
+                    y={charY}
+                    dy={5}
+                    key={`arc-${i}-slice-${j}`}
+                    transform={`rotate(${charAngle}, ${x}, ${charY})`}>
+                    {number.charAt(number.length - 1 - j)}
+                  </TSpan>
+                );
+              }
+            }
+
+            // Render reward text horizontally
+            if (this.props.options.textAngle === 'horizontal') {
+              return (
+                <TSpan
+                  // y={y-60}
+                  dx={this.fontSize * 0.07}
+                  key={`arc-${i}-slice-${j}`}>
+                  {number.charAt(j)}
+                </TSpan>
+              );
+            }
+          })}
+        </Text>
+      </>
+    );
+  };
 
   _renderSvgWheel = () => {
     return (
       <View style={styles.container}>
         {this._renderKnob()}
         {this.props.options.knobCount === 2 && this._renderKnob2()}
+        {this._renderKnob3()}
 
         <Animated.View
           style={{
@@ -261,6 +354,7 @@ class WheelOfFortune extends Component {
                       }
                       origin={`${x}, ${y}`}>
                       {this._textRender(x, y, number, i)}
+                      {this.imageResponsiveRender(x, y, number, i)}
                     </G>
                   </G>
                 );
@@ -315,7 +409,7 @@ class WheelOfFortune extends Component {
         }}>
         <Svg
           width={knobSize}
-          height={(knobSize * 100) / 57}
+          height={(knobSize * 100) / 67}
           viewBox={`0 0 57 100`}
           style={{
             transform: [{translateY: 8}],
@@ -343,22 +437,19 @@ class WheelOfFortune extends Component {
       <Animated.View
         style={{
           width: knobSize,
-          height: knobSize ,
+          height: knobSize,
           justifyContent: 'flex-end',
           zIndex: 1,
           opacity: this.state.wheelOpacity,
           // backgroundColor:'green',
-          position:'absolute',
-
+          position: 'absolute',
         }}>
         <Svg
           width={knobSize}
-          height={(knobSize * 100) / 57}
+          height={(knobSize * 100) / 67}
           viewBox={`0 0 57 100`}
           style={{
-            transform: [
-              {translateY: -7},
-              {rotate:'180deg'}],
+            transform: [{translateY: -5}, {rotate: '180deg'}],
           }}>
           <Image
             source={
@@ -366,7 +457,47 @@ class WheelOfFortune extends Component {
                 ? this.props.options.knobSource
                 : require('../../Assets/images/knob.png')
             }
-            style={{width: knobSize-5, height: (knobSize * 100) / 52,left:2}}
+            style={{
+              width: knobSize - 10,
+              height: (knobSize * 100) / 87,
+              left: 5,
+            }}
+          />
+        </Svg>
+      </Animated.View>
+    );
+  };
+
+  _renderKnob3 = () => {
+    const knobSize = this.props.options.knobSize
+      ? this.props.options.knobSize
+      : 20;
+    // [0, this.numberOfSegments]
+
+    return (
+      <Animated.View
+        style={{
+          width: knobSize,
+          height: knobSize,
+          justifyContent: 'flex-end',
+          zIndex: 1,
+          opacity: this.state.wheelOpacity,
+          // backgroundColor:'green',
+          position: 'absolute',
+        }}>
+        <Svg
+          width={knobSize}
+          height={(knobSize * 100) / 67}
+          viewBox={`0 0 57 100`}
+          style={{
+            transform: [{translateY: 37}, {translateX: 0}],
+          }}>
+          <Image
+            source={this.state.centerImage}
+            style={{
+              width: knobSize,
+              height: knobSize,
+            }}
           />
         </Svg>
       </Animated.View>
@@ -386,7 +517,7 @@ class WheelOfFortune extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
+        <TouchableWithoutFeedback
           style={{
             position: 'absolute',
             width: width,
@@ -397,7 +528,7 @@ class WheelOfFortune extends Component {
           <Animated.View style={[styles.content, {padding: 10}]}>
             {this._renderSvgWheel()}
           </Animated.View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
         {this.props.options.playButton ? this._renderTopToPlay() : null}
       </View>
     );

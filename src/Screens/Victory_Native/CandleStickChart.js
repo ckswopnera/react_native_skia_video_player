@@ -11,9 +11,9 @@ import {
   View,
 } from 'react-native';
 import {CandlestickChart, TCandle} from 'react-native-wagmi-charts';
-import mockData from '../utils/candlestick-data.json';
-import mockData2 from '../utils/candlestick-data2.json';
-import {darkTheme, lightTheme} from '../Style/theme';
+import mockData from '../../utils/candlestick-data.json';
+import mockData2 from '../../utils/candlestick-data2.json';
+import {darkTheme, lightTheme} from '../../Style/theme';
 
 function invokeHaptic() {
   if (['ios', 'android'].includes(Platform.OS)) {
