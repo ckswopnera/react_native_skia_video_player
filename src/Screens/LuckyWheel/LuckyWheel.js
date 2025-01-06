@@ -9,6 +9,7 @@ import {
   Image,
   StatusBar,
   Animated,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import WheelOfFortune from './WheelOfFortune';
 import HexagonView from './HexagonView';
@@ -46,7 +47,7 @@ const winner = [
     participant: 'Chicken',
     color: '#22AFD3',
     text_Color: 'rgb(34, 175, 211)',
-    image: require('../../Assets/images/chicken_leg.png'),
+    image: require('../../Assets/images/chicken-leg.png'),
   },
   {
     participant: 'Tacos',
@@ -175,7 +176,20 @@ class LuckyWheel extends Component {
       useNativeDriver: true,
     }).start();
   };
-
+  zoomIn = {
+    0: {
+      opacity: 0,
+      scale: 0,
+    },
+    0.5: {
+      opacity: 1,
+      scale: 2.2,
+    },
+    1: {
+      opacity: 1,
+      scale: 1,
+    },
+  };
   render() {
     const wheelOptions = {
       rewards: winner.map((i, j) => i.participant),
@@ -298,7 +312,7 @@ class LuckyWheel extends Component {
                 justifyContent: 'center',
                 transform: [{scale: this.state.scaleAnim}],
               }}>
-              <HexagonView />
+              <HexagonView height={width / 4} width={width /4} />
               <Text
                 style={{
                   position: 'absolute',
@@ -306,7 +320,7 @@ class LuckyWheel extends Component {
                   color: 'rgba(255, 223, 0, 1)',
                   fontSize: 25,
                   fontFamily: 'DancingScript-Medium',
-                  bottom: 51,
+                  bottom: width / 10,
                   textDecorationStyle: 'solid',
                   textTransform: 'uppercase',
                 }}>
@@ -358,6 +372,7 @@ class LuckyWheel extends Component {
                       borderBottomLeftRadius: 20,
                       borderBottomRightRadius: 20,
                       alignItems: 'center',
+                      height: width / 2,
                     }}>
                     <Text style={styles.modalText}>Hurray!</Text>
                     <View
@@ -376,16 +391,13 @@ class LuckyWheel extends Component {
                           marginTop: 10,
                           marginLeft: 8,
                         }}>
-                        <Animatable.View
-                          animation={'pulse'}
-                          iterationCount="infinite"
+                        <Animatable.Image
+                          animation={this.zoomIn}
                           duration={500}
-                          useNativeDriver={true}>
-                          <Image
-                            source={winner[this.state.winnerIndex]?.image}
-                            style={{width: '100%', height: '100%'}}
-                          />
-                        </Animatable.View>
+                          delay={1000}
+                          source={winner[this.state.winnerIndex]?.image}
+                          style={{width: '100%', height: '100%'}}
+                        />
                       </View>
                     </View>
                     <TouchableOpacity
@@ -465,7 +477,7 @@ const styles = StyleSheet.create({
   modalText: {
     marginTop: 15,
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 24,
     color: '#fff',
     fontFamily: 'DancingScript-Bold',
   },
@@ -496,7 +508,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignSelf: 'center',
     paddingVertical: 7,
-    marginVertical: 30,
+    position: 'absolute',
+    bottom: 10,
     width: 150,
   },
   textStyle: {
