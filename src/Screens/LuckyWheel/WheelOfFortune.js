@@ -130,7 +130,7 @@ class WheelOfFortune extends Component {
         centroid: instance.centroid(arc),
         textColor: this.props?.options?.textcolors[index],
         icon: this.props?.options?.icon[index],
-        imgValue: this.RewardImg[index]
+        imgValue: this.RewardImg[index],
       };
     });
   };
@@ -525,7 +525,7 @@ class WheelOfFortune extends Component {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Animated.View style={[styles.content, {padding: 10}]}>
+          <Animated.View style={{...styles.content}}>
             {this._renderSvgWheel()}
           </Animated.View>
         </TouchableWithoutFeedback>
@@ -544,7 +544,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // bottom:20,
   },
-  content: {},
+  content: {
+    padding: 10,
+  },
   startText: {
     fontSize: 50,
     color: '#fff',

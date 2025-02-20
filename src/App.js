@@ -246,7 +246,7 @@ const MainComponent = () => {
       <UseOnlineManager />
       <Drawer.Navigator
         // drawerContent={getDrawerContent}
-        initialRouteName="SnowFall"
+        initialRouteName="Wheel Fortune"
         screenOptions={{
           headerShown:  showBar,
           drawerHideStatusBarOnOpen: false,
