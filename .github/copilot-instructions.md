@@ -1,0 +1,21 @@
+# Copilot Instructions for react_native_skia_video_player
+
+- Entry point is `index.js` and it registers `src/App.js`. The active app container is `src/App.js`, not `src/Start.js`.
+- `src/App.js` wraps the app in `QueryClientProvider`, `SafeAreaProvider`, `GestureHandlerRootView` and `NavigationContainer`.
+- Root navigation is a `Stack.Navigator` with `MainComponent` as the drawer host and secondary screens like `CachePage` and `TokenExpiredScreen`.
+- `MainComponent` is a `Drawer.Navigator` with many demo screens under `src/Screens/`; update both drawer labels and imported screen components when adding or changing screens.
+- Shared state is stored in `src/store/MainStore.js` via `useBoundStore` and persisted to MMKV. `setShowBar` controls header/status bar visibility across the app.
+- The main video/skia implementation is in `src/skia/Video.js`. It uses `@shopify/react-native-skia` `useVideo`, `react-native-reanimated`, and manual time/seek controls.
+- `src/utils/util.js` contains app-wide helpers: `queryClient`, `prefetchData`, token APIs, screen size constants, and network fetch helpers.
+- Heavy screens are often configured with `options={{ unmountOnBlur: true }}` to reduce memory use, especially `Video`, `Random Avatar`, and query-heavy demo screens.
+- The project is a bare React Native app with Expo libraries (`expo-updates`, `expo-linear-gradient`) and native dependencies like `react-native-vision-camera`, `react-native-mmkv`, and `@shopify/react-native-skia`.
+- Build/test commands:
+  - `npm install` (uses Node >= 18)
+  - `npm start`
+  - `npm run android`
+  - `npm run ios`
+  - `npm test`
+  - `npm run lint`
+- `package.json` has a `postinstall` hook for `patch-package`; avoid breaking native dependency installs.
+- `src/MainDrawer.js` is an alternate custom drawer content component but it is currently commented out in `App.js`.
+- Prefer editing existing screen files under `src/Screens/` and use imported utilities from `src/utils/` and `src/store/` rather than adding global state in new modules.
